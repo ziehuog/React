@@ -1,20 +1,16 @@
 import React, { useContext } from "react";
 import { DATA } from "../utils/data";
-// import { indexContext } from "./LayoutBottom";
 
 
 
-const AnswerProcess = (index) => {
+const AnswerProcess = ({index}) => {
 
-  // const indexQuestion = useContext(indexContext)
 
   let percentage = DATA.length
   
   const processColor = ((Number(index))/ (Number(percentage)))*200
-  console.log(processColor)
 
   const showPercentage = Math.round(((Number(index))/ (Number(percentage))) * 100)
-  console.log(showPercentage)
 
   return (
     <div className="p-[40px] border-b-[2px]">

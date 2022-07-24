@@ -1,13 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
-import ContainerModule from './components/ContainerModule';
 import { BrowserRouter } from 'react-router-dom';
+import './App.css';
+import Navigation from './components/Navigation';
 
 function App() {
   return (
     <div>
       <BrowserRouter>
-      <ContainerModule/>
+      <Navigation/>
       </BrowserRouter>
     </div>
   );
