@@ -1,4 +1,4 @@
-let arr = [1,2,3,4]
+let arr = [1,2,3,4];
 
 Array.prototype.myFindIndex = function(callback) {
     for (let index in this) {
@@ -11,7 +11,7 @@ Array.prototype.myFindIndex = function(callback) {
   };
 
 
-for (let i = 0; i < arr.length; i++){
+for (let i = 0; i <= arr.length; i++){
 
 }
 

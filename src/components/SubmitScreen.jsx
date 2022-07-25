@@ -4,7 +4,7 @@ import { DATA } from "../utils/data";
 import { Context } from "./Context";
 
 const SubmitScreen = () => {
-  const { handleAnswer } = useContext(Context);
+  const { currentAnswer, answerKey } = useContext(Context);
 
   let navigate = useNavigate();
   // let [index, setIndex] = useState(0)
@@ -17,6 +17,8 @@ const SubmitScreen = () => {
     navigate("/score");
   };
 
+  // console.log(answerKey[2].answer)
+
   // console.log(DATA[index])
   // let answerPreview = []
 
@@ -26,9 +28,21 @@ const SubmitScreen = () => {
       {DATA.map((data) => {
         return (
           <Fragment key={data.id}>
-            <div > Cau: {data.id}</div>
+            <div className="flex"> Cau: {data.id}</div>
             {data.answers.map((elems) => {
-              return <div key={elems.id}>{elems.id}</div>;
+              return <label key={elems.id}>
+              <span className="bg-slate-400 rounded-[10px] m-[15px] py-2 text-start px-[10px]">
+                <input
+                  type="radio"
+                  name={elems.id}
+                  // checked = {answerKey === elems.id}
+                  className="mx-3"
+                  value={elems.id}
+                  // onChange = {handleAnswer(DATA[index].id)}
+                />
+                {elems.id}
+              </span>
+            </label>;
             })}
           </Fragment>
         );
@@ -46,6 +60,7 @@ const SubmitScreen = () => {
         >
           Submit
         </button>
+        
       </div>
     </div>
   );

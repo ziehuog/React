@@ -10,7 +10,7 @@ import { Context } from "./Context";
 const Navigation = () => {
   const [index, setIndex] = useState(0);
   const [currentAnswer, setCurrentAnswer] = useState("");
-  const [nextButton, setNextButton] = useState("Next");
+  const [nextButton, setNextButton] = useState("pointer");
   const navigate = useNavigate();
   const refAnswer = useRef([]);
 
@@ -33,7 +33,7 @@ const Navigation = () => {
   };
 
   let answerKey = refAnswer.current;
-  console.log(answerKey);
+  // console.log(answerKey);
 
   // Score
   for (let i = 0; i < DATA.length; i++) {
@@ -49,11 +49,19 @@ const Navigation = () => {
 
   let point = Math.round((score / DATA.length) * 10);
 
+  //Button Submit
+  const buttonSubmit = () => {
+    if (index >= DATA.length - 1) {
+      setIndex(DATA.length - 1);
+      setNextButton("Preview");
+      navigateToSubmit();
+    } else if (index === DATA.length - 2) {
+      setNextButton("Preview");
+    }
+  }
+
   //Button Next
 
-  const callback = (a) => () => {
-    console.log(a);
-  };
 
   const buttonNext = () => {
     setIndex(index + 1);
@@ -68,28 +76,29 @@ const Navigation = () => {
       setCurrentAnswer(null)
     }
 
-    for (let i = 0; i < DATA.length; i++) {
-      callback(DATA[i])();
-    }
-
-    setNextButton("Next");
-
     //
     if (index >= DATA.length - 1) {
-      setIndex(DATA.length - 1);
-      setNextButton("Preview");
+      // setIndex(DATA.length - 1);
+      setNextButton("not-allowed");
       navigateToSubmit();
-    } else if (index === DATA.length - 2) {
-      setNextButton("Preview");
     }
   };
 
   //Button Back
   const buttonBack = () => {
     setIndex(index - 1);
-    setNextButton("Next");
+    // setNextButton("Next");
 
-    
+    const prevQuestion = DATA[index - 1];
+    const pIndex = refAnswer.current.findIndex((a) => {
+      if (prevQuestion.id === a.id) return true;
+    });
+
+    if(pIndex !== -1) {
+      setCurrentAnswer(refAnswer.current[pIndex].answer)
+    } else {
+      setCurrentAnswer(null)
+    }
 
 
     if (index <= 0) {
@@ -113,7 +122,10 @@ const Navigation = () => {
         handleAnswer,
         refAnswer,
         point,
-        currentAnswer
+        currentAnswer,
+        buttonSubmit,
+        answerKey
+        
       }}
     >
       <Routes>
