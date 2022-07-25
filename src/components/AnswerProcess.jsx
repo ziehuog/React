@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
 import { DATA } from "../utils/data";
+import { Context } from "./Context";
 
 
 
-const AnswerProcess = ({index}) => {
+const AnswerProcess = () => {
+  const {index, ...rest} = useContext(Context)
+
 
 
   let percentage = DATA.length

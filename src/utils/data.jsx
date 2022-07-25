@@ -2,31 +2,34 @@ export const DATA = [{
   id: 1,
   question: "hihi means?",
   answers: [
-    { id: 'A', answer: "A:  nothing", isTrue: false },
-    { id: 'B', answer: "B: shy", isTrue: false },
-    { id: 'C', answer: "C: fun", isTrue: true },
-    { id: 'D', answer: "D: angry", isTrue: false },
+    { id: 'A', answer: "A:  nothing"},
+    { id: 'B', answer: "B: shy"},
+    { id: 'C', answer: "C: fun"},
+    { id: 'D', answer: "D: angry" },
   ],
+  correctAnswer: 'C'
 },
 {
   id: 2,
   question: "Who is Ellie?",
   answers: [
-    { id: 'A', answer: "A: Hz", isTrue: true },
-    { id: 'B', answer: "B: angel", isTrue: false },
-    { id: 'C', answer: "C: i don't know", isTrue: false },
-    { id: 'D', answer: "D: stupid person", isTrue: false },
+    { id: 'A', answer: "A: Hz"},
+    { id: 'B', answer: "B: angel" },
+    { id: 'C', answer: "C: i don't know" },
+    { id: 'D', answer: "D: stupid person" },
   ],
+  correctAnswer: 'A'
 },
 
 {
   id: 3,
   question: "Where is my brain?",
   answers: [
-    { id: 'A', answer: "A: You don't have brain :P", isTrue: false },
-    { id: 'B', answer: "B: You have but you don't use it", isTrue: true },
-    { id: 'C', answer: "C: It lose", isTrue: false },
-    { id: 'D', answer: "D: idk", isTrue: false },
+    { id: 'A', answer: "A: You don't have brain :P" },
+    { id: 'B', answer: "B: You have but you don't use it"},
+    { id: 'C', answer: "C: It lose" },
+    { id: 'D', answer: "D: idk" },
   ],
+  correctAnswer: 'B'
 },
 ];

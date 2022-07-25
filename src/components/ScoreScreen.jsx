@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { Context } from './Context';
 
 function ScoreScreen() {
+
+  const {point} = useContext(Context)
+
     let navigate = useNavigate();
 
   const navigateToHome = () => {
@@ -9,7 +13,7 @@ function ScoreScreen() {
   };
   return (
     <div>
-        <div className="text-[30px] text-center py-[30px]">Your score is ...</div>
+        <div className="text-[30px] text-center py-[30px]">Your score is {point}</div>
         <div className="text-center">
         <button
           className="text-[24px] border rounded-[8px] cursor-pointer py-1 px-8 hover:bg-slate-600 hover:text-white"
