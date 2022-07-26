@@ -3,7 +3,7 @@ import { Context } from "./Context";
 
 const LayoutBottom = () => {
 
-  const {index, nextButton , buttonBack, buttonNext} = useContext(Context)
+  const {index, nextButton , buttonBack, buttonNext, buttonSubmit} = useContext(Context)
 
   // console.log(next)
 
@@ -18,10 +18,17 @@ const LayoutBottom = () => {
       </div>
 
       <div
-        className="border border-gray-400 rounded-[8px] cursor-pointer py-2 px-4 hover:bg-slate-600 hover:text-white"
+        className="border border-gray-400 rounded-[8px]  py-2 px-4 hover:bg-slate-600 hover:text-white"
         onClick={buttonNext}
+        style={{cursor: `${nextButton}`}}
       >
-        {nextButton}
+        Next
+      </div>
+      <div
+        className="border border-gray-400 rounded-[8px] cursor-pointer py-2 px-4 hover:bg-slate-600 hover:text-white"
+        onClick={buttonSubmit}
+      >
+        Submit
       </div>
     </div>
   );

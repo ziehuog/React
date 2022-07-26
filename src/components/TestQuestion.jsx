@@ -16,7 +16,6 @@ const TestQuestion = () => {
             {DATA[index].answers.map((answer) => (
               <label key={answer.id}>
                 <div className="bg-slate-400 rounded-[10px] my-[15px] py-2 text-start px-[10px]">
-                  {currentAnswer}
                   <input
                     type="radio"
                     name={DATA[index].id}
