@@ -1,12 +1,12 @@
 import { BrowserRouter } from 'react-router-dom';
 import './App.css';
-import Navigation from './components/Navigation';
+import SignUp from './components/SignUp';
 
 function App() {
   return (
     <div>
       <BrowserRouter>
-      <Navigation/>
+      <SignUp/>
       </BrowserRouter>
     </div>
   );

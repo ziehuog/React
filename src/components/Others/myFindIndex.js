@@ -1,19 +1,16 @@
 let arr = [1,2,3,4];
 
-Array.prototype.myFindIndex = function(callback) {
+ Array.prototype.myFindIndex = function(callback) {
     for (let index in this) {
       let result = callback(this[index]);
       if (result) {
         return index;
-        break;
       }
     }
   };
 
 
-for (let i = 0; i <= arr.length; i++){
 
-}
 
 let a = arr.findMyIndex((e) => e > 3)
 console.log(a)

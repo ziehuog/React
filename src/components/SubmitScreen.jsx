@@ -4,10 +4,10 @@ import { DATA } from "../utils/data";
 import { Context } from "./Context";
 
 const SubmitScreen = () => {
-  const { currentAnswer, answerKey } = useContext(Context);
+  const {  answerKey, refAnswer } = useContext(Context);
+console.log(answerKey)
 
   let navigate = useNavigate();
-  // let [index, setIndex] = useState(0)
 
   const navigateToTest = () => {
     navigate("/question");
@@ -15,47 +15,58 @@ const SubmitScreen = () => {
 
   const navigateToScore = () => {
     navigate("/score");
+    
   };
 
-  // console.log(answerKey[2].answer)
 
-  // console.log(DATA[index])
-  // let answerPreview = []
+
 
   return (
     <div>
-      <div className="text-[30px] text-center py-[30px]">Are you finished?</div>
+      <div className="text-[30px] text-center py-[30px]  ">Are you finished?</div>
+
+      {/* map to display question */}
+      <div className="border p-[40px] w-2/3 m-auto p-auto mb-[50px] ">
       {DATA.map((data) => {
         return (
-          <Fragment key={data.id}>
-            <div className="flex"> Cau: {data.id}</div>
+          <div key={data.id} className="my-3 ">
+            <div className="my-3 "> Câu: {data.id}</div>
+
+          {/* Map to display answers */}
             {data.answers.map((elems) => {
               return <label key={elems.id}>
               <span className="bg-slate-400 rounded-[10px] m-[15px] py-2 text-start px-[10px]">
                 <input
-                  type="radio"
+                  type="checkbox"
                   name={elems.id}
-                  // checked = {answerKey === elems.id}
+
+                  // preview checked
+                  checked = { answerKey.length > 0 && answerKey.some((a) => { 
+                    if(a.id === data.id && a.answer === elems.id){
+                      return true
+                    } 
+                    return false
+                  })}
                   className="mx-3"
                   value={elems.id}
-                  // onChange = {handleAnswer(DATA[index].id)}
                 />
                 {elems.id}
               </span>
             </label>;
             })}
-          </Fragment>
+          </div>
         );
       })}
+      </div>
       <div className="text-center">
         <button
-          className="text-[24px] border rounded-[8px] cursor-pointer py-1 px-9 mx-5 hover:bg-slate-600 hover:text-white"
+          className=" border rounded-[8px] cursor-pointer py-1 px-9 mx-5 hover:bg-slate-600 hover:text-white"
           onClick={navigateToTest}
         >
           Back
         </button>
         <button
-          className="text-[24px] border rounded-[8px] cursor-pointer py-1 px-8 mx-5 hover:bg-slate-600 hover:text-white"
+          className=" border rounded-[8px] cursor-pointer py-1 px-8 mx-5 hover:bg-slate-600 hover:text-white"
           onClick={navigateToScore}
         >
           Submit

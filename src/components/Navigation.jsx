@@ -6,15 +6,52 @@ import SubmitScreen from "./SubmitScreen";
 import ScoreScreen from "./ScoreScreen";
 import { DATA } from "../utils/data";
 import { Context } from "./Context";
+import Timer from "./Timer";
 
 const Navigation = () => {
   const [index, setIndex] = useState(0);
   const [currentAnswer, setCurrentAnswer] = useState("");
-  const [nextButton, setNextButton] = useState("pointer");
+  const [nextButton, setNextButton] = useState(false);
+  const [displayNext, setDisplayNext] = useState('block')
+  const [displaySubmit, setDisplaySubmit] = useState('none');
+  const [remaining, setRemaining] = useState(1000 * 30);
+  const [timeOver, setTimeOver] = useState('')
+
   const navigate = useNavigate();
   const refAnswer = useRef([]);
 
   let score = 0;
+
+  //Countdown
+  
+
+  console.log('re-render')
+
+
+  const navigateToScore = () => {
+    navigate("/score");
+    
+  };
+
+  useEffect(() => {
+    const timerId = setInterval(() => {
+      setRemaining(remaining - 1000);
+    }, 1000);
+    
+    if(remaining <= 10000){
+      setTimeOver('text-red-600')
+      console.log('warning')
+    }
+
+    if (remaining <= 0) {
+      clearInterval(timerId);
+      navigateToScore()
+    }
+
+    return () => {
+      clearInterval(timerId);
+    };
+  }, [remaining]);
 
   //Answer
   const handleAnswer = (id) => (e) => {
@@ -33,7 +70,6 @@ const Navigation = () => {
   };
 
   let answerKey = refAnswer.current;
-  // console.log(answerKey);
 
   // Score
   for (let i = 0; i < DATA.length; i++) {
@@ -53,21 +89,31 @@ const Navigation = () => {
   const buttonSubmit = () => {
     if (index >= DATA.length - 1) {
       setIndex(DATA.length - 1);
-      setNextButton("Preview");
       navigateToSubmit();
     } else if (index === DATA.length - 2) {
-      setNextButton("Preview");
     }
   }
 
   //Button Next
 
-
-
-
   const buttonNext = () => {
-  
+
+    setNextButton(false);
     setIndex(index + 1);
+    setDisplayNext('block')
+
+    
+    if (index >= DATA.length - 1) {
+      setIndex(DATA.length - 1);
+      
+
+      setNextButton(true);
+    } else if (index === DATA.length - 2) {
+      setDisplaySubmit('block')
+      setDisplayNext('none')
+    }
+
+  //save previous choose
     const nextQuestion = DATA[index + 1];
     const aIndex = refAnswer.current.findIndex((a) => {
       if (nextQuestion.id === a.id) return true;
@@ -80,17 +126,22 @@ const Navigation = () => {
     }
 
     //
-    if (index >= DATA.length - 1) {
-      // setIndex(DATA.length - 1);
-      setNextButton("not-allowed");
-      navigateToSubmit();
-    }
+    
   };
 
   //Button Back
   const buttonBack = () => {
+    setNextButton(false);
     setIndex(index - 1);
-    // setNextButton("Next");
+    setDisplayNext('block')
+    setDisplaySubmit('none')
+
+
+    if (index <= 0) {
+      setIndex(0);
+    }
+
+    //save previous answer
 
     const prevQuestion = DATA[index - 1];
     const pIndex = refAnswer.current.findIndex((a) => {
@@ -104,9 +155,6 @@ const Navigation = () => {
     }
 
 
-    if (index <= 0) {
-      setIndex(0);
-    }
   };
 
   //Navigation
@@ -127,10 +175,16 @@ const Navigation = () => {
         point,
         currentAnswer,
         buttonSubmit,
-        answerKey
+        answerKey,
+        displayNext,
+        displaySubmit,
+        remaining,
+        setRemaining,
+        timeOver
         
       }}
-    >
+      >
+
       <Routes>
         <Route path="/" element={<StartScreen />} />
         <Route path="/question" element={<TestContainer />} />

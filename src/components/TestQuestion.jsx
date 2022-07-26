@@ -4,6 +4,8 @@ import { Context } from "./Context";
 
 const TestQuestion = () => {
   const { index, currentAnswer,  handleAnswer } = useContext(Context);
+  
+  
 
   return (
     <div style={{ display: "hidden" }}>

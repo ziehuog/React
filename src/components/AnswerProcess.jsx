@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { DATA } from "../utils/data";
 import { Context } from "./Context";
+import Timer from "./Timer";
 
 
 

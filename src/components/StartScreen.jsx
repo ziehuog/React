@@ -1,11 +1,12 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 
 const StartScreen = () => {
   let navigate = useNavigate();
 
   const navigateToTest = () => {
     navigate("/question");
+    
   };
   return (
     <div className="mt-[150px]">
@@ -17,7 +18,8 @@ const StartScreen = () => {
         <button
           className="text-[24px] border rounded-[8px] cursor-pointer py-1 px-8 hover:bg-slate-600 hover:text-white"
           onClick={navigateToTest}
-        >
+        > 
+        {/* <Link to = '/question' refresh ='true'></Link> */}
           Start
         </button>
       </div>

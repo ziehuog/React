@@ -10,10 +10,14 @@ function ScoreScreen() {
 
   const navigateToHome = () => {
     navigate("/");
+    window.location.reload();
+
   };
   return (
     <div>
-        <div className="text-[30px] text-center py-[30px]">Your score is {point}</div>
+        <div className="text-[30px] text-center py-[30px]">Your score is 
+          <span className="text-red-600 text-[35px]"> {point}</span>  
+        </div>
         <div className="text-center">
         <button
           className="text-[24px] border rounded-[8px] cursor-pointer py-1 px-8 hover:bg-slate-600 hover:text-white"
