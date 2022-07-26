@@ -55,7 +55,10 @@ const Navigation = () => {
     console.log(a);
   };
 
+
+
   const buttonNext = () => {
+  
     setIndex(index + 1);
     const nextQuestion = DATA[index + 1];
     const aIndex = refAnswer.current.findIndex((a) => {
@@ -89,7 +92,16 @@ const Navigation = () => {
     setIndex(index - 1);
     setNextButton("Next");
 
-    
+    const prevQuestion = DATA[index - 1]
+    const cIndex = refAnswer.current.findIndex((n) => {
+      if(prevQuestion.id === n.id) return true;
+    })
+
+    if(cIndex !== -1){
+      setCurrentAnswer(refAnswer.current[cIndex].answer)
+    } else {
+      setCurrentAnswer(null)
+    }
 
 
     if (index <= 0) {
