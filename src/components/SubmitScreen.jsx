@@ -1,10 +1,10 @@
-import React, { Fragment, useContext } from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { DATA } from "../utils/data";
 import { Context } from "./Context";
 
 const SubmitScreen = () => {
-  const {  answerKey, refAnswer } = useContext(Context);
+  const {  answerKey} = useContext(Context);
 console.log(answerKey)
 
   let navigate = useNavigate();

@@ -1,8 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
-import Moment from "react-moment";
 import moment from "moment";
+import React, { useContext } from "react";
 import { Context } from "./Context";
-import { useNavigate } from "react-router-dom";
 
 const Timer = () => {
   const { remaining, timeOver } = useContext(Context);

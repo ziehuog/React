@@ -1,12 +1,11 @@
 import React, { useContext } from "react";
 import { DATA } from "../utils/data";
 import { Context } from "./Context";
-import Timer from "./Timer";
 
 
 
 const AnswerProcess = () => {
-  const {index, ...rest} = useContext(Context)
+  const {index} = useContext(Context)
 
 
 

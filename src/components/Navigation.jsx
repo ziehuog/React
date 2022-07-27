@@ -1,51 +1,45 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import TestContainer from "./TestContainer";
-import StartScreen from "./StartScreen";
-import SubmitScreen from "./SubmitScreen";
-import ScoreScreen from "./ScoreScreen";
 import { DATA } from "../utils/data";
 import { Context } from "./Context";
-import Timer from "./Timer";
+import ScoreScreen from "./ScoreScreen";
+import SubmitScreen from "./SubmitScreen";
+import TestContainer from "./TestContainer";
 
 const Navigation = () => {
   const [index, setIndex] = useState(0);
   const [currentAnswer, setCurrentAnswer] = useState("");
   const [nextButton, setNextButton] = useState(false);
-  const [displayNext, setDisplayNext] = useState('block')
-  const [displaySubmit, setDisplaySubmit] = useState('none');
+  const [displayNext, setDisplayNext] = useState("block");
+  const [displaySubmit, setDisplaySubmit] = useState("none");
   const [remaining, setRemaining] = useState(1000 * 30);
-  const [timeOver, setTimeOver] = useState('')
+  const [timeOver, setTimeOver] = useState("");
 
   const navigate = useNavigate();
   const refAnswer = useRef([]);
 
   let score = 0;
 
-  //Countdown
   
-
-  console.log('re-render')
-
-
   const navigateToScore = () => {
     navigate("/score");
-    
   };
+  
+  //Countdown
 
   useEffect(() => {
     const timerId = setInterval(() => {
       setRemaining(remaining - 1000);
     }, 1000);
-    
-    if(remaining <= 10000){
-      setTimeOver('text-red-600')
-      console.log('warning')
+
+    if (remaining <= 10000) {
+      setTimeOver("text-red-600");
+      console.log("warning");
     }
 
     if (remaining <= 0) {
       clearInterval(timerId);
-      navigateToScore()
+      navigateToScore();
     }
 
     return () => {
@@ -56,7 +50,7 @@ const Navigation = () => {
   //Answer
   const handleAnswer = (id) => (e) => {
     const value = e.target.value;
-    setCurrentAnswer(value)
+    setCurrentAnswer(value);
     const a = {
       id,
       answer: value,
@@ -78,7 +72,7 @@ const Navigation = () => {
         DATA[i].id === answerKey[j].id &&
         DATA[i].correctAnswer === answerKey[j].answer
       ) {
-        ++score;
+        ++ score;
       }
     }
   }
@@ -92,50 +86,45 @@ const Navigation = () => {
       navigateToSubmit();
     } else if (index === DATA.length - 2) {
     }
-  }
+  };
 
   //Button Next
 
   const buttonNext = () => {
-
     setNextButton(false);
     setIndex(index + 1);
-    setDisplayNext('block')
+    setDisplayNext("block");
 
-    
     if (index >= DATA.length - 1) {
       setIndex(DATA.length - 1);
-      
 
       setNextButton(true);
     } else if (index === DATA.length - 2) {
-      setDisplaySubmit('block')
-      setDisplayNext('none')
+      setDisplaySubmit("block");
+      setDisplayNext("none");
     }
 
-  //save previous choose
+    //save previous choose
     const nextQuestion = DATA[index + 1];
     const aIndex = refAnswer.current.findIndex((a) => {
       if (nextQuestion.id === a.id) return true;
     });
 
-    if(aIndex !== -1) {
-      setCurrentAnswer(refAnswer.current[aIndex].answer)
+    if (aIndex !== -1) {
+      setCurrentAnswer(refAnswer.current[aIndex].answer);
     } else {
-      setCurrentAnswer(null)
+      setCurrentAnswer(null);
     }
 
     //
-    
   };
 
   //Button Back
   const buttonBack = () => {
     setNextButton(false);
     setIndex(index - 1);
-    setDisplayNext('block')
-    setDisplaySubmit('none')
-
+    setDisplayNext("block");
+    setDisplaySubmit("none");
 
     if (index <= 0) {
       setIndex(0);
@@ -148,13 +137,11 @@ const Navigation = () => {
       if (prevQuestion.id === a.id) return true;
     });
 
-    if(pIndex !== -1) {
-      setCurrentAnswer(refAnswer.current[pIndex].answer)
+    if (pIndex !== -1) {
+      setCurrentAnswer(refAnswer.current[pIndex].answer);
     } else {
-      setCurrentAnswer(null)
+      setCurrentAnswer(null);
     }
-
-
   };
 
   //Navigation
@@ -180,16 +167,15 @@ const Navigation = () => {
         displaySubmit,
         remaining,
         setRemaining,
-        timeOver
-        
+        timeOver,
+        setTimeOver,
+        navigateToScore,
       }}
-      >
-
+    >
       <Routes>
-        <Route path="/" element={<StartScreen />} />
-        <Route path="/question" element={<TestContainer />} />
-        <Route path="/submit" element={<SubmitScreen />} />
-        <Route path="/score" element={<ScoreScreen />} />
+          <Route path="/question" element={<TestContainer />} />
+          <Route path="/submit" element={<SubmitScreen />} />
+          <Route path="/score" element={<ScoreScreen />} />
       </Routes>
     </Context.Provider>
   );

@@ -5,8 +5,8 @@ import LayoutBottom from "./LayoutBottom";
 import TestQuestion from "./TestQuestion";
 import Timer from "./Timer";
 
-
 const TestContainer = () => {
+
   let navigate = useNavigate();
 
 
@@ -16,15 +16,13 @@ const TestContainer = () => {
   };
 
   return (
-      <div className="App bg-gray-300 py-[70px] w-[100vw] h-[100vh]">
+    <div className="App bg-gradient-to-r from-indigo-500 py-[70px] w-[100vw] h-[100vh]">
       <div className="bg-[#fff] rounded-[20px] drop-shadow-xl w-[65vw] m-auto ">
-      <Timer/>
+        <Timer />
 
         <AnswerProcess />
-        <TestQuestion   />
-        <LayoutBottom
-          onSubmit={navigateToSubmit}
-        />
+        <TestQuestion />
+        <LayoutBottom onSubmit={navigateToSubmit} />
       </div>
     </div>
   );
