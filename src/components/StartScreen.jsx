@@ -9,7 +9,7 @@ const StartScreen = () => {
     
   };
   return (
-    <div className="mt-[150px]">
+    <div className="pt-[150px] h-[100vh] bg-gradient-to-b from-indigo-500">
       <div className="text-[30px] text-center py-[30px]">
         Click <b>Start</b> to start the test!
       </div>

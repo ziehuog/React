@@ -48,7 +48,7 @@ const Login = () => {
       },
       body: JSON.stringify(data),
     })
-      .then(async (response) => {
+      .then(  (response) => {
         return response.json();
       })
       .then((result) => {
@@ -57,7 +57,7 @@ const Login = () => {
         console.log(result);
         navigate("/home");
       })
-      .catch(async (err) => {
+      .catch(  (err) => {
         console.log(err);
       });
   };
@@ -77,7 +77,7 @@ const Login = () => {
     }
   };
   return (
-    <div className=" flex align-middle justify-center w-[100vw] h-[100vh] bg-gradient-to-r from-indigo-500">
+    <div className=" flex align-middle justify-center w-[100vw] h-[100vh] bg-gradient-to-b from-indigo-500">
       <div className="sm:m-w-[350px] m-auto w-[350px] h-[420px] bg-slate-200 rounded-3xl border-3 border-black">
         <p className="text-center text-[35px] font-bold py-5">Form Login</p>
         <form className="px-7" onSubmit={handleSubmit}>

@@ -20,7 +20,7 @@ const AnswerProcess = () => {
       <h1 className="font-bold text-[50px]">Reactjs Quiz</h1>
 
       <div className="w-[200px] h-[20px] bg-[#808080] rounded-[20px] m-auto my-6">
-        <div className="h-full bg-black rounded-[20px]" style={{width: `${processColor}px`}}></div>
+        <div className="h-full bg-indigo-500 rounded-[20px]" style={{width: `${processColor}px`}}></div>
       </div>
       <div className="process__text">{showPercentage}% Complete</div>
     </div>

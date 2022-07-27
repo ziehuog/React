@@ -12,7 +12,7 @@ const Navigation = () => {
   const [nextButton, setNextButton] = useState(false);
   const [displayNext, setDisplayNext] = useState("block");
   const [displaySubmit, setDisplaySubmit] = useState("none");
-  const [remaining, setRemaining] = useState(1000 * 30);
+  const [remaining, setRemaining] = useState(1000 * 60*50);
   const [timeOver, setTimeOver] = useState("");
 
   const navigate = useNavigate();
