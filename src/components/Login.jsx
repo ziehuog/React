@@ -15,14 +15,19 @@ const Login = () => {
     e.preventDefault();
   };
 
+
+  
+
+
   const login = async () => {
     const inputUsername = refUsername.current.value;
-    const inputPassword = refPassword.current.value;
+  const inputPassword = refPassword.current.value;
 
-    let data = {
-      username: inputUsername,
-      password: inputPassword,
-    };
+  let data = {
+    username: inputUsername,
+    password: inputPassword,
+  };
+
 
     if (inputPassword === "") {
       setMessage("Password need input value");
@@ -44,11 +49,11 @@ const Login = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json",
+        "Accept": "application/json",
       },
       body: JSON.stringify(data),
     })
-      .then(  (response) => {
+      .then((response) => {
         return response.json();
       })
       .then((result) => {
@@ -57,10 +62,15 @@ const Login = () => {
         console.log(result);
         navigate("/home");
       })
-      .catch(  (err) => {
+      .catch((err) => {
         console.log(err);
       });
   };
+
+  const navigateToSignup = () => {
+    navigate("/register");
+
+  }
 
   //show password
 
@@ -83,7 +93,7 @@ const Login = () => {
         <form className="px-7" onSubmit={handleSubmit}>
           <div className="py-4 px-[35px]">
             <label htmlFor="username">Username</label>
-            <div className="border-gray-700 border-b-[2px]">
+            <div className="border-gray-700 border-b-[2px] focus-within:border-indigo-500 transition duration-300 ">
               <input
                 className="h-[30px] w-full bg-gray-100 outline-none bg-inherit"
                 id="username"
@@ -94,14 +104,15 @@ const Login = () => {
 
           <div className="py-4 px-[35px]">
             <label htmlFor="password">Password</label>
-            <div className="border-gray-700 border-b-[2px] flex">
+            <div className="border-gray-700 border-b-[2px]  focus-within:border-indigo-500 transition duration-300 flex"
+            >
               <input
                 type={typePassword}
-                className="h-[30px] w-full bg-gray-100  outline-none bg-inherit "
+                className="h-[30px] w-full outline-none bg-inherit "
                 id="password"
                 ref={refPassword}
               />
-              <span className=" mx-2 pt-2" onClick={changeEyeState}>
+              <span className=" mx-2 pt-2 " onClick={changeEyeState}>
                 <AiOutlineEye style={{ display: `${eye}` }} />
                 <AiOutlineEyeInvisible style={{ display: `${closeEye}` }} />
               </span>
@@ -112,11 +123,12 @@ const Login = () => {
           <div className="flex justify-center w-full">
             <input
               type="submit"
-              className="border px-3 py-1 bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-200
+              className="border transition duration-300 cursor-pointer px-3 py-1 bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-200
                my-[20px] rounded-md hover:bg-sky-700  hover:text-white"
               onClick={login}
             />
           </div>
+          <p className="text-right cursor-pointer hover:text-indigo-500 box-border" onClick={navigateToSignup}>create account</p>
         </form>
       </div>
     </div>
