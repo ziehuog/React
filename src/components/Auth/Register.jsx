@@ -4,11 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const Register = () => {
-
-    const navigateToLogin = () => {
-        navigate("/");
-    
-      }
+  const navigateToLogin = () => {
+    navigate("/");
+  };
   const refUsername = useRef();
   const refPassword = useRef();
   const refConfirmPassword = useRef();
@@ -23,54 +21,61 @@ const Register = () => {
   const [cfCloseEye, setCfCloseEye] = useState("none");
   const navigate = useNavigate();
 
-
-  const store = []
+  const store = [];
 
   const handleSubmit = (e) => {
     e.preventDefault();
   };
 
-
-
-
   const register = async () => {
 
+    setMessage('')
     const inputUsername = refUsername.current.value;
     const inputPassword = refPassword.current.value;
     const inputConfirmPassword = refConfirmPassword.current.value;
-  
-    let data = {
-      username: inputUsername,
-      password: inputPassword,
-    };
-  
+
+    if (inputUsername === "") {
+      refUsername.current.focus();
+      refUsername.current.value = "";
+
+      setMessage("Username need input value");
+      return;
+    }
+    if (inputUsername.split("").length < 3) {
+      setMessage(" Username need more than 6 letters");
+      refUsername.current.focus();
+      refUsername.current.value = "";
+      return;
+    }
 
     if (inputPassword === "") {
       setMessage("Password need input value");
-    } else if (inputPassword.split("").length < 6) {
+      refPassword.current.focus();
+      refPassword.current.value = "";
+      return;
+    }
+
+    if (inputPassword.split("").length < 6) {
       setMessage("Password need more than 6 letters");
-    } else {
-      // console.log(data);
+      refPassword.current.focus();
+      refPassword.current.value = "";
+      return;
     }
 
-    if (inputUsername === "") {
-      setMessage("Username need input value");
-    } else if (inputUsername.split("").length < 3) {
-      setMessage(" Username need more than 6 letters");
-    } else {
-      // console.log(data);
+    if (inputConfirmPassword !== inputPassword) {
+      setMessage(" Fail to confirm password");
+      refConfirmPassword.current.focus();
+      refConfirmPassword.current.value = "";
+      return;
     }
 
-    if(inputConfirmPassword !== inputPassword){
-        setMessage(" Fail to confirm password");
-    }
+    const data = {
+      username: inputUsername,
+      password: inputPassword,
+    };
 
-    if(inputPassword === inputConfirmPassword){
-      store.push(data)
-      console.log(store)
-    }
-
-
+    console.log(data)
+    navigate('/')
   };
 
   //show password
@@ -105,8 +110,7 @@ const Register = () => {
       <div className="sm:m-w-[350px] m-auto w-[350px] h-[520px] bg-slate-200 rounded-3xl opacity-90">
         <p className="text-center text-[35px] font-bold py-5"> Register Form</p>
         <form className="px-7" onSubmit={handleSubmit}>
-
-{/* username */}
+          {/* username */}
           <div className="py-4 px-[35px]">
             <label htmlFor="username">Username</label>
             <div className="border-gray-700 border-b-[2px]">
@@ -117,7 +121,7 @@ const Register = () => {
               />
             </div>
           </div>
-{/* password */}
+          {/* password */}
           <div className="py-4 px-[35px]">
             <label htmlFor="password">Password</label>
             <div className="border-gray-700 border-b-[2px] flex">
@@ -133,7 +137,7 @@ const Register = () => {
               </span>
             </div>
           </div>
-{/* confirm password */}
+          {/* confirm password */}
           <div className="py-4 px-[35px]">
             <label htmlFor="refConfirmPassword">Confirm Password</label>
             <div className="border-gray-700 border-b-[2px] focus-within:border-indigo-500 flex">
@@ -160,7 +164,10 @@ const Register = () => {
               onClick={register}
             />
           </div>
-          <p className="text-right cursor-pointer hover:text-indigo-500 box-border" onClick={navigateToLogin}>
+          <p
+            className="text-right cursor-pointer hover:text-indigo-500 box-border"
+            onClick={navigateToLogin}
+          >
             Login
           </p>
         </form>

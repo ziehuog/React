@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
-import { DATA } from "../utils/data";
-import { Context } from "./Context";
+import { DATA } from "../../utils/data";
+import { Context } from "../Share/Context";
 
 const TestQuestion = () => {
   const { index, currentAnswer, handleAnswer } = useContext(Context);
 
   return (
-    <div style={{ display: "hidden" }}>
+    <div>
       <div className="pt-9 px-6">
         <div key={DATA[index].id}>
           
@@ -19,7 +19,7 @@ const TestQuestion = () => {
           <div className="answers">
             {DATA[index].answers.map((answer) => (
               <label key={answer.id}>
-                <div className="bg-slate-400 rounded-[10px] my-[15px] py-2 text-start px-[10px]">
+                <div className="bg-indigo-700/40 rounded-[10px] my-[15px] py-2 text-start px-[10px]">
                   <input
                     type="radio"
                     name={DATA[index].id}

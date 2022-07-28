@@ -12,7 +12,7 @@ let arr = [1,2,3,4];
 
 
 
-let a = arr.findMyIndex((e) => e > 3)
+let a = arr.findMyIndex((e) => e >= 3)
 console.log(a)
 
 // function i(){

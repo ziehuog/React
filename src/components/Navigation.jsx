@@ -1,19 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { DATA } from "../utils/data";
-import { Context } from "./Context";
+import { Context } from "./Share/Context";
 import ScoreScreen from "./ScoreScreen";
 import SubmitScreen from "./SubmitScreen";
-import TestContainer from "./TestContainer";
+import TestContainer from "./MainTest/TestContainer";
 
 const Navigation = () => {
   const [index, setIndex] = useState(0);
   const [currentAnswer, setCurrentAnswer] = useState("");
   const [nextButton, setNextButton] = useState(false);
   const [displayNext, setDisplayNext] = useState("block");
+  const [displayBack, setDisplayBack] = useState("block");
   const [displaySubmit, setDisplaySubmit] = useState("none");
-  const [remaining, setRemaining] = useState(1000 * 60*50);
+  const [remaining, setRemaining] = useState(1000 *60* 20);
   const [timeOver, setTimeOver] = useState("");
+
 
   const navigate = useNavigate();
   const refAnswer = useRef([]);
@@ -83,10 +85,23 @@ const Navigation = () => {
   const buttonSubmit = () => {
     if (index >= DATA.length - 1) {
       setIndex(DATA.length - 1);
+    setDisplayBack('block')
+
       navigateToSubmit();
     } else if (index === DATA.length - 2) {
     }
   };
+
+
+  // if(localStorage.getItem('token')){
+  //   //   // navigate("/home")
+  //     console.log('a')
+  //   }
+  //   else{
+  //   //   // navigate('/')
+  //   console.log('b')
+  
+  //   }
 
   //Button Next
 
@@ -94,14 +109,19 @@ const Navigation = () => {
     setNextButton(false);
     setIndex(index + 1);
     setDisplayNext("block");
+    setDisplayBack('block')
+
 
     if (index >= DATA.length - 1) {
       setIndex(DATA.length - 1);
+    setDisplayBack('block')
 
       setNextButton(true);
     } else if (index === DATA.length - 2) {
       setDisplaySubmit("block");
       setDisplayNext("none");
+    setDisplayBack('block')
+
     }
 
     //save previous choose
@@ -118,6 +138,9 @@ const Navigation = () => {
 
     //
   };
+  if (index === 1) {
+    setDisplayBack('hidden')
+  }
 
   //Button Back
   const buttonBack = () => {
@@ -125,7 +148,10 @@ const Navigation = () => {
     setIndex(index - 1);
     setDisplayNext("block");
     setDisplaySubmit("none");
+    setDisplayBack('block')
 
+
+    
     if (index <= 0) {
       setIndex(0);
     }
@@ -143,6 +169,10 @@ const Navigation = () => {
       setCurrentAnswer(null);
     }
   };
+
+// console.log(a)
+
+
 
   //Navigation
   const navigateToSubmit = () => {
@@ -170,6 +200,7 @@ const Navigation = () => {
         timeOver,
         setTimeOver,
         navigateToScore,
+        displayBack
       }}
     >
       <Routes>
