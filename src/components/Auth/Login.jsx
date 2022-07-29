@@ -1,6 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { addUsers } from "../../utils/firebase";
+import { Auth } from "../Share/Context";
+import { getDocs, collection } from "firebase/firestore";
+import { db } from "../../utils/firebase";
 
 const Login = () => {
   const refUsername = useRef();
@@ -11,6 +15,8 @@ const Login = () => {
   const [eye, setEye] = useState("block");
   const [closeEye, setCloseEye] = useState("none");
   const navigate = useNavigate();
+
+  const { setBtnStart } = useContext(Auth);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,61 +34,54 @@ const Login = () => {
       password: inputPassword,
     };
 
-    if (inputUsername === "") {
-      setMessage("Username need input value");
-      refUsername.current.focus();
-      refUsername.current.value = "";
-      return;
-    }
-    if (inputUsername.split("").length < 3) {
-      setMessage(" Username need more than 6 letters");
-      refUsername.current.focus();
-      refUsername.current.value = "";
-      return;
-    }
+    // if (inputUsername === "") {
+    //   setMessage("Username need input value");
+    //   refUsername.current.focus();
+    //   refUsername.current.value = "";
+    //   return;
+    // }
+    // if (inputUsername.split("").length < 3) {
+    //   setMessage(" Username need more than 6 letters");
+    //   refUsername.current.focus();
+    //   refUsername.current.value = "";
+    //   return;
+    // }
 
-    if (inputPassword === "") {
-      setMessage("Password need input value");
-      refPassword.current.focus();
-      setNotification("");
-      refPassword.current.value = "";
-      return;
-    }
-    if (inputPassword.split("").length < 6) {
-      setMessage("Password need more than 6 letters");
-      refPassword.current.focus();
-      refPassword.current.value = "";
-      setNotification("");
-      return;
-    }
+    // if (inputPassword === "") {
+    //   setMessage("Password need input value");
+    //   refPassword.current.focus();
+    //   setNotification("");
+    //   refPassword.current.value = "";
+    //   return;
+    // }
+    // if (inputPassword.split("").length < 6) {
+    //   setMessage("Password need more than 6 letters");
+    //   refPassword.current.focus();
+    //   refPassword.current.value = "";
+    //   setNotification("");
+    //   return;
+    // }
 
-    if (refUsername) setNotification("");
-
-    fetch("https://api-management.sunoil.com.vn/management/accounts/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => {
-        if (response.status === 400)
-          setNotification("Failed to login, please try again");
-        refUsername.current.focus();
-
-        return response.json();
-      })
-      .then((result) => {
-        let token = result.data.token;
-        localStorage.setItem("token", JSON.stringify(token));
+    //Get and compare data
+    const querySnapshot = await getDocs(collection(db, "Users"));
+    querySnapshot.forEach((doc) => {
+      console.log(doc.id);
+      const aUser = doc.data();
+      if (
+        aUser.username === inputUsername &&
+        aUser.password === inputPassword
+      ) {
+        localStorage.setItem("id", JSON.stringify(doc.id));
+        setBtnStart(false);
         navigate("/home");
-        localStorage.setItem('username', data.username )
-      })
-      .catch((message) => {
-        console.log(message);
-      });
+        return;
+      } else {
+        setNotification("Oh no! username or password have some mistake.");
+        refUsername.current.focus();
+      }
+    });
   };
+  //navigate
 
   const navigateToSignup = () => {
     navigate("/register");
@@ -102,6 +101,8 @@ const Login = () => {
       setTypePassword("text");
     }
   };
+
+
 
   return (
     <div className=" flex align-middle justify-center w-[100vw] h-[100vh] bg-gradient-to-b from-indigo-500">

@@ -6,7 +6,6 @@ import { Context } from "./Share/Context";
 
 const SubmitScreen = () => {
   const { answerKey } = useContext(Context);
-  console.log(answerKey);
 
   let navigate = useNavigate();
 
@@ -43,7 +42,7 @@ const SubmitScreen = () => {
                         type="checkbox"
                         name={elems.id}
                         // preview checked
-                        checked={
+                        defaultChecked={
                           answerKey.length > 0 &&
                           answerKey.some((a) => {
                             if (a.id === data.id && a.answer === elems.id) {

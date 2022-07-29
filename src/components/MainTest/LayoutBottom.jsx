@@ -3,8 +3,9 @@ import { Context } from "../Share/Context";
 
 const LayoutBottom = () => {
 
-  const {displayBack, displaySubmit, displayNext, nextButton , buttonBack, buttonNext, buttonSubmit} = useContext(Context)
-
+  const {index,setDisplayBack, displayBack, displaySubmit, displayNext, nextButton , buttonBack, buttonNext, buttonSubmit} = useContext(Context)
+  
+  
 
 
   return (

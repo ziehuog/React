@@ -2,6 +2,8 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { addDoc, collection, getDocs } from "firebase/firestore";
+import { db } from "../../utils/firebase";
 
 const Register = () => {
   const navigateToLogin = () => {
@@ -28,8 +30,7 @@ const Register = () => {
   };
 
   const register = async () => {
-
-    setMessage('')
+    setMessage("");
     const inputUsername = refUsername.current.value;
     const inputPassword = refPassword.current.value;
     const inputConfirmPassword = refConfirmPassword.current.value;
@@ -74,11 +75,37 @@ const Register = () => {
       password: inputPassword,
     };
 
-    console.log(data)
-    navigate('/')
-  };
+    const querySnapshot = await getDocs(collection(db, "Users"));
+    querySnapshot.forEach((doc) => {
+      // console.log(doc.id);
+      const aUser = doc.data();
+      if (aUser.username === data.username) {
+        console.log("no no no");
+        return;
+      } else {
+        const docRef = addDoc(collection(db, "Users"), {
+          username: data.username,
+          password: data.password,
+        });
+        console.log("Document written with ID: ", docRef.id);
+      }
+    });
 
-  //show password
+    //   const response = await fetch("https://ziehuog-default-rtdb.asia-southeast1.firebasedatabase.app/user.json", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       'Accept': "application/json",
+    //     },
+    //     body: JSON.stringify(data),
+    //   });
+    //   const newData = await response.json()
+    //   console.log(data);
+    //   navigate("/");
+    // };
+
+    //show password
+  };
 
   const changeEyeState = () => {
     if (eye === "none") {
@@ -108,7 +135,13 @@ const Register = () => {
   return (
     <div className=" flex align-middle justify-center w-[100vw] h-[100vh] bg-gradient-to-b from-indigo-500">
       <div className="sm:m-w-[350px] m-auto w-[350px] h-[520px] bg-slate-200 rounded-3xl opacity-90">
-        <p className="text-center text-[35px] font-bold py-5"> Register Form</p>
+        <button
+          className="mt-[20px] mx-[20px] underline hover:text-indigo-900"
+          onClick={navigateToLogin}
+        >
+          Back
+        </button>
+        <p className="text-center text-[35px] font-bold pb-5"> Register</p>
         <form className="px-7" onSubmit={handleSubmit}>
           {/* username */}
           <div className="py-4 px-[35px]">
@@ -164,12 +197,15 @@ const Register = () => {
               onClick={register}
             />
           </div>
-          <p
-            className="text-right cursor-pointer hover:text-indigo-500 box-border"
-            onClick={navigateToLogin}
-          >
-            Login
-          </p>
+          <div className="flex justify-end">
+            <span
+              className=" cursor-pointer hover:text-indigo-900 hover:underline box-border"
+              onClick={navigateToLogin}
+            >
+              {" "}
+              Login
+            </span>
+          </div>
         </form>
       </div>
     </div>

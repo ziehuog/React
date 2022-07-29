@@ -11,7 +11,9 @@ const Navigation = () => {
   const [currentAnswer, setCurrentAnswer] = useState("");
   const [nextButton, setNextButton] = useState(false);
   const [displayNext, setDisplayNext] = useState("block");
-  const [displayBack, setDisplayBack] = useState("block");
+
+  const [displayBack, setDisplayBack] = useState("hidden");
+
   const [displaySubmit, setDisplaySubmit] = useState("none");
   const [remaining, setRemaining] = useState(1000 *60* 20);
   const [timeOver, setTimeOver] = useState("");
@@ -21,6 +23,7 @@ const Navigation = () => {
   const refAnswer = useRef([]);
 
   let score = 0;
+ 
 
   
   const navigateToScore = () => {
@@ -93,34 +96,27 @@ const Navigation = () => {
   };
 
 
-  // if(localStorage.getItem('token')){
-  //   //   // navigate("/home")
-  //     console.log('a')
-  //   }
-  //   else{
-  //   //   // navigate('/')
-  //   console.log('b')
-  
-  //   }
+  //Button start
+
 
   //Button Next
 
   const buttonNext = () => {
     setNextButton(false);
     setIndex(index + 1);
+    setDisplayBack("visible")
     setDisplayNext("block");
-    setDisplayBack('block')
 
 
     if (index >= DATA.length - 1) {
       setIndex(DATA.length - 1);
-    setDisplayBack('block')
+    setDisplayBack('visible')
 
       setNextButton(true);
     } else if (index === DATA.length - 2) {
       setDisplaySubmit("block");
       setDisplayNext("none");
-    setDisplayBack('block')
+    setDisplayBack("visible")
 
     }
 
@@ -138,9 +134,7 @@ const Navigation = () => {
 
     //
   };
-  if (index === 1) {
-    setDisplayBack('hidden')
-  }
+  
 
   //Button Back
   const buttonBack = () => {
@@ -157,6 +151,10 @@ const Navigation = () => {
     }
 
     //save previous answer
+
+    if (index === 1) {
+      setDisplayBack('hidden')
+    }
 
     const prevQuestion = DATA[index - 1];
     const pIndex = refAnswer.current.findIndex((a) => {
@@ -200,7 +198,7 @@ const Navigation = () => {
         timeOver,
         setTimeOver,
         navigateToScore,
-        displayBack
+        displayBack,
       }}
     >
       <Routes>

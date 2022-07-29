@@ -6,6 +6,7 @@ import App from "./App";
 import { AuthProvider } from "./components/Share/Context";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
+import { db } from "./utils/firebase";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -20,3 +21,4 @@ root.render(
 );
 
 reportWebVitals();
+
