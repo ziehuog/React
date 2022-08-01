@@ -2,16 +2,20 @@ import React, { useContext } from "react";
 import { Context } from "../Share/Context";
 
 const LayoutBottom = () => {
-
-  const {index,setDisplayBack, displayBack, displaySubmit, displayNext, nextButton , buttonBack, buttonNext, buttonSubmit} = useContext(Context)
-  
-  
-
+  const {
+    displayBack,
+    displaySubmit,
+    displayNext,
+    nextButton,
+    buttonBack,
+    buttonNext,
+    buttonSubmit,
+  } = useContext(Context);
 
   return (
-      <div className="flex justify-around py-7">
+    <div className="flex justify-around py-7">
       <button
-      style={{visibility: `${displayBack}`}}
+        style={{ visibility: `${displayBack}` }}
         className="border border-gray-400 rounded-[8px] cursor-pointer py-2 px-4 hover:bg-indigo-600/60 hover:text-white"
         onClick={buttonBack}
       >
@@ -21,16 +25,15 @@ const LayoutBottom = () => {
       <button
         className="border border-gray-400 rounded-[8px] py-2 px-4 hover:bg-indigo-600/60 hover:text-white"
         onClick={buttonNext}
-        disabled ={nextButton}
-        style = {{display: `${displayNext}`}}
+        disabled={nextButton}
+        style={{ display: `${displayNext}` }}
       >
         Next
       </button>
       <button
         className="border border-gray-400 rounded-[8px] cursor-pointer py-2 px-4 hover:bg-indigo-600/60 hover:text-white"
         onClick={buttonSubmit}
-        style = {{display: `${displaySubmit}`}}
-
+        style={{ display: `${displaySubmit}` }}
       >
         Preview
       </button>

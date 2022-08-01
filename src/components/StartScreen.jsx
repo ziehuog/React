@@ -5,7 +5,7 @@ import { Auth } from "./Share/Context";
 
 const StartScreen = () => {
   let navigate = useNavigate();
-  const { btnStart, setBtnStart } = useContext(Auth);
+  const { btnStart } = useContext(Auth);
 
 
   const navigateToTest = () => {

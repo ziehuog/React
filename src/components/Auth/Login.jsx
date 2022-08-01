@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { db } from "../../utils/firebase";
 import { Auth } from "../Share/Context";
 
+
 const Login = () => {
   const refUsername = useRef();
   const refPassword = useRef();
@@ -28,10 +29,8 @@ const Login = () => {
     const inputUsername = refUsername.current.value;
     const inputPassword = refPassword.current.value;
 
-    let data = {
-      username: inputUsername,
-      password: inputPassword,
-    };
+
+    //validate
 
     if (inputUsername === "") {
       setMessage("Username need input value");
@@ -76,7 +75,6 @@ const Login = () => {
       window.location.reload();
 
         navigate("/home");
-        return;
       } else {
         setNotification("Oh no! username or password have some mistake.");
         refUsername.current.focus();
@@ -85,7 +83,7 @@ const Login = () => {
   };
   //navigate
 
-  const navigateToSignup = () => {
+  const navigateToRegister = () => {
     navigate("/register");
   };
 
@@ -109,7 +107,7 @@ const Login = () => {
   return (
     <div className=" flex align-middle justify-center w-[100vw] h-[100vh] bg-gradient-to-b from-indigo-500">
       <div className="sm:m-w-[350px] m-auto w-[350px] h-[420px] bg-gray-200/30 hover:bg-gray-200/50 transition duration-200 border border-indigo-400 opacity- rounded-3xl border-3 border-black">
-        <p className="text-center text-[35px] font-bold py-5">Form Login</p>
+        <p className="text-center text-[35px] font-bold py-5">Login</p>
         <form className="px-7" onSubmit={handleSubmit}>
           <p className="text-red-700 text-center">{notification}</p>
           <div className="py-4 px-[35px]">
@@ -152,7 +150,7 @@ const Login = () => {
           </div>
           <p
             className="text-right cursor-pointer hover:text-indigo-500 box-content"
-            onClick={navigateToSignup}
+            onClick={navigateToRegister}
           >
             create account
           </p>

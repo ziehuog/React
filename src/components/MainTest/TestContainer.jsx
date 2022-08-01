@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import { useNavigate } from "react-router-dom";
 import { User } from "../Auth/User";
 import AnswerProcess from "./AnswerProcess";
 import LayoutBottom from "./LayoutBottom";
@@ -8,13 +7,6 @@ import Timer from "./Timer";
 
 const TestContainer = () => {
 
-  let navigate = useNavigate();
-
-
-  const navigateToSubmit = () => {
-    navigate("/submit");
-    console.log("submit");
-  };
 
   return (
     <Fragment>
@@ -25,7 +17,7 @@ const TestContainer = () => {
     <Timer />
     <AnswerProcess />
     <TestQuestion />
-    <LayoutBottom onSubmit={navigateToSubmit} />
+    <LayoutBottom  />
   </div>
 </div>
     </Fragment>

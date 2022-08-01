@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { DATA } from "../../utils/data";
 import { Context } from "../Share/Context";
 
 

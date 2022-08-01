@@ -1,26 +1,25 @@
+import { addDoc, collection, getDocs } from "firebase/firestore";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { DATA } from "../utils/data";
-import { Context } from "./Share/Context";
 import { Auth } from "../components/Share/Context";
-import ScoreScreen from "./ScoreScreen";
-import SubmitScreen from "./SubmitScreen";
-import TestContainer from "./MainTest/TestContainer";
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { DATA } from "../utils/data";
 import { db } from "../utils/firebase";
+import TestContainer from "./MainTest/TestContainer";
+import ScoreScreen from "./ScoreScreen";
+import { Context } from "./Share/Context";
+import SubmitScreen from "./SubmitScreen";
 
 const Navigation = () => {
   const [index, setIndex] = useState(0);
+  const [data, setData] = useState([]);
   const [currentAnswer, setCurrentAnswer] = useState("");
+  const [remaining, setRemaining] = useState(1000 * 60 * 10);
+  const [timeOver, setTimeOver] = useState("");
+
   const [nextButton, setNextButton] = useState(false);
   const [displayNext, setDisplayNext] = useState("block");
-  const [data, setData] = useState([]);
-
   const [displayBack, setDisplayBack] = useState("hidden");
-
   const [displaySubmit, setDisplaySubmit] = useState("none");
-  const [remaining, setRemaining] = useState(1000 * 60 * 20);
-  const [timeOver, setTimeOver] = useState("");
 
   const { authUsername } = useContext(Auth);
 
@@ -39,8 +38,6 @@ const Navigation = () => {
     getData();
   }, []);
 
-  //
-
   //Countdown
 
   useEffect(() => {
@@ -50,7 +47,6 @@ const Navigation = () => {
 
     if (remaining <= 10000) {
       setTimeOver("text-red-600");
-      console.log("warning");
     }
 
     if (remaining <= 0) {
@@ -109,7 +105,7 @@ const Navigation = () => {
     });
     if (flag) {
       try {
-        const docRef = addDoc(collection(db, "Result"), {
+        addDoc(collection(db, "Result"), {
           username: JSON.parse(authUsername),
           score: point,
         });
@@ -117,8 +113,11 @@ const Navigation = () => {
       } catch (e) {
         console.error("Error adding document: ", e);
       }
-    }else{
-      window.alert('You have done this test before so your result cannot save!')
+    } else {
+      window.alert(
+        "You have done this test before so your result cannot save!",
+        navigate("/home")
+      );
     }
   };
 
@@ -129,7 +128,7 @@ const Navigation = () => {
       setDisplayBack("block");
 
       navigateToSubmit();
-    } 
+    }
   };
 
   //Button Next
@@ -196,8 +195,6 @@ const Navigation = () => {
     }
   };
 
-  // console.log(a)
-
   //Navigation
   const navigateToSubmit = () => {
     navigate("/submit");
@@ -219,9 +216,7 @@ const Navigation = () => {
         displayNext,
         displaySubmit,
         remaining,
-        setRemaining,
         timeOver,
-        setTimeOver,
         navigateToScore,
         displayBack,
         data,

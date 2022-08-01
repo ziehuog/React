@@ -14,9 +14,6 @@ const SubmitScreen = () => {
     navigate("/question");
   };
 
- 
-  
-
   return (
     <Fragment>
       <User/>
@@ -41,6 +38,7 @@ const SubmitScreen = () => {
                       <input
                         type="checkbox"
                         name={elems.id}
+                        
                         // preview checked
                         defaultChecked={
                           answerKey.length > 0 &&

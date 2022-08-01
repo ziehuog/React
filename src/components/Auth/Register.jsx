@@ -23,7 +23,6 @@ const Register = () => {
   const [cfCloseEye, setCfCloseEye] = useState("none");
   const navigate = useNavigate();
 
-  const store = [];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,10 +34,11 @@ const Register = () => {
     const inputPassword = refPassword.current.value;
     const inputConfirmPassword = refConfirmPassword.current.value;
 
+    //validate
+
     if (inputUsername === "") {
       refUsername.current.focus();
       refUsername.current.value = "";
-
       setMessage("Username need input value");
       return;
     }
@@ -74,31 +74,31 @@ const Register = () => {
       username: inputUsername,
       password: inputPassword,
     };
-    let flag = true
+
+    // validate and register
+    let flag = true;
 
     const querySnapshot = await getDocs(collection(db, "Users"));
     querySnapshot.forEach((doc) => {
-
       const aUser = doc.data();
-      if(aUser.username === data.username){
-        flag = false
+      if (aUser.username === data.username) {
+        flag = false;
       }
-
     });
 
     if (flag) {
-      const docRef = 
       addDoc(collection(db, "Users"), {
         username: data.username,
         password: data.password,
       });
-      window.alert('success')
+      window.alert("success");
       navigate("/");
-
+    } else {
+      window.alert("This username has existed! ");
     }
-    
-
   };
+
+  //change eye state
 
   const changeEyeState = () => {
     if (eye === "none") {
@@ -124,6 +124,8 @@ const Register = () => {
       setTypeConfirmPassword("text");
     }
   };
+
+  //
   return (
     <div className=" flex align-middle justify-center w-[100vw] h-[100vh] bg-gradient-to-b from-indigo-500">
       <div className="sm:m-w-[350px] m-auto w-[350px] h-[520px] bg-slate-200 rounded-3xl opacity-90">

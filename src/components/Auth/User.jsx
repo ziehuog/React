@@ -8,17 +8,18 @@ export const User = () => {
   let navigate = useNavigate();
 
   const Logout = () => {
-    let result = window.confirm(  "Do you want to log out? your test will stop and not save");
+    let result = window.confirm(
+      "Do you want to log out? your test will stop and it will not save"
+    );
 
     if (result) {
       setToken(localStorage.removeItem("id"));
-      setAuthUsername(localStorage.removeItem('username'));
+      setAuthUsername(localStorage.removeItem("username"));
       // localStorage.removeItem("id");
 
       navigate("/");
 
       window.location.reload();
-      
     }
   };
 
@@ -28,7 +29,7 @@ export const User = () => {
         <img className="h-[45px]" src={logo} />
       </div>
       <div className="border border-indigo-600 px-4 py-[3px] rounded-2xl">
-         Username: {JSON.parse(authUsername)}
+        Username: {JSON.parse(authUsername)}
       </div>
       <button
         className="bg-gradient-to-b from-indigo-500  to-indigo-300 px-4 py-2 rounded-2xl"
