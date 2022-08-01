@@ -5,11 +5,11 @@ import { Context } from "../Share/Context";
 
 
 const AnswerProcess = () => {
-  const {index} = useContext(Context)
+  const {index, data} = useContext(Context)
 
 
 
-  let percentage = DATA.length
+  let percentage = data.length
   
   const processColor = ((Number(index))/ (Number(percentage)))*200
 
@@ -23,7 +23,7 @@ const AnswerProcess = () => {
         <div className="h-full bg-indigo-500 rounded-[20px]" style={{width: `${processColor}px`}}></div>
       </div> */}
       <div>Question Number: {index+1} / {percentage}</div>
-      <div className="process__text">{showPercentage}% Completed</div>
+      {/* <div className="process__text">{showPercentage}% Completed</div> */}
     </div>
   );
 };

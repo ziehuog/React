@@ -1,35 +1,46 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { DATA } from "../utils/data";
 import { Context } from "./Share/Context";
+import { Auth } from "../components/Share/Context";
 import ScoreScreen from "./ScoreScreen";
 import SubmitScreen from "./SubmitScreen";
 import TestContainer from "./MainTest/TestContainer";
+import { addDoc, collection, getDocs } from "firebase/firestore";
+import { db } from "../utils/firebase";
 
 const Navigation = () => {
   const [index, setIndex] = useState(0);
   const [currentAnswer, setCurrentAnswer] = useState("");
   const [nextButton, setNextButton] = useState(false);
   const [displayNext, setDisplayNext] = useState("block");
+  const [data, setData] = useState([]);
 
   const [displayBack, setDisplayBack] = useState("hidden");
 
   const [displaySubmit, setDisplaySubmit] = useState("none");
-  const [remaining, setRemaining] = useState(1000 *60* 20);
+  const [remaining, setRemaining] = useState(1000 * 60 * 20);
   const [timeOver, setTimeOver] = useState("");
 
+  const { authUsername } = useContext(Auth);
 
   const navigate = useNavigate();
   const refAnswer = useRef([]);
 
   let score = 0;
- 
 
-  
-  const navigateToScore = () => {
-    navigate("/score");
-  };
-  
+  useEffect(() => {
+    const getData = async () => {
+      const questionData = await getDocs(collection(db, "Questions"));
+      setData(
+        questionData.docs.map((doc) => doc.data()).sort((a, b) => a.id - b.id)
+      );
+    };
+    getData();
+  }, []);
+
+  //
+
   //Countdown
 
   useEffect(() => {
@@ -71,57 +82,77 @@ const Navigation = () => {
   let answerKey = refAnswer.current;
 
   // Score
-  for (let i = 0; i < DATA.length; i++) {
+  for (let i = 0; i < data.length; i++) {
     for (let j = 0; j < answerKey.length; j++) {
       if (
-        DATA[i].id === answerKey[j].id &&
-        DATA[i].correctAnswer === answerKey[j].answer
+        data[i].id === answerKey[j].id &&
+        data[i].correctAnswer === answerKey[j].answer
       ) {
-        ++ score;
+        ++score;
       }
     }
   }
 
-  let point = Math.round((score / DATA.length) * 10);
+  let point = Math.round((score / data.length) * 10);
 
-  //Button Submit
-  const buttonSubmit = () => {
-    if (index >= DATA.length - 1) {
-      setIndex(DATA.length - 1);
-    setDisplayBack('block')
+  //store result
 
-      navigateToSubmit();
-    } else if (index === DATA.length - 2) {
+  const navigateToScore = async () => {
+    let flag = true;
+
+    const querySnapshot = await getDocs(collection(db, "Result"));
+    querySnapshot.forEach((doc) => {
+      const aUser = doc.data();
+      if (aUser.username === JSON.parse(authUsername)) {
+        flag = false;
+      }
+    });
+    if (flag) {
+      try {
+        const docRef = addDoc(collection(db, "Result"), {
+          username: JSON.parse(authUsername),
+          score: point,
+        });
+        navigate("/score");
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+    }else{
+      window.alert('You have done this test before so your result cannot save!')
     }
   };
 
+  //Button Submit
+  const buttonSubmit = () => {
+    if (index >= data.length - 1) {
+      setIndex(data.length - 1);
+      setDisplayBack("block");
 
-  //Button start
-
+      navigateToSubmit();
+    } 
+  };
 
   //Button Next
 
   const buttonNext = () => {
     setNextButton(false);
     setIndex(index + 1);
-    setDisplayBack("visible")
+    setDisplayBack("visible");
     setDisplayNext("block");
 
-
-    if (index >= DATA.length - 1) {
-      setIndex(DATA.length - 1);
-    setDisplayBack('visible')
+    if (index >= data.length - 1) {
+      setIndex(data.length - 1);
+      setDisplayBack("visible");
 
       setNextButton(true);
-    } else if (index === DATA.length - 2) {
+    } else if (index === data.length - 2) {
       setDisplaySubmit("block");
       setDisplayNext("none");
-    setDisplayBack("visible")
-
+      setDisplayBack("visible");
     }
 
     //save previous choose
-    const nextQuestion = DATA[index + 1];
+    const nextQuestion = data[index + 1];
     const aIndex = refAnswer.current.findIndex((a) => {
       if (nextQuestion.id === a.id) return true;
     });
@@ -134,7 +165,6 @@ const Navigation = () => {
 
     //
   };
-  
 
   //Button Back
   const buttonBack = () => {
@@ -142,10 +172,8 @@ const Navigation = () => {
     setIndex(index - 1);
     setDisplayNext("block");
     setDisplaySubmit("none");
-    setDisplayBack('block')
+    setDisplayBack("block");
 
-
-    
     if (index <= 0) {
       setIndex(0);
     }
@@ -153,7 +181,7 @@ const Navigation = () => {
     //save previous answer
 
     if (index === 1) {
-      setDisplayBack('hidden')
+      setDisplayBack("hidden");
     }
 
     const prevQuestion = DATA[index - 1];
@@ -168,14 +196,11 @@ const Navigation = () => {
     }
   };
 
-// console.log(a)
-
-
+  // console.log(a)
 
   //Navigation
   const navigateToSubmit = () => {
     navigate("/submit");
-    console.log("submit");
   };
 
   return (
@@ -199,12 +224,13 @@ const Navigation = () => {
         setTimeOver,
         navigateToScore,
         displayBack,
+        data,
       }}
     >
       <Routes>
-          <Route path="/question" element={<TestContainer />} />
-          <Route path="/submit" element={<SubmitScreen />} />
-          <Route path="/score" element={<ScoreScreen />} />
+        <Route path="/question" element={<TestContainer />} />
+        <Route path="/submit" element={<SubmitScreen />} />
+        <Route path="/score" element={<ScoreScreen />} />
       </Routes>
     </Context.Provider>
   );

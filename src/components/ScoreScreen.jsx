@@ -1,19 +1,18 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { DATA } from "../utils/data";
 import { User } from "./Auth/User";
 import { Auth, Context } from "./Share/Context";
 
 function ScoreScreen() {
   const {setBtnStart } = useContext(Auth);
-  const { point,answerKey } = useContext(Context);
+  const { point,data } = useContext(Context);
 
   let navigate = useNavigate();
 
   const navigateToHome = () => {
     navigate("/home");
     setBtnStart(true)
-    // window.location.reload();
+    window.location.reload();
 
   };
   return (
@@ -31,13 +30,13 @@ function ScoreScreen() {
 
       {/* map to display question */}
       <div className="border border-gray-900 p-[40px] rounded-2xl m-auto p-auto mb-[50px] ">
-        {DATA.map((data) => {
+        {data.map((dt) => {
           return (
-            <div key={data.id} className="my-3 ">
-              <div className="my-3 "> question: {data.id}</div>
+            <div key={dt.id} className="my-3 ">
+              <div className="my-3 "> question: {dt.id}</div>
 
               {/* Map to display answers */}
-              {data.answers.map((elems) => {
+              {dt.answers.map((elems) => {
                 return (
                   <label key={elems.id}>
                     <span className="bg-slate-400 rounded-[10px] m-[15px] py-2 text-start px-[10px]">
@@ -47,8 +46,8 @@ function ScoreScreen() {
                         // preview checked
                         defaultChecked={
                           
-                          DATA.some((a) => {
-                            if (a.id === data.id && a.correctAnswer === elems.id) {
+                          data.some((a) => {
+                            if (a.id === dt.id && a.correctAnswer === elems.id) {
                               return true;
                             }
                             return false;
@@ -70,7 +69,7 @@ function ScoreScreen() {
           className=" border border-gray-900 rounded-[8px] cursor-pointer py-1 px-9 mx-5 py-[7px] hover:bg-indigo-600/60 hover:text-white"
           onClick={navigateToHome}
         >
-          Back
+          OK
         </button>
      
       </div>

@@ -1,10 +1,9 @@
+import { collection, getDocs } from "firebase/firestore";
 import React, { useContext, useRef, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import { addUsers } from "../../utils/firebase";
-import { Auth } from "../Share/Context";
-import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../utils/firebase";
+import { Auth } from "../Share/Context";
 
 const Login = () => {
   const refUsername = useRef();
@@ -34,33 +33,33 @@ const Login = () => {
       password: inputPassword,
     };
 
-    // if (inputUsername === "") {
-    //   setMessage("Username need input value");
-    //   refUsername.current.focus();
-    //   refUsername.current.value = "";
-    //   return;
-    // }
-    // if (inputUsername.split("").length < 3) {
-    //   setMessage(" Username need more than 6 letters");
-    //   refUsername.current.focus();
-    //   refUsername.current.value = "";
-    //   return;
-    // }
+    if (inputUsername === "") {
+      setMessage("Username need input value");
+      refUsername.current.focus();
+      refUsername.current.value = "";
+      return;
+    }
+    if (inputUsername.split("").length < 3) {
+      setMessage(" Username need more than 6 letters");
+      refUsername.current.focus();
+      refUsername.current.value = "";
+      return;
+    }
 
-    // if (inputPassword === "") {
-    //   setMessage("Password need input value");
-    //   refPassword.current.focus();
-    //   setNotification("");
-    //   refPassword.current.value = "";
-    //   return;
-    // }
-    // if (inputPassword.split("").length < 6) {
-    //   setMessage("Password need more than 6 letters");
-    //   refPassword.current.focus();
-    //   refPassword.current.value = "";
-    //   setNotification("");
-    //   return;
-    // }
+    if (inputPassword === "") {
+      setMessage("Password need input value");
+      refPassword.current.focus();
+      setNotification("");
+      refPassword.current.value = "";
+      return;
+    }
+    if (inputPassword.split("").length < 6) {
+      setMessage("Password need more than 6 letters");
+      refPassword.current.focus();
+      refPassword.current.value = "";
+      setNotification("");
+      return;
+    }
 
     //Get and compare data
     const querySnapshot = await getDocs(collection(db, "Users"));
@@ -72,7 +71,10 @@ const Login = () => {
         aUser.password === inputPassword
       ) {
         localStorage.setItem("id", JSON.stringify(doc.id));
+        localStorage.setItem("username", JSON.stringify(doc.data().username));
         setBtnStart(false);
+      window.location.reload();
+
         navigate("/home");
         return;
       } else {

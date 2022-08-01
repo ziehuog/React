@@ -2,6 +2,8 @@ import { createContext, useState } from 'react'
 
 export const Context = createContext()
 
+//Auth
+
 export const Auth = createContext()
 
 export const AuthProvider = ({children}) => {
@@ -16,5 +18,10 @@ export const AuthProvider = ({children}) => {
         </Auth.Provider>
     )
 
+
 }
+
+//Timer
+// export const 
+
 

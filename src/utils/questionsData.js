@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { collection, getDocs, getFirestore } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCfDS5eWjiWq7b9A4G2A6ITmViuMzf1kDw",
@@ -18,22 +18,10 @@ const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore(app);
 
-
-export const testData = async () => {
-  const querySnapshot = await getDocs(collection(db, "Questions"));
-querySnapshot.forEach((doc) => {
-
-  const questionsData = doc.data();
-  console.log(questionsData)
-})
-}
-
-// try {
-//   const docRef = addDoc(collection(db, "Users"), {
-//     username: data.username,
-//     password: data.password
-//   });
-//   console.log("Document written with ID: ", docRef.id);
-// } catch (e) {
-//   console.error("Error adding document: ", e)}
-
+// useEffect(() => {
+//   const getData = async () => {
+//     const questionData = await getDocs(collection(db, "Questions"));
+//     setData(questionData.docs.map((doc) => doc.data()).sort((a, b) => a.id - b.id));
+//   };
+//   getData();
+// }, []);

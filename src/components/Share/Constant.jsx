@@ -13,3 +13,12 @@ import React, { useState, useRef } from 'react';
 // const navigate = useNavigate();
 // const refAnswer = useRef([]);
  
+
+//login
+// export const refUsername = useRef();
+// export const refPassword = useRef();
+// export const [message, setMessage] = useState("");
+// export const [notification, setNotification] = useState("");
+// export const [typePassword, setTypePassword] = useState("password");
+// export const [eye, setEye] = useState("block");
+// export const [closeEye, setCloseEye] = useState("none");

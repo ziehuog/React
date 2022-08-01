@@ -74,37 +74,30 @@ const Register = () => {
       username: inputUsername,
       password: inputPassword,
     };
+    let flag = true
 
     const querySnapshot = await getDocs(collection(db, "Users"));
     querySnapshot.forEach((doc) => {
-      // console.log(doc.id);
+
       const aUser = doc.data();
-      if (aUser.username === data.username) {
-        console.log("no no no");
-        return;
-      } else {
-        const docRef = addDoc(collection(db, "Users"), {
-          username: data.username,
-          password: data.password,
-        });
-        console.log("Document written with ID: ", docRef.id);
+      if(aUser.username === data.username){
+        flag = false
       }
+
     });
 
-    //   const response = await fetch("https://ziehuog-default-rtdb.asia-southeast1.firebasedatabase.app/user.json", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       'Accept': "application/json",
-    //     },
-    //     body: JSON.stringify(data),
-    //   });
-    //   const newData = await response.json()
-    //   console.log(data);
-    //   navigate("/");
-    // };
+    if (flag) {
+      const docRef = 
+      addDoc(collection(db, "Users"), {
+        username: data.username,
+        password: data.password,
+      });
+      window.alert('success')
+      navigate("/");
 
-    //show password
+    }
+    
+
   };
 
   const changeEyeState = () => {
@@ -119,7 +112,6 @@ const Register = () => {
       setTypePassword("text");
     }
   };
-
   const changeCfEyeState = () => {
     if (cfEye === "none") {
       setCfEye("block");
@@ -177,7 +169,7 @@ const Register = () => {
               <input
                 type={typeConfirmPassword}
                 className="h-[30px] w-full bg-gray-100  outline-none bg-inherit "
-                id="password"
+                id="cfpassword"
                 ref={refConfirmPassword}
               />
               <span className=" mx-2 pt-2 " onClick={changeCfEyeState}>

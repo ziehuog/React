@@ -1,21 +1,16 @@
 import React, { Fragment, useContext } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { User } from "./Auth/User";
 import { Auth } from "./Share/Context";
 
 const StartScreen = () => {
   let navigate = useNavigate();
-  const { btnStart,setBtnStart } = useContext(Auth);
+  const { btnStart, setBtnStart } = useContext(Auth);
 
 
   const navigateToTest = () => {
-    
+
     navigate("/question");
-    // if(btnStart){
-    //   window.alert('You can not take the test again')
-    //   console.log('huhu')
-    // }
-  
   
   };
   return (

@@ -1,11 +1,12 @@
 import React, { Fragment, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { DATA } from "../utils/data";
 import { User } from "./Auth/User";
 import { Context } from "./Share/Context";
 
 const SubmitScreen = () => {
-  const { answerKey } = useContext(Context);
+
+
+  const { answerKey, data,navigateToScore } = useContext(Context);
 
   let navigate = useNavigate();
 
@@ -13,9 +14,8 @@ const SubmitScreen = () => {
     navigate("/question");
   };
 
-  const navigateToScore = () => {
-    navigate("/score");
-  };
+ 
+  
 
   return (
     <Fragment>
@@ -28,7 +28,7 @@ const SubmitScreen = () => {
 
       {/* map to display question */}
       <div className="border border-gray-900 p-[40px] rounded-2xl m-auto p-auto mb-[50px] ">
-        {DATA.map((data) => {
+        {data.map((data) => {
           return (
             <div key={data.id} className="my-3 ">
               <div className="my-3 "> Câu: {data.id}</div>
