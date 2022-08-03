@@ -1,11 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useReducer, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { addDoc, collection, getDocs } from "firebase/firestore";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { toast } from "react-toastify";
 import { db } from "../../utils/firebase";
-import {toast} from 'react-toastify'
-
+import { HIDE_CFPASSWORD, HIDE_PASSWORD, SHOW_CFPASSWORD, SHOW_PASSWORD} from "../Share/Constants";
+import { cfInitState, cfReducer, initState, reducer } from "../Share/Reducer";
 
 const Register = () => {
   const navigateToLogin = () => {
@@ -16,15 +17,7 @@ const Register = () => {
   const refConfirmPassword = useRef();
 
   const [message, setMessage] = useState("");
-  const [typePassword, setTypePassword] = useState("password");
-  const [eye, setEye] = useState("block");
-  const [closeEye, setCloseEye] = useState("none");
-
-  const [typeConfirmPassword, setTypeConfirmPassword] = useState("password");
-  const [cfEye, setCfEye] = useState("block");
-  const [cfCloseEye, setCfCloseEye] = useState("none");
   const navigate = useNavigate();
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -100,32 +93,13 @@ const Register = () => {
     }
   };
 
-  //change eye state
+  //Show password
 
-  const changeEyeState = () => {
-    if (eye === "none") {
-      setEye("block");
-      setCloseEye("none");
-      setTypePassword("password");
-    }
-    if (eye === "block") {
-      setEye("none");
-      setCloseEye("block");
-      setTypePassword("text");
-    }
-  };
-  const changeCfEyeState = () => {
-    if (cfEye === "none") {
-      setCfEye("block");
-      setCfCloseEye("none");
-      setTypeConfirmPassword("password");
-    }
-    if (cfEye === "block") {
-      setCfEye("none");
-      setCfCloseEye("block");
-      setTypeConfirmPassword("text");
-    }
-  };
+  const [state, dispatch] = useReducer(reducer, initState);
+  const { eyeState, closeEyeState, passwordType } = state;
+
+  const [cfState, cfDispatch] = useReducer(cfReducer, cfInitState);
+  const { cfEyeState, cfCloseEyeState, cfPasswordType } = cfState;
 
   //
   return (
@@ -155,14 +129,23 @@ const Register = () => {
             <label htmlFor="password">Password</label>
             <div className="border-gray-700 border-b-[2px] flex">
               <input
-                type={typePassword}
+                type={passwordType}
                 className="h-[30px] w-full bg-gray-100  outline-none bg-inherit "
                 id="password"
                 ref={refPassword}
               />
-              <span className=" mx-2 pt-2 " onClick={changeEyeState}>
-                <AiOutlineEye style={{ display: `${eye}` }} />
-                <AiOutlineEyeInvisible style={{ display: `${closeEye}` }} />
+              <span
+                className=" mx-2 pt-2 "
+                onClick={() => {
+                  passwordType === "text"
+                    ? dispatch(HIDE_PASSWORD)
+                    : dispatch(SHOW_PASSWORD);
+                }}
+              >
+                <AiOutlineEye style={{ display: `${eyeState}` }} />
+                <AiOutlineEyeInvisible
+                  style={{ display: `${closeEyeState}` }}
+                />
               </span>
             </div>
           </div>
@@ -171,14 +154,23 @@ const Register = () => {
             <label htmlFor="refConfirmPassword">Confirm Password</label>
             <div className="border-gray-700 border-b-[2px] focus-within:border-indigo-500 flex">
               <input
-                type={typeConfirmPassword}
+                type={cfPasswordType}
                 className="h-[30px] w-full bg-gray-100  outline-none bg-inherit "
                 id="cfpassword"
                 ref={refConfirmPassword}
               />
-              <span className=" mx-2 pt-2 " onClick={changeCfEyeState}>
-                <AiOutlineEye style={{ display: `${cfEye}` }} />
-                <AiOutlineEyeInvisible style={{ display: `${cfCloseEye}` }} />
+              <span
+                className=" mx-2 pt-2 "
+                onClick={() => {
+                  cfPasswordType === "text"
+                    ? cfDispatch(HIDE_CFPASSWORD)
+                    : cfDispatch(SHOW_CFPASSWORD);
+                }}
+              >
+                <AiOutlineEye style={{ display: `${cfEyeState}` }} />
+                <AiOutlineEyeInvisible
+                  style={{ display: `${cfCloseEyeState}` }}
+                />
               </span>
             </div>
           </div>

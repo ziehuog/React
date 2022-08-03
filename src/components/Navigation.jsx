@@ -100,6 +100,10 @@ const Navigation = () => {
     }
   };
 
+
+
+
+
   //Button Submit
   const buttonSubmit = () => {
     if (index >= data.length - 1) {
