@@ -60,6 +60,8 @@ const Login = () => {
       return;
     }
 
+    let flag = true
+
     //Get and compare data
     const querySnapshot = await getDocs(collection(db, "Users"));
     querySnapshot.forEach((doc) => {
@@ -77,6 +79,7 @@ const Login = () => {
         navigate("/home");
       } else {
         setNotification("Oh no! username or password have some mistake.");
+        // toast('Oh no! username or password have some mistake.')
         refUsername.current.focus();
       }
     });

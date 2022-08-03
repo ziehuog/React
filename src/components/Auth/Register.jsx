@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { addDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../../utils/firebase";
+import {toast} from 'react-toastify'
+
 
 const Register = () => {
   const navigateToLogin = () => {
@@ -91,10 +93,10 @@ const Register = () => {
         username: data.username,
         password: data.password,
       });
-      window.alert("success");
+      toast.success("success");
       navigate("/");
     } else {
-      window.alert("This username has existed! ");
+      toast.warning("This username has existed! ");
     }
   };
 

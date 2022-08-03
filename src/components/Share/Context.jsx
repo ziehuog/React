@@ -1,42 +1,8 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 export const Context = createContext();
-
-// export const ContextProvider = ({children}) => {
-//     const [index, setIndex] = useState(0);
-//     const [data, setData] = useState([]);
-//     const [currentAnswer, setCurrentAnswer] = useState("");
-//     const [remaining, setRemaining] = useState(1000 * 60 * 10);
-//     const [timeOver, setTimeOver] = useState("");
-  
-//     const [nextButton, setNextButton] = useState(false);
-//     const [displayNext, setDisplayNext] = useState("block");
-//     const [displayBack, setDisplayBack] = useState("hidden");
-//     const [displaySubmit, setDisplaySubmit] = useState("none");
-//     return(
-//         <Context.Provider
-//         value={{index,
-//             nextButton,
-//             // buttonBack,
-//             // buttonNext,
-//             // handleAnswer,
-//             // refAnswer,
-//             // point,
-//             currentAnswer,
-//             // buttonSubmit,
-//             // answerKey,
-//             displayNext,
-//             displaySubmit,
-//             remaining,
-//             timeOver,
-//             // navigateToScore,
-//             displayBack,
-//             data,}}
-//         >
-//             {children}
-//         </Context.Provider>
-//     )
-// }
 
 //Auth
 
@@ -66,4 +32,32 @@ export const AuthProvider = ({ children }) => {
 };
 
 //Timer
-// export const
+
+export const TimerContext = createContext();
+
+export const TimerProvider = ({ children }) => {
+const navigate = useNavigate();
+
+  
+  const [remaining, setRemaining] = useState(1000 * 10);
+  const [timeOver, setTimeOver] = useState("");
+  useEffect(() => {
+    const timerId = setInterval(() => {
+      setRemaining(remaining - 1000);
+    }, 1000);
+
+    if (remaining <= 10000) {
+      setTimeOver("text-red-600");
+    }
+
+    if (remaining <= 0) {
+      clearInterval(timerId);
+      navigate('/score')
+    }
+
+    return () => {
+      clearInterval(timerId);
+    };
+  }, [remaining]);
+  return <TimerContext.Provider value={{timeOver, remaining}}>{children}</TimerContext.Provider>;
+};

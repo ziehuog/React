@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Auth } from "../Share/Context";
 import logo from "../../asset/img/ziehuog-logo.png";
 
+
 export const User = () => {
   const { authUsername, setToken, setAuthUsername } = useContext(Auth);
   let navigate = useNavigate();
@@ -23,12 +24,19 @@ export const User = () => {
     }
   };
 
+  const navigateToHome = () =>{
+    navigate('/home')
+  }
+
+  const navigateToUser = () =>{
+    navigate('/user')
+  }
   return (
     <div className="flex justify-between px-6 h-[45px] items-center bg-white z-[100] fixed w-full">
-      <div>
-        <img className="h-[45px]" src={logo} />
+      <div onClick={navigateToHome}>
+        <img className="h-[45px] cursor-pointer" src={logo} />
       </div>
-      <div className="border border-indigo-600 px-4 py-[3px] rounded-2xl">
+      <div  className="border border-indigo-600 px-4 py-[3px] rounded-2xl cursor-pointer" onClick={navigateToUser}>
         Username: {JSON.parse(authUsername)}
       </div>
       <button

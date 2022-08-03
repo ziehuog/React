@@ -4,6 +4,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { Auth } from "../components/Share/Context";
 import { DATA } from "../utils/data";
 import { db } from "../utils/firebase";
+import UserManager from "./Auth/UserManager";
 import TestContainer from "./MainTest/TestContainer";
 import ScoreScreen from "./ScoreScreen";
 import { Context } from "./Share/Context";
@@ -13,8 +14,6 @@ const Navigation = () => {
   const [index, setIndex] = useState(0);
   const [data, setData] = useState([]);
   const [currentAnswer, setCurrentAnswer] = useState("");
-  const [remaining, setRemaining] = useState(1000 * 60 * 10);
-  const [timeOver, setTimeOver] = useState("");
 
   const [nextButton, setNextButton] = useState(false);
   const [displayNext, setDisplayNext] = useState("block");
@@ -38,26 +37,6 @@ const Navigation = () => {
     getData();
   }, []);
 
-  //Countdown
-
-  useEffect(() => {
-    const timerId = setInterval(() => {
-      setRemaining(remaining - 1000);
-    }, 1000);
-
-    if (remaining <= 10000) {
-      setTimeOver("text-red-600");
-    }
-
-    if (remaining <= 0) {
-      clearInterval(timerId);
-      navigateToScore();
-    }
-
-    return () => {
-      clearInterval(timerId);
-    };
-  }, [remaining]);
 
   //Answer
   const handleAnswer = (id) => (e) => {
@@ -215,8 +194,6 @@ const Navigation = () => {
         answerKey,
         displayNext,
         displaySubmit,
-        remaining,
-        timeOver,
         navigateToScore,
         displayBack,
         data,
@@ -226,6 +203,10 @@ const Navigation = () => {
         <Route path="/question" element={<TestContainer />} />
         <Route path="/submit" element={<SubmitScreen />} />
         <Route path="/score" element={<ScoreScreen />} />
+        <Route path="/user" element={<UserManager />} />
+        {/* <Route path="/user" element={<UserManager />} /> */}
+
+
       </Routes>
     </Context.Provider>
   );

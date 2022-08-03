@@ -1,13 +1,12 @@
-// import moment from "moment";
 import React, { useContext } from "react";
-import { Context } from "../Share/Context";
+import { TimerContext } from "../Share/Context";
 
 require("moment-duration-format");
 
 const Timer = () => {
   let moment = require("moment");
 
-  const { remaining, timeOver } = useContext(Context);
+  const { remaining, timeOver } = useContext(TimerContext);
 
   return (
     <div className=" pt-6">
