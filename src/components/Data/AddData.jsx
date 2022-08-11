@@ -7,6 +7,8 @@ import { addDoc, collection, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../../utils/firebase";
 import { questionContext } from "../Share/Context";
 import Select from "react-select";
+import ShowData from "./ShowData";
+import Modals from "./Modals";
 
 function AddData() {
   const { state } = useContext(questionContext);
@@ -23,21 +25,6 @@ function AddData() {
     })
     .required();
 
-  useEffect(() => {
-    setIdInput(
-      data.map((data) => {
-        return Number(data.id);
-      })[data.length - 1] + 1
-    );
-  }, [data]);
-
-  console.log(idInput);
-
-  const preloadValue = {
-    id: `${idInput}`,
-  };
-
-  // }
   const {
     register,
     handleSubmit,
@@ -45,9 +32,35 @@ function AddData() {
     watch,
     formState: { errors },
   } = useForm({
-    defaultValues: preloadValue,
-    resolver: yupResolver(schema),
+    // resolver: yupResolver(schema),
   });
+  // const onSubmit = (data) => console.log(data);
+
+  // useEffect(() => {
+  //   setIdInput(
+  //     data.map((data) => {
+  //       return Number(data.id);
+  //     })[data.length - 1] + 1
+  //   );
+  // }, [data]);
+
+  // console.log(idInput);
+
+  // const preloadValue = {
+  //   id: `${idInput}`,
+  // };
+
+  // }
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   control,
+  //   watch,
+  //   formState: { errors },
+  // } = useForm({
+  //   // defaultValues: preloadValue,
+  //   resolver: yupResolver(schema),
+  // });
   let flag = true;
 
   const onSubmit = async (data) => {
@@ -73,7 +86,6 @@ function AddData() {
       toast.error("question id is duplicated!");
     }
   };
-  // const options = [{value: 'A', label: 'A'}, {value: 'B', label: 'B'}, ];
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -90,53 +102,45 @@ function AddData() {
             Add question
           </h1>
           <form className="px-[35px]" onSubmit={handleSubmit(onSubmit)}>
-            {/* id */}
             <div className="grid grid-cols-12 gap-5">
-              <div className=" col-span-2 md:col-span-12">
+              <div className="2xl:col-span-2 md:col-span-12">
                 <label className="my-5" htmlFor="id">
                   Question id
                 </label>
-
                 <div className=" flex w-full mt-[15px] bg-gray-100 rounded-md">
                   <input
                     className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
                     name="id"
                     type="number"
+                    defaultValue={`${idInput}`}
                     {...register("id")}
-                    required
                   />
                 </div>
-                <p className="text-[15px] text-red-600">
-                  {errors.questionId?.message}
-                </p>
+                <p className="text-[15px] text-red-600">{errors.id?.message}</p>
               </div>
-              {/* question */}
-              <div className="col-span-10 md:col-span-12">
+              <div className="2xl:col-span-10 md:col-span-12">
                 <label htmlFor="question">Question</label>
-                <div className="flex my-[15px]">
-                  <textarea
-                    className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
-                    type="text"
-                    placeholder="question"
-                    name="question"
-                    {...register("question")}
-                  ></textarea>
-                </div>
+
+                <input
+                  className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                  type="text"
+                  placeholder="question"
+                  name="question"
+                  {...register("question")}
+                />
                 <p className="text-[15px] text-red-600">
                   {errors.question?.message}
                 </p>
               </div>
             </div>
 
-            {/* CorrectAnswer */}
             <label className="my-5" htmlFor="correctAnswer">
               Correct answer
             </label>
-
             <div className=" flex my-[15px] grid grid-cols-12 gap-5">
               <select
                 name="correctAnswer"
-                className="uppercase  bg-gray-100 rounded-md col-span-2 h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                className="uppercase  bg-gray-100 rounded-md 2xl:col-span-2 md:col-span-12 h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
                 {...register("correctAnswer")}
               >
                 <option value="A">A</option>
@@ -147,32 +151,22 @@ function AddData() {
               </select>
             </div>
 
-            {/* Answers */}
             <p>ANSWERS</p>
+
             <div className="mt-[20px]">
-              <div className="">
+              <div>
                 {fields.map((item, index) => (
                   <div
                     className="grid grid-cols-12 gap-5 w-full my-4"
                     key={item.id}
                   >
-                    <div className=" col-span-2">
-                      {/* <Controller
-                        as={<Select options={options} />}
-                        control={control}
-                        // onChange={([selected]) => {
-                        //   // React Select return object instead of value for selection
-                        //   return { value: selected };
-                        // }}
-                        name={`answers[${index}].id`}
-                        defaultValue={{ value: "A" }}
-                      /> */}
+                    <div className=" 2xl:col-span-2 md:col-span-3">
                       <input
                         className="uppercase w-full h-[35px] rounded-md px-[15px] outline-none placeholder:text-gray-500"
                         {...register(`answers.${index}.id`)}
                       />
                     </div>
-                    <div className=" col-span-8">
+                    <div className=" 2xl:col-span-8 md:col-span-9">
                       <Controller
                         render={({ field }) => (
                           <input
@@ -184,7 +178,7 @@ function AddData() {
                         control={control}
                       />
                     </div>
-                    <div className="">
+                    <div className="md:col-end-10">
                       <button
                         onClick={() => remove(index)}
                         className="border transition duration-300 cursor-pointer px-3 py-1 
@@ -208,8 +202,6 @@ function AddData() {
                 </button>
               </div>
             </div>
-
-            {/* Button add */}
             <div className="flex justify-center absolute bottom-[40px] left-[135px] pt-10">
               <input
                 className="border transition duration-300 cursor-pointer px-3 py-1 
@@ -225,7 +217,7 @@ function AddData() {
           className="sm:m-w-[350px] col-span-1 border  border-gray-400 m-auto bg-slate-200/50 rounded-3xl
           xl:h-[1200px] w-full md:h-[700px]"
         >
-          
+          <ShowData />
         </div>
       </div>
     </div>

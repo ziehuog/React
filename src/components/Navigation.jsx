@@ -1,5 +1,5 @@
 import { addDoc, collection, getDocs } from "firebase/firestore";
-import React, { useContext, useEffect, useReducer } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { db } from "../utils/firebase";
 import UserManager from "./User/Userdetails";
@@ -11,10 +11,12 @@ import { dataReducer, initState } from "./Share/Reducer";
 import SubmitScreen from "./SubmitScreen";
 import AddData from "./Data/AddData";
 import UserDetails from "./User/Userdetails";
+import Modals from "./Data/Modals";
 
 const Navigation = () => {
   const navigate = useNavigate();
   const { authUsername } = useContext(Auth);
+  const [modalShow, setModalShow] = useState(false);
 
   const [state, dispatch] = useReducer(dataReducer, initState);
   const { data, storeAns } = state;
@@ -106,6 +108,7 @@ const Navigation = () => {
             handleAnswer,
             point,
             navigateToScore,
+            setModalShow, modalShow
           }}
         >
           <Routes>
@@ -115,6 +118,7 @@ const Navigation = () => {
             <Route path="/user" element={<UserManager />} />
         <Route path="user" element={<UserDetails />} />
         <Route path="add-data" element={<AddData />} />
+        {/* <Route path="add-data" element={<AddData />} /> */}
 
           </Routes>
         </questionContext.Provider>
