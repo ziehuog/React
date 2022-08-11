@@ -1,23 +1,40 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { User } from "./Auth/User";
-import { Auth, Context } from "./Share/Context";
+import { Navbar, User } from "./Auth/Navbar";
+import { Auth, questionContext } from "./Share/Context";
+import { dataContext } from "./Share/DataContext";
 
 function ScoreScreen() {
+
+  const { state, handleAnswer, point } = useContext(questionContext);
+  const { storeAns, data } = state;
   const {setBtnStart } = useContext(Auth);
-  const { point,data } = useContext(Context);
 
   let navigate = useNavigate();
 
   const navigateToHome = () => {
-    navigate("/home");
+    navigate("/");
     setBtnStart(true)
     window.location.reload();
 
   };
+  // for (let i = 0; i < data.length; i++) {
+  //   for (let j = 0; j < answerKey.length; j++) {
+  //     if (
+  //       data[i].id === answerKey[j].id &&
+  //       data[i].correctAnswer === answerKey[j].answer
+  //     ) {
+  //       ++score;
+  //     }
+  //   }
+  // }
+
+  // let point = Math.round((score / data.length) * 10);
+
+  
   return (
     <div>
-      <User/>
+      <Navbar/>
 
       
       <div className="h-full bg-gradient-to-b from-indigo-500 flex  justify-center pt-[100px]">

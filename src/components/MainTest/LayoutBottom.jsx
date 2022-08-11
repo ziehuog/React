@@ -1,38 +1,36 @@
+import { type } from "@testing-library/user-event/dist/type";
 import React, { useContext } from "react";
-import { Context } from "../Share/Context";
+import { useNavigate } from "react-router-dom";
+import { BTN_BACK, BTN_NEXT } from "../Share/Constants";
+import { questionContext } from "../Share/Context";
 
 const LayoutBottom = () => {
-  const {
-    displayBack,
-    displaySubmit,
-    displayNext,
-    nextButton,
-    buttonBack,
-    buttonNext,
-    buttonSubmit,
-  } = useContext(Context);
+  const navigate = useNavigate();
+
+  const { state, dispatch,  } = useContext(questionContext);
+  const {displayBack,displayNext, displaySubmit  } = state
+
 
   return (
     <div className="flex justify-around py-7">
       <button
         style={{ visibility: `${displayBack}` }}
         className="border border-gray-400 rounded-[8px] cursor-pointer py-2 px-4 hover:bg-indigo-600/60 hover:text-white"
-        onClick={buttonBack}
+        onClick={() => dispatch({type: BTN_BACK})  }
       >
         Back
       </button>
 
       <button
         className="border border-gray-400 rounded-[8px] py-2 px-4 hover:bg-indigo-600/60 hover:text-white"
-        onClick={buttonNext}
-        disabled={nextButton}
+        onClick={ () => dispatch({type: BTN_NEXT})}
         style={{ display: `${displayNext}` }}
       >
         Next
       </button>
       <button
         className="border border-gray-400 rounded-[8px] cursor-pointer py-2 px-4 hover:bg-indigo-600/60 hover:text-white"
-        onClick={buttonSubmit}
+        onClick={() => navigate("/test/submit")}
         style={{ display: `${displaySubmit}` }}
       >
         Preview

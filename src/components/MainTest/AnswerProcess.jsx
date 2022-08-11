@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
-import { Context } from "../Share/Context";
+import { questionContext } from "../Share/Context";
+import { dataContext } from "../Share/DataContext";
 
 
 
 const AnswerProcess = () => {
-  const {index, data} = useContext(Context)
+  const { state} = useContext(questionContext)
+ const {index, data} = state
 
 
 

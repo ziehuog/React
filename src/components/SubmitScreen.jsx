@@ -1,22 +1,21 @@
 import React, { Fragment, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { User } from "./Auth/User";
-import { Context } from "./Share/Context";
+import { Navbar, User } from "./Auth/Navbar";
+import { questionContext } from "./Share/Context";
 
 const SubmitScreen = () => {
 
+  const { state, navigateToScore } = useContext(questionContext);
+  const { storeAns, data } = state;
 
-  const { answerKey, data,navigateToScore } = useContext(Context);
+
 
   let navigate = useNavigate();
 
-  const navigateToTest = () => {
-    navigate("/question");
-  };
 
   return (
     <Fragment>
-      <User/>
+      <Navbar/>
       <div className="h-full bg-gradient-to-b from-indigo-500 flex  justify-center ">
       <div className="bg-gray-200/80 p-[40px] rounded-2xl mt-[40px] h-min">
       <div className="text-[30px] text-center py-[30px]  ">
@@ -41,8 +40,8 @@ const SubmitScreen = () => {
                         
                         // preview checked
                         defaultChecked={
-                          answerKey.length > 0 &&
-                          answerKey.some((a) => {
+                          storeAns.length > 0 &&
+                          storeAns.some((a) => {
                             if (a.id === data.id && a.answer === elems.id) {
                               return true;
                             }
@@ -64,7 +63,7 @@ const SubmitScreen = () => {
       <div className="text-center">
         <button
           className=" border border-gray-900 rounded-[8px] cursor-pointer py-1 px-9 mx-5 py-[7px] hover:bg-indigo-600/60 hover:text-white"
-          onClick={navigateToTest}
+          onClick={() => (navigate("/test/question"))}
         >
           Back
         </button>

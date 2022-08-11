@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Auth } from "../Share/Context";
 import logo from "../../asset/img/ziehuog-logo.png";
 
-
-export const User = () => {
+export const Navbar = () => {
   const { authUsername, setToken, setAuthUsername } = useContext(Auth);
   let navigate = useNavigate();
 
@@ -18,25 +17,21 @@ export const User = () => {
       setAuthUsername(localStorage.removeItem("username"));
       // localStorage.removeItem("id");
 
-      navigate("/");
+      navigate("/login");
 
       window.location.reload();
     }
   };
 
-  const navigateToHome = () =>{
-    navigate('/home')
-  }
-
-  const navigateToUser = () =>{
-    navigate('/user')
-  }
   return (
     <div className="flex justify-between px-6 h-[45px] items-center bg-white z-[100] fixed w-full">
-      <div onClick={navigateToHome}>
+      <div onClick={() => navigate("/")}>
         <img className="h-[45px] cursor-pointer" src={logo} />
       </div>
-      <div  className="border border-indigo-600 px-4 py-[3px] rounded-2xl cursor-pointer" onClick={navigateToUser}>
+      <div
+        onClick={() => navigate("/test/user")}
+        className="border border-indigo-600 px-4 py-[3px] rounded-2xl cursor-pointer"
+      >
         Username: {JSON.parse(authUsername)}
       </div>
       <button

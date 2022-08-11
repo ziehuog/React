@@ -1,74 +1,45 @@
-import React, { useReducer, useRef, useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import React, { useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { addDoc, collection, getDocs } from "firebase/firestore";
+import { useForm } from "react-hook-form";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { toast } from "react-toastify";
+import * as yup from "yup";
 import { db } from "../../utils/firebase";
-import { HIDE_CFPASSWORD, HIDE_PASSWORD, SHOW_CFPASSWORD, SHOW_PASSWORD} from "../Share/Constants";
+import {
+  HIDE_CFPASSWORD,
+  HIDE_PASSWORD,
+  SHOW_CFPASSWORD,
+  SHOW_PASSWORD
+} from "../Share/Constants";
 import { cfInitState, cfReducer, initState, reducer } from "../Share/Reducer";
 
 const Register = () => {
-  const navigateToLogin = () => {
-    navigate("/");
-  };
-  const refUsername = useRef();
-  const refPassword = useRef();
-  const refConfirmPassword = useRef();
-
-  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
+  let schema = yup
+    .object()
+    .shape({
+      username: yup.string().required().min(3),
+      password: yup.string().required().min(6),
+      confirmPassword: yup
+        .string()
+        .oneOf([yup.ref("password"), null], "Passwords must match"),
+    })
+    .required();
 
-  const register = async () => {
-    setMessage("");
-    const inputUsername = refUsername.current.value;
-    const inputPassword = refPassword.current.value;
-    const inputConfirmPassword = refConfirmPassword.current.value;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
-    //validate
-
-    if (inputUsername === "") {
-      refUsername.current.focus();
-      refUsername.current.value = "";
-      setMessage("Username need input value");
-      return;
-    }
-    if (inputUsername.split("").length < 3) {
-      setMessage(" Username need more than 6 letters");
-      refUsername.current.focus();
-      refUsername.current.value = "";
-      return;
-    }
-
-    if (inputPassword === "") {
-      setMessage("Password need input value");
-      refPassword.current.focus();
-      refPassword.current.value = "";
-      return;
-    }
-
-    if (inputPassword.split("").length < 6) {
-      setMessage("Password need more than 6 letters");
-      refPassword.current.focus();
-      refPassword.current.value = "";
-      return;
-    }
-
-    if (inputConfirmPassword !== inputPassword) {
-      setMessage(" Fail to confirm password");
-      refConfirmPassword.current.focus();
-      refConfirmPassword.current.value = "";
-      return;
-    }
-
-    const data = {
-      username: inputUsername,
-      password: inputPassword,
-    };
+  const onSubmit = async (data) => {
+    console.log(data);
 
     // validate and register
     let flag = true;
@@ -87,7 +58,7 @@ const Register = () => {
         password: data.password,
       });
       toast.success("success");
-      navigate("/");
+      navigate("/login");
     } else {
       toast.warning("This username has existed! ");
     }
@@ -103,96 +74,96 @@ const Register = () => {
 
   //
   return (
-    <div className=" flex align-middle justify-center w-[100vw] h-[100vh] bg-gradient-to-b from-indigo-500">
-      <div className="sm:m-w-[350px] m-auto w-[350px] h-[520px] bg-slate-200 rounded-3xl opacity-90">
-        <button
-          className="mt-[20px] mx-[20px] underline hover:text-indigo-900"
-          onClick={navigateToLogin}
-        >
-          Back
-        </button>
-        <p className="text-center text-[35px] font-bold pb-5"> Register</p>
-        <form className="px-7" onSubmit={handleSubmit}>
-          {/* username */}
-          <div className="py-4 px-[35px]">
-            <label htmlFor="username">Username</label>
-            <div className="border-gray-700 border-b-[2px]">
-              <input
-                className="h-[30px] w-full bg-gray-100 outline-none bg-inherit"
-                id="username"
-                ref={refUsername}
-              />
-            </div>
-          </div>
-          {/* password */}
-          <div className="py-4 px-[35px]">
-            <label htmlFor="password">Password</label>
-            <div className="border-gray-700 border-b-[2px] flex">
-              <input
-                type={passwordType}
-                className="h-[30px] w-full bg-gray-100  outline-none bg-inherit "
-                id="password"
-                ref={refPassword}
-              />
-              <span
-                className=" mx-2 pt-2 "
-                onClick={() => {
-                  passwordType === "text"
-                    ? dispatch(HIDE_PASSWORD)
-                    : dispatch(SHOW_PASSWORD);
-                }}
-              >
-                <AiOutlineEye style={{ display: `${eyeState}` }} />
-                <AiOutlineEyeInvisible
-                  style={{ display: `${closeEyeState}` }}
-                />
-              </span>
-            </div>
-          </div>
-          {/* confirm password */}
-          <div className="py-4 px-[35px]">
-            <label htmlFor="refConfirmPassword">Confirm Password</label>
-            <div className="border-gray-700 border-b-[2px] focus-within:border-indigo-500 flex">
-              <input
-                type={cfPasswordType}
-                className="h-[30px] w-full bg-gray-100  outline-none bg-inherit "
-                id="cfpassword"
-                ref={refConfirmPassword}
-              />
-              <span
-                className=" mx-2 pt-2 "
-                onClick={() => {
-                  cfPasswordType === "text"
-                    ? cfDispatch(HIDE_CFPASSWORD)
-                    : cfDispatch(SHOW_CFPASSWORD);
-                }}
-              >
-                <AiOutlineEye style={{ display: `${cfEyeState}` }} />
-                <AiOutlineEyeInvisible
-                  style={{ display: `${cfCloseEyeState}` }}
-                />
-              </span>
-            </div>
-          </div>
-          <p className="text-red-700">{message}</p>
-
-          <div className="flex justify-center w-full">
+    <div className=" flex align-middle justify-center  w-[100vw] h-[100vh] bg-gradient-to-b from-indigo-500">
+      <div className="sm:m-w-[350px] border relative border-gray-400 m-auto w-[350px] h-[520px] bg-slate-200/50 rounded-3xl">
+        <h1 className="text-center text-[35px] pt-7 font-bold pb-5">
+          Register
+        </h1>
+        <form className="px-[35px]" onSubmit={handleSubmit(onSubmit)}>
+          <label htmlFor="username">Username</label>
+          <div className="flex my-[15px]">
             <input
-              type="submit"
+              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+              type="text"
+              placeholder="username"
+              name="username"
+              {...register("username")}
+            />
+          </div>
+          <p className="text-[15px] text-red-600">{errors.username?.message}</p>
+          <label className="my-5" htmlFor="password">
+            Password
+          </label>
+
+          <div className=" flex my-[15px] bg-gray-100 rounded-md">
+            <input
+              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+              name="password"
+              type={`${passwordType}`}
+              placeholder="password"
+              {...register("password")}
+            />
+            <span
+              className=" mx-2 pt-2 bg-gray-100 cursor-pointer"
+              onClick={() => {
+                passwordType === "text"
+                  ? dispatch(HIDE_PASSWORD)
+                  : dispatch(SHOW_PASSWORD);
+              }}
+            >
+              <AiOutlineEye style={{ display: `${eyeState}` }} />
+              <AiOutlineEyeInvisible style={{ display: `${closeEyeState}` }} />
+            </span>
+          </div>
+          <p className="text-[15px] text-red-600">{errors.password?.message}</p>
+
+          <label className="my-5" htmlFor="password">
+            Confirm Password
+          </label>
+
+          <div className=" flex mt-[15px] bg-gray-100 rounded-md">
+            <input
+              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+              name="confirmPassword"
+              type={`${cfPasswordType}`}
+              placeholder="password"
+              {...register("confirmPassword")}
+            />
+            <span
+              className=" mx-2 pt-2 bg-gray-100 cursor-pointer"
+              onClick={() => {
+                cfPasswordType === "text"
+                  ? cfDispatch(HIDE_CFPASSWORD)
+                  : cfDispatch(SHOW_CFPASSWORD);
+              }}
+            >
+              <AiOutlineEye style={{ display: `${cfEyeState}` }} />
+              <AiOutlineEyeInvisible
+                style={{ display: `${cfCloseEyeState}` }}
+              />
+            </span>
+          </div>
+          <p className="text-[15px] text-red-600">
+            {errors.confirmPassword?.message}
+          </p>
+
+          <div className="flex justify-center absolute bottom-[40px] left-[135px] pt-10">
+            <input
               className="border transition duration-300 cursor-pointer px-3 py-1 
               bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-200
                my-[20px] rounded-md hover:bg-sky-700  hover:text-white"
-              onClick={register}
+              type="submit"
             />
           </div>
-          <div className="flex justify-end">
-            <span
-              className=" cursor-pointer hover:text-indigo-900 hover:underline box-border"
-              onClick={navigateToLogin}
+          <div className="flex justify-end absolute bottom-[18px] right-[35px]">
+            <p
+              className="cursor-pointer hover:text-indigo-600"
+              onClick={() => {
+                navigate("/register");
+              }}
             >
-              {" "}
-              Login
-            </span>
+              Register
+            </p>
           </div>
         </form>
       </div>

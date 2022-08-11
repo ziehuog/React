@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import App from "./App";
 import { AuthProvider } from "./components/Share/Context";
+import { DataProvider } from "./components/Share/DataContext";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { db } from "./utils/firebase";
@@ -12,9 +13,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
   <AuthProvider>
+    <DataProvider>
     <BrowserRouter>
       <App />
     </BrowserRouter>
+    </DataProvider>
   </AuthProvider>
 
   // </React.StrictMode>
