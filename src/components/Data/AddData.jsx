@@ -83,6 +83,7 @@ function AddData() {
         answers: data.answers,
       });
       toast.success("success");
+      window.location.reload()
     } else {
       toast.error("question id is duplicated!");
     }
@@ -145,11 +146,11 @@ function AddData() {
                 className="uppercase bg-gray-100 rounded-md 2xl:col-span-2 md:col-span-12 h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
                 {...register("correctAnswer")}
               >
-                <option value="A">A</option>
-                <option value="B">B</option>
-                <option value="C">C</option>
-                <option value="D">D</option>
-                <option value="E">E</option>
+                <option value="a">A</option>
+                <option value="b">B</option>
+                <option value="c">C</option>
+                <option value="d">D</option>
+                <option value="e">E</option>
               </select>
             </div>
 

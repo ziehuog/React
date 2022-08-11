@@ -16,7 +16,6 @@ import Modals from "./Data/Modals";
 const Navigation = () => {
   const navigate = useNavigate();
   const { authUsername } = useContext(Auth);
-  const [modalShow, setModalShow] = useState(false);
 
   const [state, dispatch] = useReducer(dataReducer, initState);
   const { data, storeAns } = state;
@@ -108,7 +107,6 @@ const Navigation = () => {
             handleAnswer,
             point,
             navigateToScore,
-            setModalShow, modalShow
           }}
         >
           <Routes>

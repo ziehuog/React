@@ -5,25 +5,20 @@ import { questionContext } from "../Share/Context";
 import Modals from "./Modals";
 import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
 
 function ShowData() {
-  const { state, setModalShow, modalShow } = useContext(questionContext);
-  const { data } = state;
-  const [allData, setAllData] = useState([]);
-  const [upData, setUpData] = useState({});
-  const [questionDt, setQuestionDt] = useState({
-    question: 'a',
-    id: '1'
-  });
+  const { state } = useContext(questionContext);
+  const [modalShow, setModalShow] = useState(false);
 
-  const handleChange = (question) => (e) => {
-    e.preventDefault();
-    setQuestionDt(e.target.value);
-    console.log(question);
-  };
+  const [allData, setAllData] = useState([]);
+  const [upData, setUpData] = useState({
+    data: {
+      question: "",
+      correctAnswer: "",
+    },
+    id: "",
+  });
 
   const FetchData = async () => {
     const querySnapshot = await getDocs(collection(db, "Questions"));
@@ -34,41 +29,33 @@ function ShowData() {
       });
     });
   };
-  // const {question} = value
-  // getData();
-  // }
-
-  // const updateData = () => {
-  //   setUpData(doc)
-  //   setModalShow(true);
-  // };
-  console.log(questionDt)
 
   const deleteData = async (id) => {
-    console.log(id);
-    await deleteDoc(doc(db, "Questions", id));
-    toast.success('Delete successfully')
-    window.location.reload()
+    let confirm = window.confirm("Are you sure?");
+    if (confirm) {
+      await deleteDoc(doc(db, "Questions", id));
+      toast.success("Delete successfully");
+      window.location.reload();
+    }
   };
 
   return (
-      <div className="px-6">
-        <Modals
-          handleChange={handleChange}
-          value={questionDt}
-          upData={upData}
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-          deleteData={deleteData}
-        />
+    <div className="px-6">
+      <Modals
+        // handleChange={handleChange}
+        upData={upData}
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        deleteData={deleteData}
+        // updateData = {updateData}
+      />
 
-        <button onClick={FetchData}>Fetch</button>
+      <button onClick={FetchData}>Fetch</button>
 
-        <h1 className="text-center text-[35px] pt-7 font-bold pb-5 ">
-          List questions
-        </h1>
-        <SimpleBar style={{ maxHeight: 600 }}>
-
+      <h1 className="text-center text-[35px] pt-7 font-bold pb-5 ">
+        List questions
+      </h1>
+      <SimpleBar style={{ maxHeight: 600 }}>
         {allData.map((items) => (
           <div key={items.data.id}>
             <div className="flex justify-between">
@@ -77,7 +64,7 @@ function ShowData() {
                 <button
                   variant="primary"
                   onClick={() => {
-                    setUpData(items.data.question);
+                    setUpData(items);
                     setModalShow(true);
                   }}
                   className="border mx-2 px-3 py-1 rounded-md hover:text-white 
@@ -110,9 +97,8 @@ function ShowData() {
             </div>
           </div>
         ))}
-    </SimpleBar>
-
-      </div>
+      </SimpleBar>
+    </div>
   );
 }
 
