@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
+import SimpleBar from "simplebar-react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
@@ -96,15 +97,16 @@ function AddData() {
       <div className="container mx-auto my-11 grid grid-cols-2 gap-6 ">
         <div
           className="sm:m-w-[350px] border relative border-gray-400 col-span-1 m-auto bg-slate-200/50 rounded-3xl
-          xl:h-[1200px] w-full md:h-[700px]"
+          xl:h-[1000px] w-full md:h-[800px]"
         >
           <h1 className="text-center text-[35px] pt-7 font-bold pb-5">
             Add question
           </h1>
           <form className="px-[35px]" onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-12 gap-5">
+          <SimpleBar style={{ maxHeight: 600 }}>
+            <div className="grid grid-cols-12 gap-y-3 2xl:gap-5 w-full">
               <div className="2xl:col-span-2 md:col-span-12">
-                <label className="my-5" htmlFor="id">
+                <label htmlFor="id">
                   Question id
                 </label>
                 <div className=" flex w-full mt-[15px] bg-gray-100 rounded-md">
@@ -118,11 +120,11 @@ function AddData() {
                 </div>
                 <p className="text-[15px] text-red-600">{errors.id?.message}</p>
               </div>
-              <div className="2xl:col-span-10 md:col-span-12">
+              <div className="2xl:col-span-10 md:col-span-12 ">
                 <label htmlFor="question">Question</label>
 
                 <input
-                  className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                  className="h-[35px] my-3 w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
                   type="text"
                   placeholder="question"
                   name="question"
@@ -134,13 +136,13 @@ function AddData() {
               </div>
             </div>
 
-            <label className="my-5" htmlFor="correctAnswer">
+            <label  htmlFor="correctAnswer">
               Correct answer
             </label>
-            <div className=" flex my-[15px] grid grid-cols-12 gap-5">
+            <div className=" flex my-[15px] grid grid-cols-12 2xl:gap-5">
               <select
                 name="correctAnswer"
-                className="uppercase  bg-gray-100 rounded-md 2xl:col-span-2 md:col-span-12 h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                className="uppercase bg-gray-100 rounded-md 2xl:col-span-2 md:col-span-12 h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
                 {...register("correctAnswer")}
               >
                 <option value="A">A</option>
@@ -157,9 +159,11 @@ function AddData() {
               <div>
                 {fields.map((item, index) => (
                   <div
-                    className="grid grid-cols-12 gap-5 w-full my-4"
+                    
                     key={item.id}
                   >
+                    <p>Ans: {}</p>
+                    <div className="grid grid-cols-12 2xl:gap-5 md:gap-2 w-full my-4">
                     <div className=" 2xl:col-span-2 md:col-span-3">
                       <input
                         className="uppercase w-full h-[35px] rounded-md px-[15px] outline-none placeholder:text-gray-500"
@@ -188,7 +192,7 @@ function AddData() {
                         Delete
                       </button>
                     </div>
-                    <button type="button"></button>
+                    </div>
                   </div>
                 ))}
                 <button
@@ -202,7 +206,8 @@ function AddData() {
                 </button>
               </div>
             </div>
-            <div className="flex justify-center absolute bottom-[40px] left-[135px] pt-10">
+              </SimpleBar>
+            <div className="flex justify-center absolute bottom-[5px] left-[135px] pt-10">
               <input
                 className="border transition duration-300 cursor-pointer px-3 py-1 
               bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-200
@@ -215,7 +220,7 @@ function AddData() {
 
         <div
           className="sm:m-w-[350px] col-span-1 border  border-gray-400 m-auto bg-slate-200/50 rounded-3xl
-          xl:h-[1200px] w-full md:h-[700px]"
+          xl:h-[1000px] w-full md:h-[800px]"
         >
           <ShowData />
         </div>
