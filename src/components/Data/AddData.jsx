@@ -6,12 +6,11 @@ import { toast } from "react-toastify";
 import { addDoc, collection, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../../utils/firebase";
 import { questionContext } from "../Share/Context";
-// import Select from "react-select/dist/declarations/src/Select";
 import Select from "react-select";
 
 function AddData() {
   const { state } = useContext(questionContext);
-  const { storeAns, data } = state;
+  const { data } = state;
   const [idInput, setIdInput] = useState();
 
   let schema = yup
@@ -32,8 +31,10 @@ function AddData() {
     );
   }, [data]);
 
+  console.log(idInput);
+
   const preloadValue = {
-    id: idInput,
+    id: `${idInput}`,
   };
 
   // }
@@ -72,18 +73,18 @@ function AddData() {
       toast.error("question id is duplicated!");
     }
   };
-  const options = [{value: 'A', label: 'A'}, {value: 'B', label: 'B'}, ];
+  // const options = [{value: 'A', label: 'A'}, {value: 'B', label: 'B'}, ];
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: "answers",
   });
   return (
-    <div>
-      <div className=" flex align-middle justify-center  w-[100vw] h-[100vh] bg-gradient-to-b from-indigo-500">
+    <div className=" flex align-middle justify-center w-[100vw] h-[100vh] bg-gradient-to-b from-indigo-500">
+      <div className="container mx-auto my-11 grid grid-cols-2 gap-6 ">
         <div
-          className="sm:m-w-[350px] border relative border-gray-400 m-auto bg-slate-200/50 rounded-3xl
-         xl:w-[1050px] xl:h-[1200px] md:w-[850px] md:h-[700px]"
+          className="sm:m-w-[350px] border relative border-gray-400 col-span-1 m-auto bg-slate-200/50 rounded-3xl
+          xl:h-[1200px] w-full md:h-[700px]"
         >
           <h1 className="text-center text-[35px] pt-7 font-bold pb-5">
             Add question
@@ -91,7 +92,7 @@ function AddData() {
           <form className="px-[35px]" onSubmit={handleSubmit(onSubmit)}>
             {/* id */}
             <div className="grid grid-cols-12 gap-5">
-              <div className=" col-span-2">
+              <div className=" col-span-2 md:col-span-12">
                 <label className="my-5" htmlFor="id">
                   Question id
                 </label>
@@ -100,6 +101,7 @@ function AddData() {
                   <input
                     className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
                     name="id"
+                    type="number"
                     {...register("id")}
                     required
                   />
@@ -109,16 +111,16 @@ function AddData() {
                 </p>
               </div>
               {/* question */}
-              <div className="col-span-10">
+              <div className="col-span-10 md:col-span-12">
                 <label htmlFor="question">Question</label>
                 <div className="flex my-[15px]">
-                  <input
+                  <textarea
                     className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
                     type="text"
                     placeholder="question"
                     name="question"
                     {...register("question")}
-                  />
+                  ></textarea>
                 </div>
                 <p className="text-[15px] text-red-600">
                   {errors.question?.message}
@@ -155,20 +157,20 @@ function AddData() {
                     key={item.id}
                   >
                     <div className=" col-span-2">
-                      <Controller
+                      {/* <Controller
                         as={<Select options={options} />}
                         control={control}
-                        onChange={([selected]) => {
-                          // React Select return object instead of value for selection
-                          return { value: selected };
-                        }}
-                        name={`food[${index}].name`}
-                        defaultValue={{ value: "chocolate" }}
-                      />
-                      {/* <input
+                        // onChange={([selected]) => {
+                        //   // React Select return object instead of value for selection
+                        //   return { value: selected };
+                        // }}
+                        name={`answers[${index}].id`}
+                        defaultValue={{ value: "A" }}
+                      /> */}
+                      <input
                         className="uppercase w-full h-[35px] rounded-md px-[15px] outline-none placeholder:text-gray-500"
                         {...register(`answers.${index}.id`)}
-                      /> */}
+                      />
                     </div>
                     <div className=" col-span-8">
                       <Controller
@@ -217,6 +219,13 @@ function AddData() {
               />
             </div>
           </form>
+        </div>
+
+        <div
+          className="sm:m-w-[350px] col-span-1 border  border-gray-400 m-auto bg-slate-200/50 rounded-3xl
+          xl:h-[1200px] w-full md:h-[700px]"
+        >
+          
         </div>
       </div>
     </div>
