@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { db } from "../../utils/firebase";
-import { addDoc, collection, getDocs, deleteDoc } from "firebase/firestore";
+import { collection, getDocs, deleteDoc,doc } from "firebase/firestore";
 import { questionContext } from "../Share/Context";
 import Modals from "./Modals";
 import Button from "react-bootstrap/Button";
@@ -42,7 +42,7 @@ function ShowData() {
 
   const deleteData = async (id) => {
     console.log(id);
-    await deleteDoc(collection(db, "Questions", id));
+    await deleteDoc(doc(db, "Questions", id));
   };
 
   return (
