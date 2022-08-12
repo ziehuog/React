@@ -91,7 +91,7 @@ const Register = () => {
             />
           </div>
           <p className="text-[15px] text-red-600">{errors.username?.message}</p>
-          <label className="my-5" htmlFor="password">
+          <label className="" htmlFor="password">
             Password
           </label>
 
@@ -117,7 +117,7 @@ const Register = () => {
           </div>
           <p className="text-[15px] text-red-600">{errors.password?.message}</p>
 
-          <label className="my-5" htmlFor="password">
+          <label htmlFor="password">
             Confirm Password
           </label>
 
@@ -159,10 +159,10 @@ const Register = () => {
             <p
               className="cursor-pointer hover:text-indigo-600"
               onClick={() => {
-                navigate("/register");
+                navigate("/login");
               }}
             >
-              Register
+              Login
             </p>
           </div>
         </form>

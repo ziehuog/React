@@ -19,7 +19,8 @@ const StartScreen = () => {
           <button
             
             className="text-[24px] border rounded-[8px] cursor-pointer py-1 px-8 hover:bg-gray-700/30 hover:text-white"
-            onClick={() => {navigate("test/question")}}
+            onClick={() => {navigate("test/question") 
+          window.location.reload()}}
             disabled = {btnStart}
           >
             {/* <Link to = '/question' refresh ='true'></Link> */}

@@ -7,25 +7,25 @@ const TestQuestion = () => {
 
   return (
     <div>
-      <div className="pt-9 px-6">
+      <div className="pt-9 px-6 w-full">
         {data.length === 0 ? (
           <div className="lds-dual-ring"></div>
         ) : (
           data.length > 0 && (
-            <div key={data[index].id}>
-              <div className="text-center text-[30px] font-thin font-serif">
+            <div key={data[index].id} className='w-full'>
+              <div className="text-center w-full text-[30px] font-thin font-serif">
                 {data[index].question}
               </div>
 
-              <div className="answers">
+              <div className="answers w-full">
                 {data[index].answers.map((answer) => (
-                  <label key={answer.id}>
-                    <div className="bg-indigo-700/40 rounded-[10px] my-[15px] py-2 text-start px-[10px]">
+                  <label key={answer.id} className="w-full">
+                    <div className="bg-indigo-700/40 w-full rounded-[10px] my-[15px] py-2 text-start px-[10px]">
                       <input
                         type="radio"
                         name={data[index].id}
                         checked={storeAns[index]?.answer === answer.id}
-                        className="mx-3"
+                        className="mx-3 "
                         value={answer.id}
                         onChange={handleAnswer(data[index].id)}
                       />

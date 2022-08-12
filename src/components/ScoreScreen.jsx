@@ -15,7 +15,7 @@ function ScoreScreen() {
   const navigateToHome = () => {
     navigate("/");
     setBtnStart(true)
-    window.location.reload();
+    // window.location.reload();
 
   };
   // for (let i = 0; i < data.length; i++) {

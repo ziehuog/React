@@ -76,7 +76,7 @@ const Login = () => {
             />
           </div>
           <p className="text-[15px] text-red-600">{errors.username?.message}</p>
-          <label className="my-5" htmlFor="password">
+          <label className="" htmlFor="password">
             Password
           </label>
 

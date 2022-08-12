@@ -1,23 +1,20 @@
-import React, { useContext, useState } from "react";
-import { db } from "../../utils/firebase";
-import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
-import { questionContext } from "../Share/Context";
-import Modals from "./Modals";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
 import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
-import { toast } from "react-toastify";
+import { db } from "../../utils/firebase";
+import Modals from "./Modals";
 
 function ShowData() {
-  const { state } = useContext(questionContext);
   const [modalShow, setModalShow] = useState(false);
+  const [displayFetch, setDisplayFetch] = useState('block')
 
   const [allData, setAllData] = useState([]);
   const [upData, setUpData] = useState({
-    data: {
-      question: "",
-      correctAnswer: "",
-    },
     id: "",
+    question: "",
+    correctAnswer: "",
   });
 
   const FetchData = async () => {
@@ -28,6 +25,7 @@ function ShowData() {
         return [...prev, { data: doc.data(), id: doc.id }];
       });
     });
+    setDisplayFetch('none')
   };
 
   const deleteData = async (id) => {
@@ -42,29 +40,39 @@ function ShowData() {
   return (
     <div className="px-6">
       <Modals
-        // handleChange={handleChange}
-        upData={upData}
+        updata={upData}
         show={modalShow}
         onHide={() => setModalShow(false)}
-        deleteData={deleteData}
-        // updateData = {updateData}
+        setupdata={setUpData}
       />
 
-      <button onClick={FetchData}>Fetch</button>
-
-      <h1 className="text-center text-[35px] pt-7 font-bold pb-5 ">
+      <h1 className="text-center text-[35px] pt-7 font-bold ">
         List questions
       </h1>
+      <div className="flex justify-center mt-4">
+      <button
+      style={{display: `${displayFetch}`}}
+        className="border mx-2 px-3 py-1 m-auto rounded-md hover:text-white 
+              transition-all duration-300 hover:bg-indigo-400 bg-zinc-100/60 "
+        onClick={FetchData}
+      >
+        Fetch
+      </button>
+      </div>
       <SimpleBar style={{ maxHeight: 600 }}>
         {allData.map((items) => (
-          <div key={items.data.id}>
+          <div key={items.data.id} className="border-2 border-black my-4 p-2">
             <div className="flex justify-between">
-              <div>Question {items.data.id}</div>
+              <div className="font-bold">Question {items.data.id}</div>
               <div>
                 <button
                   variant="primary"
                   onClick={() => {
-                    setUpData(items);
+                    setUpData({
+                      question: items.data.question,
+                      id: items.id,
+                      correctAnswer: items.data.correctAnswer,
+                    });
                     setModalShow(true);
                   }}
                   className="border mx-2 px-3 py-1 rounded-md hover:text-white 

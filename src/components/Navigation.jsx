@@ -1,17 +1,15 @@
 import { addDoc, collection, getDocs } from "firebase/firestore";
-import React, { useContext, useEffect, useReducer, useState } from "react";
+import React, { useContext, useEffect, useReducer } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { db } from "../utils/firebase";
-import UserManager from "./User/Userdetails";
+import AddData from "./Data/AddData";
 import TestContainer from "./MainTest/TestContainer";
 import ScoreScreen from "./ScoreScreen";
 import { ANSWER, SETDATA } from "./Share/Constants";
 import { Auth, questionContext } from "./Share/Context";
 import { dataReducer, initState } from "./Share/Reducer";
 import SubmitScreen from "./SubmitScreen";
-import AddData from "./Data/AddData";
-import UserDetails from "./User/Userdetails";
-import Modals from "./Data/Modals";
+import { default as UserDetails, default as UserManager } from "./User/Userdetails";
 
 const Navigation = () => {
   const navigate = useNavigate();
