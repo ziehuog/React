@@ -15,14 +15,22 @@ function Modals(props) {
   const dataId = props.updata.id;
   const question = props.updata.question;
   const correctAnswer = props.updata.correctAnswer;
+  const answers = props.updata.answers;
+  let answerList = []
+  // let answerList = []
 
-  // console.log(qId)
+  answers.map((ans, idx) => {
+    answerList.push(ans.answer)
+    
+    console.log(ans.answer)
+    console.log(ans.id)
+
+  })
+
+  console.log(props.updata)
 
 
-  const handleChange = (question) => (e) => {
-    console.log(e.target.value);
-    props.setupdata({ ...props.updata, [question]: e.target.value });
-  };
+
 
   const {
     register,
@@ -39,6 +47,8 @@ function Modals(props) {
       });
       toast.success("update successfully!");
       props.onHide()
+      window.location.reload()
+
     } catch {
       toast.error("Update failed");
     }
@@ -57,7 +67,11 @@ function Modals(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
+
+
         <form className="px-[35px]">
+
+          {/* display input question */}
           <label htmlFor="question">Question</label>
           <div className="flex my-[15px]">
             <input
@@ -67,10 +81,12 @@ function Modals(props) {
               placeholder="question"
               name="question"
               {...register("question", {
-                onChange: handleChange("question"),
+                onChange: props.handleChange("question"),
               })}
             />
           </div>
+
+          {/* display correct answer */}
           <label className="" htmlFor="correctAnswer">
             CorrectAnswer
           </label>
@@ -83,11 +99,26 @@ function Modals(props) {
               placeholder="correctAnswer"
               value={correctAnswer}
               {...register("correctAnswer", {
-                onChange: handleChange("correctAnswer"),
+                onChange: props.handleChange("correctAnswer"),
               })}
             />
-            <span className=" mx-2 pt-2 bg-gray-100 cursor-pointer"></span>
           </div>
+          <p>Answers</p>
+              {answers.map((ans, index) => (
+                <div className="flex my-[15px]" key={index}>
+                <input
+                  className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                  type="text"
+                  value={answerList[index]}
+                  placeholder="answer"
+                  name={`answer-${index}`}
+                  {...register(`answer-${index}`, {
+                    onChange: props.handleChange(`answer-${index}`),
+                  })}
+                />
+              </div>
+              ))}
+
           <button
             className="border mx-2 px-3 py-1 rounded-md hover:text-white 
           transition-all duration-300 bg-indigo-400 hover:bg-indigo-600 mt-7"

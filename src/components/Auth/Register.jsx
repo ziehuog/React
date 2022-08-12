@@ -41,7 +41,7 @@ const Register = () => {
   const onSubmit = async (data) => {
     console.log(data);
 
-    // validate and register
+    // read data from firebase
     let flag = true;
 
     const querySnapshot = await getDocs(collection(db, "Users"));
@@ -51,6 +51,8 @@ const Register = () => {
         flag = false;
       }
     });
+
+// validate unique and push into firebase
 
     if (flag) {
       addDoc(collection(db, "Users"), {
@@ -76,6 +78,7 @@ const Register = () => {
   return (
     <div className=" flex align-middle justify-center  w-[100vw] h-[100vh] bg-gradient-to-b from-indigo-500">
       <div className="sm:m-w-[350px] border relative border-gray-400 m-auto w-[350px] h-[520px] bg-slate-200/50 rounded-3xl">
+        
         <h1 className="text-center text-[35px] pt-7 font-bold pb-5">
           Register
         </h1>

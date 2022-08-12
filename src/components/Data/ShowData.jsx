@@ -15,6 +15,8 @@ function ShowData() {
     id: "",
     question: "",
     correctAnswer: "",
+    answers: [],
+    answerId: []
   });
 
   const FetchData = async () => {
@@ -22,10 +24,11 @@ function ShowData() {
 
     querySnapshot.forEach((doc) => {
       setAllData((prev) => {
-        return [...prev, { data: doc.data(), id: doc.id }];
+        return [ { data: doc.data(), id: doc.id }, ...prev];
       });
     });
     setDisplayFetch('none')
+
   };
 
   const deleteData = async (id) => {
@@ -37,13 +40,18 @@ function ShowData() {
     }
   };
 
+  const handleChange = (question) => (e) => {
+    console.log(e.target.value);
+    setUpData({ ...upData, [question]: e.target.value });
+  };
+
   return (
     <div className="px-6">
       <Modals
         updata={upData}
         show={modalShow}
         onHide={() => setModalShow(false)}
-        setupdata={setUpData}
+        handleChange={handleChange}
       />
 
       <h1 className="text-center text-[35px] pt-7 font-bold ">
@@ -72,6 +80,9 @@ function ShowData() {
                       question: items.data.question,
                       id: items.id,
                       correctAnswer: items.data.correctAnswer,
+                      answers: items.data.answers,
+                      answerId: items.data.id
+
                     });
                     setModalShow(true);
                   }}

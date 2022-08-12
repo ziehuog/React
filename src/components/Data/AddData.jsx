@@ -1,10 +1,11 @@
 import { addDoc, collection, getDocs } from "firebase/firestore";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import SimpleBar from "simplebar-react";
 import * as yup from "yup";
 import { db } from "../../utils/firebase";
+import { Navbar } from "../Auth/Navbar";
 import { questionContext } from "../Share/Context";
 import ShowData from "./ShowData";
 
@@ -22,6 +23,10 @@ function AddData() {
       answer: yup.string().required(),
     })
     .required();
+
+  useEffect(() => {
+    console.log(data.id);
+  }, [data]);
 
   const {
     register,
@@ -41,6 +46,9 @@ function AddData() {
       if (dataQuestions.id === data.id) {
         flag = false;
       }
+      dataQuestions.answers.map((items) => {
+        console.log(items);
+      });
     });
 
     if (flag) {
@@ -51,7 +59,6 @@ function AddData() {
         answers: data.answers,
       });
       toast.success("success");
-      // window.location.reload()
     } else {
       toast.error("question id is duplicated!");
     }
@@ -63,10 +70,12 @@ function AddData() {
   });
   return (
     <div className=" flex align-middle justify-center w-[100vw] h-[100vh] bg-gradient-to-b from-indigo-500">
-      <div className="container mx-auto my-11 grid grid-cols-2 gap-6 ">
+      <Navbar />
+
+      <div className="container mx-auto mt-[100px] grid grid-cols-2 gap-6 ">
         <div
           className="sm:m-w-[350px] border relative border-gray-400 col-span-1 m-auto bg-slate-200/50 rounded-3xl
-          xl:h-[1000px] w-full md:h-[800px]"
+          xl:h-[850px] w-full md:h-[800px]"
         >
           <h1 className="text-center text-[35px] pt-7 font-bold pb-5">
             Add question
@@ -81,7 +90,7 @@ function AddData() {
                       className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
                       name="id"
                       type="number"
-                      defaultValue={`${idInput}`}
+                      // value={`${idInput}`}
                       {...register("id")}
                     />
                   </div>
@@ -126,8 +135,8 @@ function AddData() {
                 <div>
                   {fields.map((item, index) => (
                     <div key={item.id}>
-                      <p>Ans: {}</p>
-                      <div className="grid grid-cols-12 2xl:gap-5 md:gap-2 w-full my-4">
+                      <p>Ans: {index + 1}</p>
+                      <div className="grid grid-cols-12 2xl:gap-5 md:gap-2 w-full ">
                         <div className=" 2xl:col-span-2 md:col-span-3">
                           <input
                             className="uppercase w-full h-[35px] rounded-md px-[15px] outline-none placeholder:text-gray-500"
@@ -150,8 +159,8 @@ function AddData() {
                           <button
                             onClick={() => remove(index)}
                             className="border transition duration-300 cursor-pointer px-3 py-1 
-                      bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-200
-                       rounded-md hover:bg-sky-700  hover:text-white"
+                              bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-200
+                              rounded-md hover:bg-sky-700  hover:text-white"
                           >
                             Delete
                           </button>
@@ -184,7 +193,7 @@ function AddData() {
 
         <div
           className="sm:m-w-[350px] col-span-1 border  border-gray-400 m-auto bg-slate-200/50 rounded-3xl
-          xl:h-[1000px] w-full md:h-[800px]"
+          xl:h-[850px] w-full md:h-[800px]"
         >
           <ShowData />
         </div>
