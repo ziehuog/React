@@ -9,15 +9,14 @@ import { ANSWER, SETDATA } from "./Share/Constants";
 import { Auth, questionContext } from "./Share/Context";
 import { dataReducer, initState } from "./Share/Reducer";
 import SubmitScreen from "./SubmitScreen";
-import { default as UserDetails, default as UserManager } from "./User/Userdetails";
+import NavUser from "./User/NavUser";
 
 const Navigation = () => {
   const navigate = useNavigate();
-  const { authUsername } = useContext(Auth);
+  const { authUsername, setBtnStart } = useContext(Auth);
 
   const [state, dispatch] = useReducer(dataReducer, initState);
   const { data, storeAns } = state;
-
 
   useEffect(() => {
     const getData = async () => {
@@ -31,9 +30,6 @@ const Navigation = () => {
     };
     getData();
   }, []);
-
-
-
 
   //answer
   const handleAnswer = (id) => (e) => {
@@ -63,34 +59,34 @@ const Navigation = () => {
   let point = Math.round((score / data.length) * 10);
 
   const navigateToScore = async () => {
-    // let flag = true;
+    let count = 0;
 
     const querySnapshot = await getDocs(collection(db, "Result"));
     querySnapshot.forEach((doc) => {
       const aUser = doc.data();
-    //   if (aUser.username === JSON.parse(authUsername)) {
-    //     flag = false;
-    //   }
-    // });
-    // if (flag) {
+      if (aUser.username === JSON.parse(authUsername)) {
+        count++;
+      }
+    });
+    if (count < 5) {
       try {
         addDoc(collection(db, "Result"), {
           username: JSON.parse(authUsername),
           score: point,
         });
-        console.log('ok')
-        navigate('/test/score')
+        navigate("/test/score");
       } catch (e) {
         console.error("Error adding document: ", e);
       }
-    // } 
-    // else {
-      // window.alert(
-      //   "You have done this test before so your result cannot save!",
-      //   navigate("/home")
-      // );
-      // console.log('this')
-    })
+    } else {
+      window.alert(
+        "You have done this test 5 times before so your result cannot save!",
+
+        navigate("/")
+      );
+      setBtnStart(true);
+
+    }
   };
 
   return (
@@ -111,11 +107,9 @@ const Navigation = () => {
             <Route path="/question" element={<TestContainer />} />
             <Route path="/submit" element={<SubmitScreen />} />
             <Route path="/score" element={<ScoreScreen />} />
-            <Route path="/user" element={<UserManager />} />
-        <Route path="user" element={<UserDetails />} />
-        <Route path="add-data" element={<AddData />} />
-        {/* <Route path="add-data" element={<AddData />} /> */}
-
+            <Route path="user/*" element={<NavUser />} />
+            <Route path="add-data" element={<AddData />} />
+            {/* <Route path="add-data" element={<AddData />} /> */}
           </Routes>
         </questionContext.Provider>
       )}

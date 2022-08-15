@@ -39,7 +39,6 @@ const Register = () => {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
 
     // read data from firebase
     let flag = true;

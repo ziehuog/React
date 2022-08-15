@@ -15,17 +15,32 @@ const StartScreen = () => {
           Click <b>Start</b> to start the test!
         </div>
 
-        <div className="text-center">
+        <div className="flex justify-center">
+          <div className="mx-[20px]">
+            <h2 className="text-[25px] text-center">Maths</h2>
           <button
             
-            className="text-[24px] border rounded-[8px] cursor-pointer py-1 px-8 hover:bg-gray-700/30 hover:text-white"
+            className="text-[20px] border rounded-[8px] cursor-pointer my-3 py-1 px-6 hover:bg-gray-700/30 hover:text-white"
             onClick={() => {navigate("test/question") 
           window.location.reload()}}
             disabled = {btnStart}
           >
-            {/* <Link to = '/question' refresh ='true'></Link> */}
             Start
           </button>
+          </div>
+          <div className="mx-[20px]">
+            <h2 className="text-[25px] text-center">Physics</h2>
+          <button
+            
+            className="text-[20px] border rounded-[8px] cursor-pointer my-3 py-1 px-6 hover:bg-gray-700/30 hover:text-white"
+            onClick={() => {navigate("test/question") 
+          window.location.reload()}}
+            disabled = {btnStart}
+          >
+            Start
+          </button>
+          </div>
+          
         </div>
       </div>
     </Fragment>

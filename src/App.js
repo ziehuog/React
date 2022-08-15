@@ -5,11 +5,9 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
-import AddData from "./components/Data/AddData";
 import Navigation from "./components/Navigation";
 import { Auth } from "./components/Share/Context";
 import StartScreen from "./components/StartScreen";
-import UserDetails from "./components/User/Userdetails";
 
 function App() {
   const { token } = useContext(Auth);

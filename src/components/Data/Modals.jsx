@@ -11,25 +11,20 @@ import { toast } from "react-toastify";
 
 function Modals(props) {
 
-  // const {dataId, question, correctAnswer} = props.updata
   const dataId = props.updata.id;
   const question = props.updata.question;
   const correctAnswer = props.updata.correctAnswer;
-  const answers = props.updata.answers;
-  let answerList = []
-  // let answerList = []
-
-  answers.map((ans, idx) => {
-    answerList.push(ans.answer)
-    
-    console.log(ans.answer)
-    console.log(ans.id)
-
-  })
-
-  console.log(props.updata)
+  // const id_0 = props.updata.id_0;
+  // const id_1 = props.updata.id_1;
+  // const id_2 = props.updata.id_2;
+  // const id_3 = props.updata.id_3;
+  const answer_0 = props.updata.answer_0;
+  const answer_1 = props.updata.answer_1;
+  const answer_2 = props.updata.answer_2;
+  const answer_3 = props.updata.answer_3;
 
 
+console.log(props.updata)
 
 
   const {
@@ -44,6 +39,14 @@ function Modals(props) {
         ...data,
         question: question,
         correctAnswer: correctAnswer,
+        // answers: [
+        //   {answer: answer_0, id: id_0},
+        //   {answer: answer_1, id: id_1},
+        //   {answer: answer_2, id: id_2},
+        //   {answer: answer_3, id: id_3},
+
+        // ],
+
       });
       toast.success("update successfully!");
       props.onHide()
@@ -104,21 +107,96 @@ function Modals(props) {
             />
           </div>
           <p>Answers</p>
-              {answers.map((ans, index) => (
-                <div className="flex my-[15px]" key={index}>
-                <input
-                  className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
-                  type="text"
-                  value={answerList[index]}
-                  placeholder="answer"
-                  name={`answer-${index}`}
-                  {...register(`answer-${index}`, {
-                    onChange: props.handleChange(`answer-${index}`),
-                  })}
-                />
-              </div>
-              ))}
 
+          <div className=" flex mt-[15px] bg-gray-100 rounded-md">
+          {/* <input
+              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+              name="id_0"
+              type="text"
+              placeholder="answer"
+              value={id_0.id}
+              {...register("id_0", {
+                onChange: props.handleChange("id_0"),
+              })}
+            /> */}
+            <input
+              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+              name="answer_0"
+              type="text"
+              placeholder="answer"
+              value={answer_0.answer}
+              {...register("answer_0", {
+                onChange: props.handleChange("answer_0"),
+              })}
+            />
+          </div>
+          <div className=" flex mt-[15px] bg-gray-100 rounded-md">
+          {/* <input
+              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+              name="id_1"
+              type="text"
+              placeholder="answer"
+              value={id_1.id}
+              {...register("id_1", {
+                onChange: props.handleChange("id_1"),
+              })}
+            /> */}
+            <input
+              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+              name="answer_1"
+              type="text"
+              placeholder="answer"
+              value={answer_1.answer}
+              {...register("answer_1", {
+                onChange: props.handleChange("answer_1"),
+              })}
+            />
+          </div>
+          <div className=" flex mt-[15px] bg-gray-100 rounded-md">
+          {/* <input
+              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+              name="id_2"
+              type="text"
+              placeholder="answer"
+              value={id_2.id}
+              {...register("id_2", {
+                onChange: props.handleChange("id_2"),
+              })}
+            /> */}
+            <input
+              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+              name="answer_2"
+              type="text"
+              placeholder="answer"
+              value={answer_2?.answer}
+              {...register("answer_2", {
+                onChange: props.handleChange("answer_2"),
+              })}
+            />
+          </div>
+
+          <div className=" flex mt-[15px] bg-gray-100 rounded-md">
+          {/* <input
+              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+              name="id_3"
+              type="text"
+              placeholder="answer"
+              value={id_3.id}
+              {...register("id_3", {
+                onChange: props.handleChange("id_3"),
+              })}
+            /> */}
+            <input
+              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+              name="answer_3"
+              type="text"
+              placeholder="answer"
+              value={answer_3?.answer}
+              {...register("answer_3", {
+                onChange: props.handleChange("answer_3"),
+              })}
+            />
+          </div>
           <button
             className="border mx-2 px-3 py-1 rounded-md hover:text-white 
           transition-all duration-300 bg-indigo-400 hover:bg-indigo-600 mt-7"

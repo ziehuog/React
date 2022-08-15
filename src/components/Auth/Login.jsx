@@ -35,7 +35,6 @@ const Login = () => {
     const querySnapshot = await getDocs(collection(db, "Users"));
 
     querySnapshot.forEach((doc) => {
-      console.log(doc.id);
       const aUser = doc.data();
       if (
         aUser.username === data.username &&

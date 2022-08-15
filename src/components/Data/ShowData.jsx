@@ -6,17 +6,23 @@ import "simplebar/dist/simplebar.min.css";
 import { db } from "../../utils/firebase";
 import Modals from "./Modals";
 
-function ShowData() {
+function ShowData(props) {
   const [modalShow, setModalShow] = useState(false);
-  const [displayFetch, setDisplayFetch] = useState('block')
 
   const [allData, setAllData] = useState([]);
   const [upData, setUpData] = useState({
     id: "",
     question: "",
     correctAnswer: "",
-    answers: [],
-    answerId: []
+    id_0: "",
+    id_1: "",
+    id_2: "",
+    id_3: "",
+    answer_0: '',
+    answer_1: '',
+    answer_2: '',
+    answer_3: '',
+
   });
 
   const FetchData = async () => {
@@ -24,11 +30,10 @@ function ShowData() {
 
     querySnapshot.forEach((doc) => {
       setAllData((prev) => {
-        return [ { data: doc.data(), id: doc.id }, ...prev];
+        return [{ data: doc.data(), id: doc.id }, ...prev];
       });
     });
-    setDisplayFetch('none')
-
+    props.setDisplayFetch("none");
   };
 
   const deleteData = async (id) => {
@@ -39,7 +44,6 @@ function ShowData() {
       window.location.reload();
     }
   };
-
   const handleChange = (question) => (e) => {
     console.log(e.target.value);
     setUpData({ ...upData, [question]: e.target.value });
@@ -58,14 +62,14 @@ function ShowData() {
         List questions
       </h1>
       <div className="flex justify-center mt-4">
-      <button
-      style={{display: `${displayFetch}`}}
-        className="border mx-2 px-3 py-1 m-auto rounded-md hover:text-white 
+        <button
+          style={{ display: `${props.displayFetch}` }}
+          className="border mx-2 px-3 py-1 m-auto rounded-md hover:text-white 
               transition-all duration-300 hover:bg-indigo-400 bg-zinc-100/60 "
-        onClick={FetchData}
-      >
-        Fetch
-      </button>
+          onClick={FetchData}
+        >
+          Fetch
+        </button>
       </div>
       <SimpleBar style={{ maxHeight: 600 }}>
         {allData.map((items) => (
@@ -80,9 +84,8 @@ function ShowData() {
                       question: items.data.question,
                       id: items.id,
                       correctAnswer: items.data.correctAnswer,
-                      answers: items.data.answers,
-                      answerId: items.data.id
-
+                      answer_: items.data.answers,
+                      
                     });
                     setModalShow(true);
                   }}

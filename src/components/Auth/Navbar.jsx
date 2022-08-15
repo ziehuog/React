@@ -24,7 +24,8 @@ export const Navbar = () => {
   };
 
   return (
-    <div className="flex justify-between px-6 h-[45px] items-center bg-white z-[100] fixed w-full">
+    <div className="flex justify-between px-6 h-[55px] items-center bg-white 
+    z-[100] fixed w-full border-b-2 border-indigo-700">
       <div onClick={() => navigate("/")}>
         <img className="h-[45px] cursor-pointer" src={logo} />
       </div>

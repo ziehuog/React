@@ -13,6 +13,8 @@ function AddData() {
   const { state } = useContext(questionContext);
   const { data } = state;
   const [idInput, setIdInput] = useState();
+  const [displayFetch, setDisplayFetch] = useState('block')
+
 
   let schema = yup
     .object()
@@ -24,9 +26,9 @@ function AddData() {
     })
     .required();
 
-  useEffect(() => {
-    console.log(data.id);
-  }, [data]);
+  // useEffect(() => {
+  //   console.log(data.id);
+  // }, [data]);
 
   const {
     register,
@@ -38,7 +40,6 @@ function AddData() {
   let flag = true;
 
   const onSubmit = async (data) => {
-    console.log(data);
 
     const querySnapshot = await getDocs(collection(db, "Questions"));
     querySnapshot.forEach((doc) => {
@@ -59,6 +60,7 @@ function AddData() {
         answers: data.answers,
       });
       toast.success("success");
+      setDisplayFetch('block')
     } else {
       toast.error("question id is duplicated!");
     }
@@ -195,7 +197,7 @@ function AddData() {
           className="sm:m-w-[350px] col-span-1 border  border-gray-400 m-auto bg-slate-200/50 rounded-3xl
           xl:h-[850px] w-full md:h-[800px]"
         >
-          <ShowData />
+          <ShowData setDisplayFetch={setDisplayFetch} displayFetch={displayFetch}/>
         </div>
       </div>
     </div>
