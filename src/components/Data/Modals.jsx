@@ -14,17 +14,16 @@ function Modals(props) {
   const dataId = props.updata.id;
   const question = props.updata.question;
   const correctAnswer = props.updata.correctAnswer;
-  // const id_0 = props.updata.id_0;
-  // const id_1 = props.updata.id_1;
-  // const id_2 = props.updata.id_2;
-  // const id_3 = props.updata.id_3;
   const answer_0 = props.updata.answer_0;
   const answer_1 = props.updata.answer_1;
   const answer_2 = props.updata.answer_2;
   const answer_3 = props.updata.answer_3;
+  const id_0 = props.updata.id_0;
+  const id_1 = props.updata.id_1;
+  const id_2 = props.updata.id_2;
+  const id_3 = props.updata.id_3;
 
 
-console.log(props.updata)
 
 
   const {
@@ -39,13 +38,12 @@ console.log(props.updata)
         ...data,
         question: question,
         correctAnswer: correctAnswer,
-        // answers: [
-        //   {answer: answer_0, id: id_0},
-        //   {answer: answer_1, id: id_1},
-        //   {answer: answer_2, id: id_2},
-        //   {answer: answer_3, id: id_3},
-
-        // ],
+        answers: [
+          {answer: answer_0, id: id_0},
+          {answer: answer_1, id: id_1},
+          {answer : answer_2 , id: id_2 } ,
+          {answer: answer_3, id: id_3},
+        ],
 
       });
       toast.success("update successfully!");
@@ -109,66 +107,66 @@ console.log(props.updata)
           <p>Answers</p>
 
           <div className=" flex mt-[15px] bg-gray-100 rounded-md">
-          {/* <input
+          <input
               className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
               name="id_0"
               type="text"
               placeholder="answer"
-              value={id_0.id}
+              value={id_0}
               {...register("id_0", {
                 onChange: props.handleChange("id_0"),
               })}
-            /> */}
+            />
             <input
               className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
               name="answer_0"
               type="text"
               placeholder="answer"
-              value={answer_0.answer}
+              value={answer_0}
               {...register("answer_0", {
                 onChange: props.handleChange("answer_0"),
               })}
             />
           </div>
           <div className=" flex mt-[15px] bg-gray-100 rounded-md">
-          {/* <input
+          <input
               className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
               name="id_1"
               type="text"
               placeholder="answer"
-              value={id_1.id}
+              value={id_1}
               {...register("id_1", {
                 onChange: props.handleChange("id_1"),
               })}
-            /> */}
+            />
             <input
               className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
               name="answer_1"
               type="text"
               placeholder="answer"
-              value={answer_1.answer}
+              value={answer_1}
               {...register("answer_1", {
                 onChange: props.handleChange("answer_1"),
               })}
             />
           </div>
           <div className=" flex mt-[15px] bg-gray-100 rounded-md">
-          {/* <input
+          <input
               className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
               name="id_2"
               type="text"
               placeholder="answer"
-              value={id_2.id}
+              value={id_2}
               {...register("id_2", {
                 onChange: props.handleChange("id_2"),
               })}
-            /> */}
+            />
             <input
               className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
               name="answer_2"
               type="text"
               placeholder="answer"
-              value={answer_2?.answer}
+              value={answer_2}
               {...register("answer_2", {
                 onChange: props.handleChange("answer_2"),
               })}
@@ -176,22 +174,22 @@ console.log(props.updata)
           </div>
 
           <div className=" flex mt-[15px] bg-gray-100 rounded-md">
-          {/* <input
+          <input
               className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
               name="id_3"
               type="text"
               placeholder="answer"
-              value={id_3.id}
+              value={id_3}
               {...register("id_3", {
                 onChange: props.handleChange("id_3"),
               })}
-            /> */}
+            />
             <input
               className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
               name="answer_3"
               type="text"
               placeholder="answer"
-              value={answer_3?.answer}
+              value={answer_3}
               {...register("answer_3", {
                 onChange: props.handleChange("answer_3"),
               })}

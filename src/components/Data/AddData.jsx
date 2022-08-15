@@ -1,6 +1,7 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { addDoc, collection, getDocs } from "firebase/firestore";
-import React, { useContext, useEffect, useState } from "react";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import React, { useContext, useState } from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import SimpleBar from "simplebar-react";
 import * as yup from "yup";
@@ -12,9 +13,7 @@ import ShowData from "./ShowData";
 function AddData() {
   const { state } = useContext(questionContext);
   const { data } = state;
-  const [idInput, setIdInput] = useState();
-  const [displayFetch, setDisplayFetch] = useState('block')
-
+  const [displayFetch, setDisplayFetch] = useState("block");
 
   let schema = yup
     .object()
@@ -26,9 +25,6 @@ function AddData() {
     })
     .required();
 
-  // useEffect(() => {
-  //   console.log(data.id);
-  // }, [data]);
 
   const {
     register,
@@ -36,11 +32,13 @@ function AddData() {
     control,
     watch,
     formState: { errors },
-  } = useForm({});
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
   let flag = true;
 
   const onSubmit = async (data) => {
-
+    console.log(data)
     const querySnapshot = await getDocs(collection(db, "Questions"));
     querySnapshot.forEach((doc) => {
       const dataQuestions = doc.data();
@@ -57,19 +55,20 @@ function AddData() {
         id: data.id,
         question: data.question,
         correctAnswer: data.correctAnswer,
-        answers: data.answers,
+        answers: [
+          {answer: data.answer_0, id: data.answerId_0},
+          {answer: data.answer_1, id: data.answerId_1},
+          {answer: data.answer_2, id: data.answerId_2},
+          {answer: data.answer_3, id: data.answerId_3},
+        ],
       });
       toast.success("success");
-      setDisplayFetch('block')
+      setDisplayFetch("block");
     } else {
       toast.error("question id is duplicated!");
     }
   };
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "answers",
-  });
   return (
     <div className=" flex align-middle justify-center w-[100vw] h-[100vh] bg-gradient-to-b from-indigo-500">
       <Navbar />
@@ -92,7 +91,6 @@ function AddData() {
                       className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
                       name="id"
                       type="number"
-                      // value={`${idInput}`}
                       {...register("id")}
                     />
                   </div>
@@ -123,62 +121,101 @@ function AddData() {
                   className="uppercase bg-gray-100 rounded-md 2xl:col-span-2 md:col-span-12 h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
                   {...register("correctAnswer")}
                 >
-                  <option value="a">A</option>
-                  <option value="b">B</option>
-                  <option value="c">C</option>
-                  <option value="d">D</option>
-                  <option value="e">E</option>
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                  <option value="D">D</option>
                 </select>
               </div>
 
               <p>ANSWERS</p>
 
               <div className="mt-[20px]">
-                <div>
-                  {fields.map((item, index) => (
-                    <div key={item.id}>
-                      <p>Ans: {index + 1}</p>
-                      <div className="grid grid-cols-12 2xl:gap-5 md:gap-2 w-full ">
-                        <div className=" 2xl:col-span-2 md:col-span-3">
-                          <input
-                            className="uppercase w-full h-[35px] rounded-md px-[15px] outline-none placeholder:text-gray-500"
-                            {...register(`answers.${index}.id`)}
-                          />
-                        </div>
-                        <div className=" 2xl:col-span-8 md:col-span-9">
-                          <Controller
-                            render={({ field }) => (
-                              <input
-                                className="w-full h-[35px] rounded-md px-[15px] outline-none placeholder:text-gray-500"
-                                {...field}
-                              />
-                            )}
-                            name={`answers.${index}.answer`}
-                            control={control}
-                          />
-                        </div>
-                        <div className="md:col-end-10">
-                          <button
-                            onClick={() => remove(index)}
-                            className="border transition duration-300 cursor-pointer px-3 py-1 
-                              bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-200
-                              rounded-md hover:bg-sky-700  hover:text-white"
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                  <button
-                    className="border transition duration-300 cursor-pointer px-3 py-1 
-                bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-200
-                 rounded-md hover:bg-sky-700  hover:text-white"
-                    type="button"
-                    onClick={() => append()}
-                  >
-                    Append
-                  </button>
+                <div className="grid grid-cols-12 gap-y-3 2xl:gap-5 md:gap-2 w-full">
+                  <div className="2xl:col-span-2 md:col-span-3">
+                    <input
+                      className="h-[35px] my-3 w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                      type="text"
+                      name="question"
+                      value="A"
+                      {...register("answerId_0")}
+                    />
+                  </div>
+                  <div className="2xl:col-span-10 md:col-span-9">
+                    <input
+                      className="h-[35px] my-3 w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                      type="text"
+                      placeholder="answer"
+                      name="question"
+                      required
+                      {...register("answer_0")}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-12 gap-y-3 2xl:gap-5 md:gap-2 w-full">
+                  <div className="2xl:col-span-2 md:col-span-3">
+                    <input
+                      className="h-[35px] my-3 w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                      type="text"
+                      name="question"
+                      value="B"
+                      {...register("answerId_1")}
+                    />
+                  </div>
+                  <div className="2xl:col-span-10 md:col-span-9">
+                    <input
+                      className="h-[35px] my-3 w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                      type="text"
+                      placeholder="answer"
+                      required
+                      name="question"
+                      {...register("answer_1")}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-12 gap-y-3 2xl:gap-5 md:gap-2 w-full">
+                  <div className="2xl:col-span-2 md:col-span-3">
+                    <input
+                      className="h-[35px] my-3 w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                      type="text"
+                      name="question"
+                      value="C"
+                      {...register("answerId_2")}
+                    />
+                  </div>
+                  <div className="2xl:col-span-10 md:col-span-9">
+                    <input
+                      className="h-[35px] my-3 w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                      type="text"
+                      placeholder="answer"
+                      required
+                      name="question"
+                      {...register("answer_2")}
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-12 gap-y-3 2xl:gap-5 md:gap-2 w-full">
+                  <div className="2xl:col-span-2 md:col-span-3">
+                    <input
+                      className="h-[35px] my-3 w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                      type="text"
+                      name="answerId_3"
+                      value="D"
+                      {...register("answerId_3")}
+                    />
+                  </div>
+                  <div className="2xl:col-span-10 md:col-span-9">
+                    <input
+                      className="h-[35px] my-3 w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                      type="text"
+                      placeholder="answer"
+                      name="answer_3"
+                      {...register("answer_3")}
+                      required
+                    />
+                  </div>
                 </div>
               </div>
             </SimpleBar>
@@ -197,7 +234,10 @@ function AddData() {
           className="sm:m-w-[350px] col-span-1 border  border-gray-400 m-auto bg-slate-200/50 rounded-3xl
           xl:h-[850px] w-full md:h-[800px]"
         >
-          <ShowData setDisplayFetch={setDisplayFetch} displayFetch={displayFetch}/>
+          <ShowData
+            setDisplayFetch={setDisplayFetch}
+            displayFetch={displayFetch}
+          />
         </div>
       </div>
     </div>

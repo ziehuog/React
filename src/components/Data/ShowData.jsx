@@ -14,14 +14,14 @@ function ShowData(props) {
     id: "",
     question: "",
     correctAnswer: "",
+    answer_0: "",
+    answer_1: "",
+    answer_2: "",
+    answer_3: "",
     id_0: "",
     id_1: "",
     id_2: "",
     id_3: "",
-    answer_0: '',
-    answer_1: '',
-    answer_2: '',
-    answer_3: '',
 
   });
 
@@ -84,8 +84,14 @@ function ShowData(props) {
                       question: items.data.question,
                       id: items.id,
                       correctAnswer: items.data.correctAnswer,
-                      answer_: items.data.answers,
-                      
+                      answer_0: items.data.answers[0]?.answer,
+                      answer_1: items.data.answers[1]?.answer,
+                      answer_2: items.data.answers[2]?.answer,
+                      answer_3: items.data.answers[3]?.answer,
+                      id_0: items.data.answers[0]?.id,
+                      id_1: items.data.answers[1]?.id,
+                      id_2: items.data.answers[2]?.id,
+                      id_3: items.data.answers[3]?.id,
                     });
                     setModalShow(true);
                   }}
