@@ -7,6 +7,7 @@ import TestContainer from "./MainTest/TestContainer";
 import ScoreScreen from "./ScoreScreen";
 import { ANSWER, SETDATA } from "./Share/Constants";
 import { Auth, questionContext } from "./Share/Context";
+import { dataContext } from "./Share/DataContext";
 import { dataReducer, initState } from "./Share/Reducer";
 import SubmitScreen from "./SubmitScreen";
 import NavUser from "./User/NavUser";
@@ -14,13 +15,14 @@ import NavUser from "./User/NavUser";
 const Navigation = () => {
   const navigate = useNavigate();
   const { authUsername, setBtnStart } = useContext(Auth);
+  const { subject } = useContext(dataContext);
 
   const [state, dispatch] = useReducer(dataReducer, initState);
   const { data, storeAns } = state;
 
   useEffect(() => {
     const getData = async () => {
-      const questionData = await getDocs(collection(db, "Questions"));
+      const questionData = await getDocs(collection(db, `${subject}`));
       dispatch({
         type: SETDATA,
         data: questionData.docs
@@ -61,7 +63,7 @@ const Navigation = () => {
   const navigateToScore = async () => {
     let count = 0;
 
-    const querySnapshot = await getDocs(collection(db, "Result"));
+    const querySnapshot = await getDocs(collection(db, "Results"));
     querySnapshot.forEach((doc) => {
       const aUser = doc.data();
       if (aUser.username === JSON.parse(authUsername)) {
@@ -70,9 +72,10 @@ const Navigation = () => {
     });
     if (count < 5) {
       try {
-        addDoc(collection(db, "Result"), {
+        addDoc(collection(db, "Results"), {
           username: JSON.parse(authUsername),
           score: point,
+          subject: subject,
         });
         navigate("/test/score");
       } catch (e) {

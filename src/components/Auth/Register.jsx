@@ -1,10 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useReducer } from "react";
-import { useNavigate } from "react-router-dom";
-
 import { addDoc, collection, getDocs } from "firebase/firestore";
+import React, { useReducer } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { db } from "../../utils/firebase";
@@ -19,6 +18,7 @@ import { cfInitState, cfReducer, initState, reducer } from "../Share/Reducer";
 const Register = () => {
   const navigate = useNavigate();
 
+  // validate
   let schema = yup
     .object()
     .shape({
@@ -39,7 +39,6 @@ const Register = () => {
   });
 
   const onSubmit = async (data) => {
-
     // read data from firebase
     let flag = true;
 
@@ -51,7 +50,7 @@ const Register = () => {
       }
     });
 
-// validate unique and push into firebase
+    // validate unique and push into firebase
 
     if (flag) {
       addDoc(collection(db, "Users"), {
@@ -77,7 +76,6 @@ const Register = () => {
   return (
     <div className=" flex align-middle justify-center  w-[100vw] h-[100vh] bg-gradient-to-b from-indigo-500">
       <div className="sm:m-w-[350px] border relative border-gray-400 m-auto w-[350px] h-[520px] bg-slate-200/50 rounded-3xl">
-        
         <h1 className="text-center text-[35px] pt-7 font-bold pb-5">
           Register
         </h1>
@@ -93,6 +91,8 @@ const Register = () => {
             />
           </div>
           <p className="text-[15px] text-red-600">{errors.username?.message}</p>
+
+          {/* password */}
           <label className="" htmlFor="password">
             Password
           </label>
@@ -119,10 +119,8 @@ const Register = () => {
           </div>
           <p className="text-[15px] text-red-600">{errors.password?.message}</p>
 
-          <label htmlFor="password">
-            Confirm Password
-          </label>
-
+          {/* confirm password */}
+          <label htmlFor="password">Confirm Password</label>
           <div className=" flex mt-[15px] bg-gray-100 rounded-md">
             <input
               className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"

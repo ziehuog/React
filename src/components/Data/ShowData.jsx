@@ -1,15 +1,18 @@
 import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import React, { useState } from "react";
+import { useContext } from "react";
 import { toast } from "react-toastify";
 import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
 import { db } from "../../utils/firebase";
+import { dataContext } from "../Share/DataContext";
 import Modals from "./Modals";
 
 function ShowData(props) {
   const [modalShow, setModalShow] = useState(false);
-
   const [allData, setAllData] = useState([]);
+  const { subject } = useContext(dataContext);
+  
   const [upData, setUpData] = useState({
     id: "",
     question: "",
@@ -25,8 +28,10 @@ function ShowData(props) {
 
   });
 
+
+  //fetch data and show on screen
   const FetchData = async () => {
-    const querySnapshot = await getDocs(collection(db, "Questions"));
+    const querySnapshot = await getDocs(collection(db, `${subject}`));
 
     querySnapshot.forEach((doc) => {
       setAllData((prev) => {
@@ -36,18 +41,23 @@ function ShowData(props) {
     props.setDisplayFetch("none");
   };
 
+
+//delete data from database
   const deleteData = async (id) => {
     let confirm = window.confirm("Are you sure?");
     if (confirm) {
-      await deleteDoc(doc(db, "Questions", id));
+      await deleteDoc(doc(db, `${subject}`, id));
       toast.success("Delete successfully");
       window.location.reload();
     }
   };
+
+  //handle change value and key in upData when change value in input
   const handleChange = (question) => (e) => {
-    console.log(e.target.value);
     setUpData({ ...upData, [question]: e.target.value });
   };
+
+
 
   return (
     <div className="px-6">
@@ -61,6 +71,8 @@ function ShowData(props) {
       <h1 className="text-center text-[35px] pt-7 font-bold ">
         List questions
       </h1>
+
+      {/* button to fetch data */}
       <div className="flex justify-center mt-4">
         <button
           style={{ display: `${props.displayFetch}` }}
@@ -71,12 +83,16 @@ function ShowData(props) {
           Fetch
         </button>
       </div>
+
+      
       <SimpleBar style={{ maxHeight: 600 }}>
         {allData.map((items) => (
           <div key={items.data.id} className="border-2 border-black my-4 p-2">
             <div className="flex justify-between">
               <div className="font-bold">Question {items.data.id}</div>
               <div>
+
+              {/* get each field of data and save in updata to show on update input */}
                 <button
                   variant="primary"
                   onClick={() => {
@@ -100,6 +116,8 @@ function ShowData(props) {
                 >
                   Update
                 </button>
+
+                {/* delete data  */}
                 <button
                   onClick={() => {
                     deleteData(items.id);
@@ -111,6 +129,8 @@ function ShowData(props) {
                 </button>
               </div>
             </div>
+
+            {/* show list of data */}
             <div className="border border-black my-3">
               <p>Question: </p>
               <p>{items.data.question} </p>

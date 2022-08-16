@@ -2,10 +2,12 @@ import React, { Fragment, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "./Auth/Navbar";
 import { Auth } from "./Share/Context";
+import { dataContext } from "./Share/DataContext";
 
 const StartScreen = () => {
   let navigate = useNavigate();
   const { btnStart } = useContext(Auth);
+  const { subject, setSubject } = useContext(dataContext);
 
   return (
     <Fragment>
@@ -18,29 +20,32 @@ const StartScreen = () => {
         <div className="flex justify-center">
           <div className="mx-[20px]">
             <h2 className="text-[25px] text-center">Maths</h2>
-          <button
-            
-            className="text-[20px] border rounded-[8px] cursor-pointer my-3 py-1 px-6 hover:bg-gray-700/30 hover:text-white"
-            onClick={() => {navigate("test/question") 
-          window.location.reload()}}
-            disabled = {btnStart}
-          >
-            Start
-          </button>
+            <button
+              className="text-[20px] border rounded-[8px] cursor-pointer my-3 py-1 px-6 hover:bg-gray-700/30 hover:text-white"
+              onClick={() => {
+                navigate("test/question");
+                // window.location.reload();
+                setSubject("Maths");
+              }}
+              disabled={btnStart}
+            >
+              Start
+            </button>
           </div>
           <div className="mx-[20px]">
-            <h2 className="text-[25px] text-center">Physics</h2>
-          <button
-            
-            className="text-[20px] border rounded-[8px] cursor-pointer my-3 py-1 px-6 hover:bg-gray-700/30 hover:text-white"
-            onClick={() => {navigate("test/question") 
-          window.location.reload()}}
-            disabled = {btnStart}
-          >
-            Start
-          </button>
+            <h2 className="text-[25px] text-center">Js</h2>
+            <button
+              className="text-[20px] border rounded-[8px] cursor-pointer my-3 py-1 px-6 hover:bg-gray-700/30 hover:text-white"
+              onClick={() => {
+                navigate("test/question");
+                // window.location.reload();
+                setSubject("Questions");
+              }}
+              disabled={btnStart}
+            >
+              Start
+            </button>
           </div>
-          
         </div>
       </div>
     </Fragment>

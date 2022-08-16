@@ -4,16 +4,18 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../utils/firebase";
 import { useState } from "react";
 import { useEffect } from "react";
+import { dataContext } from "../Share/DataContext";
 
 function ShowResult() {
   const { authUsername } = useContext(Auth);
   const userScore = [];
+  const { subject } = useContext(dataContext);
 
   const [dataResult, setDataResult] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
-      const questionData = await getDocs(collection(db, "Result"));
+      const questionData = await getDocs(collection(db, "Results"));
       questionData.forEach((doc) => {
         setDataResult((data) => {
           return [...data, doc.data()];
@@ -48,7 +50,7 @@ function ShowResult() {
                 {userScore.map((result, index) => (
                   <tr key={index} className="border">
                     <td className="border-x-2 border-black text-center">{index + 1}</td>
-                    <td className="border-x-2 border-black text-center">Subject</td>
+                    <td className="border-x-2 border-black text-center">{result.subject}</td>
                     <td className="border-x-2 border-black text-center">{result.score}/10</td>
                     {/* <p>
                     

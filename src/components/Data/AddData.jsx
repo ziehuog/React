@@ -8,11 +8,11 @@ import * as yup from "yup";
 import { db } from "../../utils/firebase";
 import { Navbar } from "../Auth/Navbar";
 import { questionContext } from "../Share/Context";
+import { dataContext } from "../Share/DataContext";
 import ShowData from "./ShowData";
 
 function AddData() {
-  const { state } = useContext(questionContext);
-  const { data } = state;
+  const { subject } = useContext(dataContext);
   const [displayFetch, setDisplayFetch] = useState("block");
 
   let schema = yup
@@ -29,17 +29,15 @@ function AddData() {
   const {
     register,
     handleSubmit,
-    control,
-    watch,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    // resolver: yupResolver(schema),
   });
   let flag = true;
 
   const onSubmit = async (data) => {
     console.log(data)
-    const querySnapshot = await getDocs(collection(db, "Questions"));
+    const querySnapshot = await getDocs(collection(db, `${subject}`));
     querySnapshot.forEach((doc) => {
       const dataQuestions = doc.data();
       if (dataQuestions.id === data.id) {
@@ -51,7 +49,7 @@ function AddData() {
     });
 
     if (flag) {
-      addDoc(collection(db, "Questions"), {
+      addDoc(collection(db, `${subject}`), {
         id: data.id,
         question: data.question,
         correctAnswer: data.correctAnswer,
@@ -72,6 +70,7 @@ function AddData() {
   return (
     <div className=" flex align-middle justify-center w-[100vw] h-[100vh] bg-gradient-to-b from-indigo-500">
       <Navbar />
+      <p className="pt-[100px]"> {subject}</p>
 
       <div className="container mx-auto mt-[100px] grid grid-cols-2 gap-6 ">
         <div
@@ -91,6 +90,7 @@ function AddData() {
                       className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
                       name="id"
                       type="number"
+                      required
                       {...register("id")}
                     />
                   </div>
@@ -143,7 +143,8 @@ function AddData() {
                   </div>
                   <div className="2xl:col-span-10 md:col-span-9">
                     <input
-                      className="h-[35px] my-3 w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                      className="h-[35px] my-3 w-full bg-gray-100 rounded-md 
+                      px-[15px] outline-none placeholder:text-gray-500"
                       type="text"
                       placeholder="answer"
                       name="question"

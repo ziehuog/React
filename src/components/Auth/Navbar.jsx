@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Auth } from "../Share/Context";
 import logo from "../../asset/img/ziehuog-logo.png";
+import { Auth } from "../Share/Context";
 
 export const Navbar = () => {
   const { authUsername, setToken, setAuthUsername } = useContext(Auth);
@@ -12,11 +12,10 @@ export const Navbar = () => {
       "Do you want to log out? your test will stop and it will not save"
     );
 
+    // delete all in local storage when click logout
     if (result) {
       setToken(localStorage.removeItem("id"));
       setAuthUsername(localStorage.removeItem("username"));
-      // localStorage.removeItem("id");
-
       navigate("/login");
 
       window.location.reload();
@@ -24,8 +23,10 @@ export const Navbar = () => {
   };
 
   return (
-    <div className="flex justify-between px-6 h-[55px] items-center bg-white 
-    z-[100] fixed w-full border-b-2 border-indigo-700">
+    <div
+      className="flex justify-between px-6 h-[55px] items-center bg-white 
+    z-[100] fixed w-full border-b-2 border-indigo-700"
+    >
       <div onClick={() => navigate("/")}>
         <img className="h-[45px] cursor-pointer" src={logo} />
       </div>

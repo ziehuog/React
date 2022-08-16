@@ -30,32 +30,33 @@ const Login = () => {
   });
 
   const onSubmit = async (data) => {
-    let isDuplicate = false;
+    let isMatched = false;
 
+    //get data from db to compair
     const querySnapshot = await getDocs(collection(db, "Users"));
-
     querySnapshot.forEach((doc) => {
       const aUser = doc.data();
       if (
         aUser.username === data.username &&
         aUser.password === data.password
       ) {
+        //save id and user name in local storage
         localStorage.setItem("id", JSON.stringify(doc.id));
         localStorage.setItem("username", JSON.stringify(doc.data().username));
-        isDuplicate = false;
+        isMatched = false;
         navigate("/");
         window.location.reload();
-
       } else {
-        isDuplicate = true;
+        isMatched = true;
       }
     });
 
-    isDuplicate
+    isMatched
       ? toast.error("Oh no! username or password have some mistake.")
-      : console.log("ok");
+      : toast.success("Login successfully!");
   };
 
+  //display show password state
   const [state, dispatch] = useReducer(reducer, initState);
   const { eyeState, closeEyeState, passwordType } = state;
 
@@ -63,6 +64,7 @@ const Login = () => {
     <div className=" flex align-middle justify-center  w-[100vw] h-[100vh] bg-gradient-to-b from-indigo-500">
       <div className="sm:m-w-[350px] border relative border-gray-400 m-auto w-[350px] h-[420px] bg-slate-200/50 rounded-3xl">
         <h1 className="text-center text-[35px] pt-7 font-bold pb-5">Login</h1>
+
         <form className="px-[35px]" onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="username">Username</label>
           <div className="flex my-[15px]">
@@ -75,10 +77,10 @@ const Login = () => {
             />
           </div>
           <p className="text-[15px] text-red-600">{errors.username?.message}</p>
+
           <label className="" htmlFor="password">
             Password
           </label>
-
           <div className=" flex mt-[15px] bg-gray-100 rounded-md">
             <input
               className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"

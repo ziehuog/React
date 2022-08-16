@@ -32,6 +32,7 @@ function Modals(props) {
     formState: { errors },
   } = useForm({});
 
+
   const updateData = async (data) => {
     try {
       await updateDoc(doc(db, "Questions", dataId), {
@@ -92,9 +93,10 @@ function Modals(props) {
             CorrectAnswer
           </label>
 
-          <div className=" flex mt-[15px] bg-gray-100 rounded-md">
+          <div className=" w-full my-[15px]">
             <input
-              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none 
+              placeholder:text-gray-500"
               name="correctAnswer"
               type="text"
               placeholder="correctAnswer"
@@ -106,9 +108,10 @@ function Modals(props) {
           </div>
           <p>Answers</p>
 
-          <div className=" flex mt-[15px] bg-gray-100 rounded-md">
+          <div className="grid grid-cols-12 gap-y-3 2xl:gap-5 md:gap-2 w-full my-[15px]">
           <input
-              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none 
+              2xl:col-span-2 md:col-span-3 placeholder:text-gray-500"
               name="id_0"
               type="text"
               placeholder="answer"
@@ -118,7 +121,8 @@ function Modals(props) {
               })}
             />
             <input
-              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] 2xl:col-span-10 
+              md:col-span-9 outline-none placeholder:text-gray-500"
               name="answer_0"
               type="text"
               placeholder="answer"
@@ -128,9 +132,10 @@ function Modals(props) {
               })}
             />
           </div>
-          <div className=" flex mt-[15px] bg-gray-100 rounded-md">
+          <div className="grid grid-cols-12 gap-y-3 2xl:gap-5 md:gap-2 w-full my-[15px]">
           <input
-              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none 
+              2xl:col-span-2 md:col-span-3 placeholder:text-gray-500"
               name="id_1"
               type="text"
               placeholder="answer"
@@ -140,7 +145,8 @@ function Modals(props) {
               })}
             />
             <input
-              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] 2xl:col-span-10 
+              md:col-span-9 outline-none placeholder:text-gray-500"
               name="answer_1"
               type="text"
               placeholder="answer"
@@ -150,9 +156,10 @@ function Modals(props) {
               })}
             />
           </div>
-          <div className=" flex mt-[15px] bg-gray-100 rounded-md">
+          <div className="grid grid-cols-12 gap-y-3 2xl:gap-5 md:gap-2 w-full my-[15px]">
           <input
-              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none 
+              2xl:col-span-2 md:col-span-3 placeholder:text-gray-500"
               name="id_2"
               type="text"
               placeholder="answer"
@@ -162,7 +169,8 @@ function Modals(props) {
               })}
             />
             <input
-              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] 2xl:col-span-10 
+              md:col-span-9 outline-none placeholder:text-gray-500"
               name="answer_2"
               type="text"
               placeholder="answer"
@@ -173,9 +181,10 @@ function Modals(props) {
             />
           </div>
 
-          <div className=" flex mt-[15px] bg-gray-100 rounded-md">
+          <div className="grid grid-cols-12 gap-y-3 2xl:gap-5 md:gap-2 w-full my-[15px]">
           <input
-              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none 
+              2xl:col-span-2 md:col-span-3 placeholder:text-gray-500"
               name="id_3"
               type="text"
               placeholder="answer"
@@ -185,8 +194,8 @@ function Modals(props) {
               })}
             />
             <input
-              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
-              name="answer_3"
+              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] 2xl:col-span-10 
+              md:col-span-9 outline-none placeholder:text-gray-500"
               type="text"
               placeholder="answer"
               value={answer_3}

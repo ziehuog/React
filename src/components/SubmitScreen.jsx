@@ -8,8 +8,6 @@ const SubmitScreen = () => {
   const { state, navigateToScore } = useContext(questionContext);
   const { storeAns, data } = state;
 
-
-
   let navigate = useNavigate();
 
 
