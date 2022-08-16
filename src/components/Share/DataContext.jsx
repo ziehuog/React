@@ -4,13 +4,13 @@ export const dataContext = createContext();
 
 export const DataProvider = ({ children }) => {
   const [subject, setSubject] = useState("Questions");
-  const [arrayResult, setArrayresult] = useState([]);
+  const [arraySubjects, setArraySubjects] = useState(["Maths", "Questions"]);
 
   return (
     <dataContext.Provider
       value={{
-        arrayResult,
-        setArrayresult,
+        arraySubjects,
+        setArraySubjects,
         subject,
         setSubject,
       }}
