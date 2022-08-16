@@ -8,8 +8,9 @@ const UserAddData = () => {
   const navigate = useNavigate();
   const { authUsername } = useContext(Auth);
   const { subject, setSubject, arraySubjects, setArraySubjects } = useContext(dataContext);
-
-
+const addArrSubjects = () => {
+  
+}
   return (
     <div>
       <div className="text-center">Choose one subject to add question! </div>
