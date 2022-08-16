@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Auth } from "../Share/Context";
 import { dataContext } from "../Share/DataContext";
 import { GrAdd } from "react-icons/gr";
+import ModalAddSubject from "../Data/ModalAddSubject";
+import ModalSubject from "../Data/ModalSubject";
+import { useState } from "react";
 
 const UserAddData = () => {
-  const navigate = useNavigate();
-  const { authUsername } = useContext(Auth);
-  const { subject, setSubject, arraySubjects, setArraySubjects } = useContext(dataContext);
-const addArrSubjects = () => {
-  
-}
+  const [showAddSubject, setShowAddSubject] = useState(false);
+  const [showSubject, setShowSubject] = useState(false);
+  const {setSubject, arraySubjects} = useContext(dataContext);
+
   return (
     <div>
       <div className="text-center">Choose one subject to add question! </div>
@@ -21,9 +21,10 @@ const addArrSubjects = () => {
           <div key={index}> 
             <button
           onClick={() => {
-            navigate("/test/add-data");
-            setSubject(subject);
-          }}
+            setShowSubject(true)
+            setSubject(subject)
+          }
+          }
           value={subject}
           className="border transition duration-300 cursor-pointer px-4 py-2 
               bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-200
@@ -35,10 +36,7 @@ const addArrSubjects = () => {
         ))
         }
         <button
-          onClick={() => {
-            navigate("/test/add-data");
-            setSubject("Physics");
-          }}
+          onClick={() => setShowAddSubject(true)}
           className="border transition duration-300 cursor-pointer px-4 py-2 
               bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-200
                my-[20px] rounded-md hover:bg-sky-700  hover:text-white mx-3"
@@ -46,6 +44,14 @@ const addArrSubjects = () => {
           <GrAdd/>
         </button>
       </div>
+      <ModalSubject
+      show={showSubject}
+      onHide={() => setShowSubject(false)}
+      />
+      <ModalAddSubject
+      show={showAddSubject}
+      onHide={() => setShowAddSubject(false)}
+      />
     </div>
   );
 };
