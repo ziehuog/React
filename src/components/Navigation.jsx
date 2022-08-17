@@ -65,8 +65,8 @@ const Navigation = () => {
 
     const querySnapshot = await getDocs(collection(db, "Results"));
     querySnapshot.forEach((doc) => {
-      const aUser = doc.data();
-      if (aUser.username === JSON.parse(authUsername)) {
+      const result = doc.data();
+      if (result.username === JSON.parse(authUsername) && result.subject=== subject ) {
         count++;
       }
     });

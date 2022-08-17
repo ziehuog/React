@@ -21,14 +21,15 @@ const StartScreen = () => {
           {arraySubjects.map((subject, index) =>(
             <div key={index}>
               <button
-              className="text-[20px] border rounded-[8px] cursor-pointer my-3 py-1 px-6 hover:bg-gray-700/30 hover:text-white"
+              className="border transition duration-300 rounded-xl cursor-pointer px-4 py-2 
+             bg-indigo-300 hover:bg-indigo-600 hover:text-white mx-3"
               onClick={() => {
                 navigate("test/question");
-                setSubject(subject);
+                setSubject(subject.data.subject);
               }}
               disabled={btnStart}
             >
-              {subject}
+              {subject.data.subject}
             </button>
             </div>
           ))}

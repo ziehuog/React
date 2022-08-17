@@ -8,32 +8,35 @@ import { dataContext } from "../Share/DataContext";
 
 function ShowResult() {
   const { authUsername } = useContext(Auth);
-  const userScore = [];
-  const { subject } = useContext(dataContext);
+  const { dataResult, arraySubjects } = useContext(dataContext);
 
-  const [dataResult, setDataResult] = useState([]);
+  const [score, setScore] = useState([]);
+  
+  
 
-  useEffect(() => {
-    const getData = async () => {
-      const questionData = await getDocs(collection(db, "Results"));
-      questionData.forEach((doc) => {
-        setDataResult((data) => {
-          return [...data, doc.data()];
-        });
-      });
-    };
-    getData();
-  }, []);
 
-  dataResult.map((user) => {
-    if (user.username === JSON.parse(authUsername)) {
-      userScore.push(user);
-    }
-  });
+  const storeData = dataResult.filter(
+    (items) =>
+      items.subject === score && items.username === JSON.parse(authUsername)
+  );
 
   return (
     <div>
-      {userScore.length === 0 ? (
+      <div>
+        {arraySubjects.map((subject, index) => (
+          <button
+            key={index}
+            onClick={() => setScore(subject.data.subject)}
+            className="border transition duration-300 cursor-pointer px-4 py-2 
+             bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-200
+              my-[20px] rounded-md hover:bg-sky-700  hover:text-white mx-3
+              focus:outline-none focus:ring focus:ring-violet-300 focus:text-white"
+          >
+            {subject.data.subject}
+          </button>
+        ))}
+      </div>
+      {storeData.length === 0 ? (
         <div>You haven't done the test yet...</div>
       ) : (
         <div className="flex justify-center py-[50px]">
@@ -44,21 +47,22 @@ function ShowResult() {
                 <th className="border-2 border-black text-center">Subject</th>
                 <th className="border-2 border-black text-center">Score</th>
               </tr>
-              
             </thead>
             <tbody className="border-y-2 border-black">
-                {userScore.map((result, index) => (
-                  <tr key={index} className="border">
-                    <td className="border-x-2 border-black text-center">{index + 1}</td>
-                    <td className="border-x-2 border-black text-center">{result.subject}</td>
-                    <td className="border-x-2 border-black text-center">{result.score}/10</td>
-                    {/* <p>
-                    
-                      Turn {index + 1}: {result.score}/10
-                    </p> */}
-                  </tr>
-                ))}
-              </tbody>
+              {storeData?.map((result, index) => (
+                <tr key={index} className="border">
+                  <td className="border-x-2 border-black text-center">
+                    {index + 1}
+                  </td>
+                  <td className="border-x-2 border-black text-center">
+                    {result.subject}
+                  </td>
+                  <td className="border-x-2 border-black text-center">
+                    {result.score}/10
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
       )}

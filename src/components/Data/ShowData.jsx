@@ -12,7 +12,8 @@ function ShowData(props) {
   const [modalShow, setModalShow] = useState(false);
   const [allData, setAllData] = useState([]);
   const { subject } = useContext(dataContext);
-  
+  const [displayText, setDisplayText] = useState("none");
+
   const [upData, setUpData] = useState({
     id: "",
     question: "",
@@ -25,9 +26,7 @@ function ShowData(props) {
     id_1: "",
     id_2: "",
     id_3: "",
-
   });
-
 
   //fetch data and show on screen
   const FetchData = async () => {
@@ -39,10 +38,10 @@ function ShowData(props) {
       });
     });
     props.setDisplayFetch("none");
+    setDisplayText("block");
   };
 
-
-//delete data from database
+  //delete data from database
   const deleteData = async (id) => {
     let confirm = window.confirm("Are you sure?");
     if (confirm) {
@@ -57,8 +56,6 @@ function ShowData(props) {
     setUpData({ ...upData, [question]: e.target.value });
   };
 
-
-
   return (
     <div className="px-6">
       <Modals
@@ -68,7 +65,7 @@ function ShowData(props) {
         handleChange={handleChange}
       />
 
-      <h1 className="text-center text-[35px] pt-7 font-bold ">
+      <h1 className="text-center text-[25px] pt-7 font-bold ">
         List questions
       </h1>
 
@@ -84,68 +81,72 @@ function ShowData(props) {
         </button>
       </div>
 
-      
-      <SimpleBar style={{ maxHeight: 600 }}>
-        {allData.map((items) => (
-          <div key={items.data.id} className="border-2 border-black my-4 p-2">
-            <div className="flex justify-between">
-              <div className="font-bold">Question {items.data.id}</div>
-              <div>
-
-              {/* get each field of data and save in updata to show on update input */}
-                <button
-                  variant="primary"
-                  onClick={() => {
-                    setUpData({
-                      question: items.data.question,
-                      id: items.id,
-                      correctAnswer: items.data.correctAnswer,
-                      answer_0: items.data.answers[0]?.answer,
-                      answer_1: items.data.answers[1]?.answer,
-                      answer_2: items.data.answers[2]?.answer,
-                      answer_3: items.data.answers[3]?.answer,
-                      id_0: items.data.answers[0]?.id,
-                      id_1: items.data.answers[1]?.id,
-                      id_2: items.data.answers[2]?.id,
-                      id_3: items.data.answers[3]?.id,
-                    });
-                    setModalShow(true);
-                  }}
-                  className="border mx-2 px-3 py-1 rounded-md hover:text-white 
+      {allData.length === 0 ? (
+        <p className="text-center" style={{ display: `${displayText}` }}>
+          No Data
+        </p>
+      ) : (
+        <SimpleBar style={{ maxHeight: 600 }}>
+          {allData.map((items) => (
+            <div key={items.data.id} className="border-2 border-black my-4 p-2">
+              <div className="flex justify-between">
+                <div className="font-bold">Question {items.data.id}</div>
+                <div>
+                  {/* get each field of data and save in updata to show on update input */}
+                  <button
+                    variant="primary"
+                    onClick={() => {
+                      setUpData({
+                        question: items.data.question,
+                        id: items.id,
+                        correctAnswer: items.data.correctAnswer,
+                        answer_0: items.data.answers[0]?.answer,
+                        answer_1: items.data.answers[1]?.answer,
+                        answer_2: items.data.answers[2]?.answer,
+                        answer_3: items.data.answers[3]?.answer,
+                        id_0: items.data.answers[0]?.id,
+                        id_1: items.data.answers[1]?.id,
+                        id_2: items.data.answers[2]?.id,
+                        id_3: items.data.answers[3]?.id,
+                      });
+                      setModalShow(true);
+                    }}
+                    className="border mx-2 px-3 py-1 rounded-md hover:text-white 
               transition-all duration-300 hover:bg-indigo-400 bg-zinc-100/60"
-                >
-                  Update
-                </button>
+                  >
+                    Update
+                  </button>
 
-                {/* delete data  */}
-                <button
-                  onClick={() => {
-                    deleteData(items.id);
-                  }}
-                  className="border mx-2 px-3 py-1 rounded-md hover:text-white 
+                  {/* delete data  */}
+                  <button
+                    onClick={() => {
+                      deleteData(items.id);
+                    }}
+                    className="border mx-2 px-3 py-1 rounded-md hover:text-white 
               transition-all duration-300 hover:bg-indigo-400 bg-zinc-100/60"
-                >
-                  Delete
-                </button>
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+
+              {/* show list of data */}
+              <div className="border border-black my-3">
+                <p>Question: </p>
+                <p>{items.data.question} </p>
+                <p>Answers: </p>
+                {items.data.answers.map((ans) => (
+                  <div key={ans.id}>
+                    <p>
+                      {ans.id}: {ans.answer}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
-
-            {/* show list of data */}
-            <div className="border border-black my-3">
-              <p>Question: </p>
-              <p>{items.data.question} </p>
-              <p>Answers: </p>
-              {items.data.answers.map((ans) => (
-                <div key={ans.id}>
-                  <p>
-                    {ans.id}: {ans.answer}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </SimpleBar>
+          ))}
+        </SimpleBar>
+      )}
     </div>
   );
 }

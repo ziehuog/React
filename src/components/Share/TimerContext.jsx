@@ -7,7 +7,7 @@ export const TimerProvider = ({ children }) => {
 const navigate = useNavigate();
 
   
-  const [remaining, setRemaining] = useState(1000 * 100* 100);
+  const [remaining, setRemaining] = useState(1000 * 60*3);
   const [timeOver, setTimeOver] = useState("");
   useEffect(() => {
     const timerId = setInterval(() => {
@@ -20,7 +20,7 @@ const navigate = useNavigate();
 
     if (remaining <= 0) {
       clearInterval(timerId);
-      navigate('/score')
+      navigate("/test/score");
     }
 
     return () => {

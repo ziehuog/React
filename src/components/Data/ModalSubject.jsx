@@ -1,18 +1,25 @@
+import { deleteDoc, doc } from 'firebase/firestore';
 import { useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { db } from '../../utils/firebase';
 import { dataContext } from '../Share/DataContext';
 
 function ModalSubject(props) {
   const { subject, arraySubjects } = useContext(dataContext);
   const navigate = useNavigate();
 
-
-  const deleteSubject = () => {
-console.log('delete ', subject)
-
-  }
+  const deleteSubject = async (id) => {
+    let confirm = window.confirm("Are you sure?");
+    if (confirm) {
+      await deleteDoc(doc(db, "Subjects", props.id));
+      toast.success("Delete successfully");
+      props.onHide()
+      window.location.reload();
+    }
+  };
   return (
     <Modal
       {...props}
@@ -49,6 +56,7 @@ console.log('delete ', subject)
         </button>
       </Modal.Body>
       <Modal.Footer>
+      
         <Button onClick={props.onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
