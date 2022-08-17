@@ -14,7 +14,6 @@ export const SETDATA = 'set_data'
 
 export const CHANGE_PERMISSION = 'add_permission'
 export const CHECK_VALUE = 'add_permission'
-// export const ADD_PERMISSION = 'add_permission'
 
 
 
