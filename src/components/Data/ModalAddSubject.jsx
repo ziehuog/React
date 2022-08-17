@@ -1,9 +1,8 @@
 import { addDoc, collection, getDocs } from "firebase/firestore";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
 import { db } from "../../utils/firebase";
-import { dataContext } from "../Share/DataContext";
 
 function ModalAddSubject(props) {
   const [subjectInput, setSubjextInput] = useState("");
@@ -17,7 +16,7 @@ function ModalAddSubject(props) {
       const subjectDb = doc.data();
       if (subjectDb.subject === subjectInput) {
         flag = true;
-      } 
+      }
     });
     if (!flag) {
       addDoc(collection(db, "Subjects"), {
@@ -29,8 +28,6 @@ function ModalAddSubject(props) {
       toast.error("This subject has existed!");
     }
   };
-
-
 
   return (
     <Modal

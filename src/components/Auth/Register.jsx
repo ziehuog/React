@@ -11,7 +11,7 @@ import {
   HIDE_CFPASSWORD,
   HIDE_PASSWORD,
   SHOW_CFPASSWORD,
-  SHOW_PASSWORD
+  SHOW_PASSWORD,
 } from "../Share/Constants";
 import { cfInitState, cfReducer, initState, reducer } from "../Share/Reducer";
 
@@ -56,6 +56,12 @@ const Register = () => {
       addDoc(collection(db, "Users"), {
         username: data.username,
         password: data.password,
+        permission: [
+          { value: "Information", state: true },
+          { value: "Result", state: true},
+          { value: "Add questions", state: false},
+          { value: "Permissions", state: false},
+        ],
       });
       toast.success("success");
       navigate("/login");

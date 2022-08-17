@@ -9,7 +9,9 @@ export const DataProvider = ({ children }) => {
   const [subject, setSubject] = useState("Questions");
   const [arraySubjects, setArraySubjects] = useState([]);
   const [dataResult, setDataResult] = useState([]);
-
+  const [dataUser, setDataUser] = useState([]);
+  
+//get subject data
   useEffect(() => {
     const getData = async () => {
       const querySnapshot = await getDocs(collection(db, "Subjects"));
@@ -32,9 +34,20 @@ export const DataProvider = ({ children }) => {
     getData();
   }, []);
 
+  useEffect(() => {
+    const getData = async () => {
+      const questionData = await getDocs(collection(db, "Users"));
+      questionData.forEach((doc) => {
+        setDataUser((data) => [...data,doc.data() ]);
+      });
+    };
+    getData();
+  }, []);
+
   return (
     <dataContext.Provider
       value={{
+        dataUser,
         dataResult,
         arraySubjects,
         subject,

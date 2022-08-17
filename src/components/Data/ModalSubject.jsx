@@ -8,7 +8,7 @@ import { db } from '../../utils/firebase';
 import { dataContext } from '../Share/DataContext';
 
 function ModalSubject(props) {
-  const { subject, arraySubjects } = useContext(dataContext);
+  const { subject } = useContext(dataContext);
   const navigate = useNavigate();
 
   const deleteSubject = async (id) => {

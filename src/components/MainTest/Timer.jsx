@@ -12,7 +12,6 @@ const Timer = () => {
     <div className=" pt-6">
       Time remaining:
       <span className={`${timeOver}`}>
-        {" "}
         {moment.duration(remaining).format("hh:mm:ss")}
       </span>
     </div>

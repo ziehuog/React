@@ -1,9 +1,11 @@
 import React, { Fragment } from "react";
+import { useContext } from "react";
 import { AiFillFileAdd } from "react-icons/ai";
 import { BsStickiesFill } from "react-icons/bs";
 import { FaHouseUser, FaUsers } from "react-icons/fa";
 import { Link, Route, Routes } from "react-router-dom";
 import { Navbar } from "../Auth/Navbar";
+import { dataContext } from "../Share/DataContext";
 import Information from "./Information";
 import Permissions from "./Permissions";
 import ShowResult from "./ShowResult";
@@ -11,6 +13,9 @@ import UserAddData from "./UserAddData";
 
 
 function NavUser() {
+  const { dataUser } = useContext(dataContext);
+
+  
 
   return (
     <Fragment>

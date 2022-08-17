@@ -1,4 +1,3 @@
-import { type } from "@testing-library/user-event/dist/type";
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { BTN_BACK, BTN_NEXT } from "../Share/Constants";
