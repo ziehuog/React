@@ -2,7 +2,7 @@ import { addDoc, collection, getDocs } from "firebase/firestore";
 import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-import { db } from "../../utils/firebase";
+import { db } from "../../../utils/firebase";
 
 function ModalAddSubject(props) {
   const [subjectInput, setSubjextInput] = useState("");

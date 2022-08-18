@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar, User } from "./Auth/Navbar";
 import { Auth, questionContext } from "./Share/Context";
-import { dataContext } from "./Share/DataContext";
+// import { dataContext } from "./Share/DataContext";
 
 function ScoreScreen() {
 

@@ -4,7 +4,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../utils/firebase";
 import { useState } from "react";
 import { useEffect } from "react";
-import { dataContext } from "../Share/DataContext";
+import { dataContext } from "../Share/Context/DataContext";
 
 function ShowResult() {
   const { authUsername } = useContext(Auth);

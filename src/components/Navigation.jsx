@@ -7,7 +7,7 @@ import TestContainer from "./MainTest/TestContainer";
 import ScoreScreen from "./ScoreScreen";
 import { ANSWER, SETDATA } from "./Share/Constants";
 import { Auth, questionContext } from "./Share/Context";
-import { dataContext } from "./Share/DataContext";
+import { dataContext } from "./Share/Context/DataContext";
 import { dataReducer, initState } from "./Share/Reducer";
 import SubmitScreen from "./SubmitScreen";
 import NavUser from "./User/NavUser";

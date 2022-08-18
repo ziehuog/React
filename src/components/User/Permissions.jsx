@@ -2,13 +2,13 @@ import React from "react";
 import { useState } from "react";
 import { useContext } from "react";
 import { classByCondition } from "../Share/classByCondition";
-import { dataContext } from "../Share/DataContext";
 import { BsFillPencilFill } from "react-icons/bs";
 import { FaTimes } from "react-icons/fa";
-import ModalPermission from "../Data/ModalPermission";
+import ModalPermission from "../Share/Modals/ModalPermission";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../utils/firebase";
 import { toast } from "react-toastify";
+import { dataContext } from "../Share/Context/DataContext";
 
 function Permissions() {
   const { dataUser, permissions } = useContext(dataContext);

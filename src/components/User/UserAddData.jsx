@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { dataContext } from "../Share/DataContext";
+// import { dataContext } from "../Share/DataContext";
 import { GrAdd } from "react-icons/gr";
-import ModalAddSubject from "../Data/ModalAddSubject";
-import ModalSubject from "../Data/ModalSubject";
+import ModalAddSubject from "../Share/Modals/ModalAddSubject";
+import ModalSubject from "../Share/Modals/ModalSubject";
 import { useState } from "react";
+import { dataContext } from "../Share/Context/DataContext";
 
 const UserAddData = () => {
   const [showAddSubject, setShowAddSubject] = useState(false);

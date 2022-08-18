@@ -2,7 +2,7 @@ import React, { Fragment, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "./Auth/Navbar";
 import { Auth } from "./Share/Context";
-import { dataContext } from "./Share/DataContext";
+import { dataContext } from "./Share/Context/DataContext";
 
 const StartScreen = () => {
   let navigate = useNavigate();

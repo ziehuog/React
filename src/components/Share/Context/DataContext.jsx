@@ -1,7 +1,7 @@
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect } from "react";
 import { createContext, useState } from "react";
-import { db } from "../../utils/firebase";
+import { db } from "../../../utils/firebase";
 
 export const dataContext = createContext();
 

@@ -4,8 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { db } from '../../utils/firebase';
-import { dataContext } from '../Share/DataContext';
+import { db } from '../../../utils/firebase';
+import { dataContext } from '../Context/DataContext';
 
 function ModalSubject(props) {
   const { subject } = useContext(dataContext);

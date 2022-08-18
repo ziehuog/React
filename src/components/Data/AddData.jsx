@@ -8,8 +8,7 @@ import SimpleBar from "simplebar-react";
 import * as yup from "yup";
 import { db } from "../../utils/firebase";
 import { Navbar } from "../Auth/Navbar";
-import { questionContext } from "../Share/Context";
-import { dataContext } from "../Share/DataContext";
+import { dataContext } from "../Share/Context/DataContext";
 import ShowData from "./ShowData";
 
 function AddData() {

@@ -4,9 +4,9 @@ import {
 import { useContext, useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-import { db } from "../../utils/firebase";
-import { classByCondition } from "../Share/classByCondition";
-import { dataContext } from "../Share/DataContext";
+import { db } from "../../../utils/firebase";
+import { classByCondition } from "../classByCondition";
+import { dataContext } from "../Context/DataContext";
 
 function ModalPermission(props) {
   const { permissions } = useContext(dataContext);

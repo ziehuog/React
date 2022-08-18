@@ -5,8 +5,8 @@ import { toast } from "react-toastify";
 import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
 import { db } from "../../utils/firebase";
-import { dataContext } from "../Share/DataContext";
-import Modals from "./Modals";
+import { dataContext } from "../Share/Context/DataContext";
+import Modals from "../Share/Modals/Modals";
 
 function ShowData(props) {
   const [modalShow, setModalShow] = useState(false);
