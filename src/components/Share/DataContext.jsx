@@ -10,6 +10,7 @@ export const DataProvider = ({ children }) => {
   const [arraySubjects, setArraySubjects] = useState([]);
   const [dataResult, setDataResult] = useState([]);
   const [dataUser, setDataUser] = useState([]);
+  const [permissions, setPermissions] = useState([]);
   
 //get subject data
   useEffect(() => {
@@ -38,7 +39,17 @@ export const DataProvider = ({ children }) => {
     const getData = async () => {
       const questionData = await getDocs(collection(db, "Users"));
       questionData.forEach((doc) => {
-        setDataUser((data) => [...data,doc.data() ]);
+        setDataUser((data) => [...data, { data: doc.data(), id: doc.id }]);
+      });
+    };
+    getData();
+  }, []);
+
+  useEffect(() => {
+    const getData = async () => {
+      const questionData = await getDocs(collection(db, "Permissions"));
+      questionData.forEach((doc) => {
+        setPermissions((data) => [...data, { data: doc.data(), id: doc.id }]);
       });
     };
     getData();
@@ -48,6 +59,7 @@ export const DataProvider = ({ children }) => {
     <dataContext.Provider
       value={{
         dataUser,
+        permissions,
         dataResult,
         arraySubjects,
         subject,

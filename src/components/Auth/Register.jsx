@@ -56,12 +56,7 @@ const Register = () => {
       addDoc(collection(db, "Users"), {
         username: data.username,
         password: data.password,
-        permission: [
-          { value: "Information", state: true },
-          { value: "Result", state: true},
-          { value: "Add questions", state: false},
-          { value: "Permissions", state: false},
-        ],
+        permission: ['info', 'result'],
       });
       toast.success("success");
       navigate("/login");

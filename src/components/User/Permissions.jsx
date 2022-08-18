@@ -1,33 +1,28 @@
 import React from "react";
 import { useState } from "react";
 import { useContext } from "react";
+import { classByCondition } from "../Share/classByCondition";
 import { dataContext } from "../Share/DataContext";
+import { BsFillPencilFill } from "react-icons/bs";
+import { FaTimes } from "react-icons/fa";
+import ModalPermission from "../Data/ModalPermission";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../utils/firebase";
+import { toast } from "react-toastify";
 
 function Permissions() {
-  const { dataUser } = useContext(dataContext);
-  // const [listState, setListState] = useState({
-  //   info: true,
-  //   result: true,
-  //   add: false,
-  //   permission: false,
-  //   checked: true,
-  // })
-  const [value, setValue] = useState('#fff')
-// console.log(dataUser)
+  const { dataUser, permissions } = useContext(dataContext);
+  const [modalShow, setModalShow] = useState(false);
+  const [currentUser, setCurrentUser] = useState();
 
-  const checkedValue = (e) => {
-
-    console.log(e.target.value)
-    // if( e.target.value === 'true'){
-    //   setValue('#6366F1')
-    // }
-    // else{
-    //   setValue('#fff')
-    // }
-   
-    // (value === 'true')? setChecked('#6366F1') : setChecked('#000')
-  }
-  console.log(value)
+  const deleteUser = async (id) => {
+    let confirm = window.confirm("Are you sure?");
+    if (confirm) {
+      await deleteDoc(doc(db, "Users", id));
+      toast.success("Delete successfully");
+      window.location.reload();
+    }
+  };
 
   return (
     <div>
@@ -36,30 +31,60 @@ function Permissions() {
         <div key={index}>
           <div className="grid grid-cols-5 border-b-[1px] py-2">
             <div className="col-span-1 px-2 flex items-center">
-              <div>{user.username}</div>
+              <div>{user.data.username}</div>
             </div>
-            <div className="col-span-3 md:col-span-4 flex">
-              {user.permission.map((permission, index) => (
-                <div key={index} className="flex">
-                  <input 
-                  type ="button"
-                  value={permission.value}
-                  onChange={checkedValue}
-                  className="border-2 border-indigo-500 rounded-lg py-1 px-2 mx-2"
-                  style={{backgroundColor: `${value}`}}
-                  />
-
-                    {/* {permission.value} */}
-                  {/* </input> */}
-                </div>
+            <div className="col-span-3 md:col-span-4  flex">
+              {permissions.map((permission, index) => (
+                <button
+                  key={index}
+                  value={permission.data.key}
+                  className={
+                    "border-2 px-2 py-1 mx-1 my-2 lg:mx-2 rounded-lg border-indigo-400" +
+                    classByCondition(
+                      "bg-indigo-400 text-white ",
+                      user.data.permission.includes(permission.data.key)
+                    )
+                  }
+                >
+                  {permission.data.title}
+                </button>
               ))}
             </div>
             <div className="col-span-1 md:col-end-6 flex">
-              <button>Update</button>
+              {user.data.username !== 'admin'? (
+                <div className="flex">
+                  <button
+                    onClick={() => {
+                      setCurrentUser(user);
+                      setModalShow(true);
+                    }}
+                    className="border transition duration-300 cursor-pointer flex justify-center
+              bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-200
+              items-center py-1 px-2 rounded-md hover:bg-sky-700  hover:text-white mx-2"
+                  >
+                    <BsFillPencilFill className="text-white" />
+                  </button>
+                  <button
+                    onClick={() => deleteUser(user.id)}
+                    className="border transition duration-300 cursor-pointer flex justify-center
+              bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-200
+              items-center py-1 px-2 rounded-md hover:bg-sky-700  hover:text-white mx-2"
+                  >
+                    <FaTimes className="text-white" />
+                  </button>
+                </div>
+              ) : (
+                <div></div>
+              )}
             </div>
           </div>
         </div>
       ))}
+      <ModalPermission
+        user={currentUser}
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
     </div>
   );
 }
