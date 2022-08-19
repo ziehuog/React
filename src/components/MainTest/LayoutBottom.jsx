@@ -29,7 +29,7 @@ const LayoutBottom = () => {
       </button>
       <button
         className="border border-gray-400 rounded-[8px] cursor-pointer py-2 px-4 hover:bg-indigo-600/60 hover:text-white"
-        onClick={() => navigate("/test/submit")}
+        onClick={() => navigate("/submit")}
         style={{ display: `${displaySubmit}` }}
       >
         Preview

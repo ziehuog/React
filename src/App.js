@@ -1,6 +1,7 @@
 import { Fragment, useContext, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import logo from "./asset/img/ziehuog-logo.png";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Login from "./components/Auth/Login";
@@ -10,7 +11,7 @@ import { Auth } from "./components/Share/Context";
 import StartScreen from "./components/StartScreen";
 
 function App() {
-  const { token } = useContext(Auth);
+  const { token,  } = useContext(Auth);
 
   const navigate = useNavigate();
 
@@ -20,14 +21,19 @@ function App() {
     }
   }, [token]);
 
+
+  
+
   return (
+
+    
     <Fragment >
+
       <Routes>
         
         <Route path="login" element={<Login />} />
-        <Route path="test/*" element={<Navigation />} />
+        <Route path="/*" element={<Navigation />} />
         <Route path="register" element={<Register />} />
-        <Route path="/" element={<StartScreen />} />
       </Routes>
       <ToastContainer />
     </Fragment>

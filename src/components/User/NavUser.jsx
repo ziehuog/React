@@ -1,6 +1,7 @@
 import React, { Fragment, useContext } from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import { Navbar } from "../Auth/Navbar";
+import AddData from "../Data/AddData";
 import { Auth } from "../Share/Context";
 import { dataContext } from "../Share/Context/DataContext";
 import Information from "./Information";
@@ -14,7 +15,7 @@ function NavUser() {
 
   return (
     <Fragment>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="pt-[55px] grid grid-cols-12 gap-5">
         <div className="md:col-span-4 xl:col-span-2 border p-4 h-[100vh] ">
           {dataUser.map((user, index) => (
@@ -47,6 +48,8 @@ function NavUser() {
             <Route path="result" element={<ShowResult />} />
             <Route path="add_question" element={<UserAddData />} />
             <Route path="permission" element={<Permissions />} />
+            <Route path="add-data" element={<AddData />} />
+
           </Routes>
         </div>
       </div>

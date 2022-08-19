@@ -1,11 +1,11 @@
-import { deleteDoc, doc } from 'firebase/firestore';
-import { useContext } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { db } from '../../../utils/firebase';
-import { dataContext } from '../Context/DataContext';
+import { deleteDoc, doc } from "firebase/firestore";
+import { useContext } from "react";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { db } from "../../../utils/firebase";
+import { dataContext } from "../Context/DataContext";
 
 function ModalSubject(props) {
   const { subject } = useContext(dataContext);
@@ -16,7 +16,7 @@ function ModalSubject(props) {
     if (confirm) {
       await deleteDoc(doc(db, "Subjects", props.id));
       toast.success("Delete successfully");
-      props.onHide()
+      props.onHide();
       window.location.reload();
     }
   };
@@ -28,16 +28,13 @@ function ModalSubject(props) {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          {subject} 
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">{subject}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      <button
+        <button
           onClick={() => {
-            navigate("/test/add-data")
-          }
-          }
+            navigate("/user/add-data");
+          }}
           value={subject}
           className="border transition duration-300 cursor-pointer px-4 py-2 
               bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-200
@@ -56,11 +53,10 @@ function ModalSubject(props) {
         </button>
       </Modal.Body>
       <Modal.Footer>
-      
         <Button onClick={props.onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
   );
 }
 
-export default ModalSubject
+export default ModalSubject;

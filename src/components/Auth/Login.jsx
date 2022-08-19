@@ -44,7 +44,7 @@ const Login = () => {
         localStorage.setItem("id", JSON.stringify(doc.id));
         localStorage.setItem("username", JSON.stringify(doc.data().username));
         isMatched = false;
-        navigate("/");
+        navigate("/start");
         window.location.reload();
       } else {
         isMatched = true;

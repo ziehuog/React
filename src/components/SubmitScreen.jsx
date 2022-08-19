@@ -13,7 +13,7 @@ const SubmitScreen = () => {
 
   return (
     <Fragment>
-      <Navbar/>
+      {/* <Navbar/> */}
       <div className="h-full bg-gradient-to-b from-indigo-500 flex  justify-center ">
       <div className="bg-gray-200/80 p-[40px] rounded-2xl mt-[40px] h-min">
       <div className="text-[30px] text-center py-[30px]  ">
@@ -33,7 +33,7 @@ const SubmitScreen = () => {
                   <label key={elems.id}>
                     <span className="bg-slate-400 rounded-[10px] m-[15px] py-2 text-start px-[10px]">
                       <input
-                        type="checkbox"
+                        type="radio"
                         name={elems.id}
                         
                         // preview checked
@@ -60,13 +60,15 @@ const SubmitScreen = () => {
       </div>
       <div className="text-center">
         <button
-          className=" border border-gray-900 rounded-[8px] cursor-pointer py-1 px-9 mx-5 py-[7px] hover:bg-indigo-600/60 hover:text-white"
-          onClick={() => (navigate("/test/question"))}
+          className=" border border-gray-900 rounded-[8px] cursor-pointer 
+          py-1 px-9 mx-5 py-[7px] hover:bg-indigo-600/60 hover:text-white"
+          onClick={() => (navigate("/question"))}
         >
           Back
         </button>
         <button
-          className=" border border-gray-900 rounded-[8px] cursor-pointer py-1 px-8 mx-5 py-[7px] hover:bg-indigo-600/60 hover:text-white"
+          className=" border border-gray-900 rounded-[8px] cursor-pointer 
+          py-1 px-8 mx-5 py-[7px] hover:bg-indigo-600/60 hover:text-white"
           onClick={navigateToScore}
         >
           Submit

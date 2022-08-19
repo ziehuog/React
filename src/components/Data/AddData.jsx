@@ -69,7 +69,7 @@ function AddData() {
 
   return (
     <div className=" flex align-middle justify-center w-[100vw] h-[100vh] bg-gradient-to-b from-indigo-500">
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="w-full container mt-[100px]">
         <div
           className="bg-gradient-to-r relative from-indigo-400 via-indigo-200 to-indigo-400

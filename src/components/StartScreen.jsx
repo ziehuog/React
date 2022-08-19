@@ -11,7 +11,7 @@ const StartScreen = () => {
 
   return (
     <Fragment>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="pt-[150px] h-[100vh] bg-gradient-to-b from-indigo-500">
         <div className="text-[30px] text-center py-[30px]">
           Click <b>Start</b> to start the test!
@@ -24,7 +24,7 @@ const StartScreen = () => {
               className="border transition duration-300 rounded-xl cursor-pointer px-4 py-2 
              bg-indigo-300 hover:bg-indigo-600 hover:text-white mx-3"
               onClick={() => {
-                navigate("test/question");
+                navigate("/question");
                 setSubject(subject.data.subject);
               }}
               disabled={btnStart}
