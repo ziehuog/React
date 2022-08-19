@@ -6,7 +6,7 @@ import { utils as XLSXUtils, writeFile } from "xlsx";
 function ShowResult() {
   const { authUsername } = useContext(Auth);
   const { dataResult, arraySubjects } = useContext(dataContext);
-
+const [showAll, setShowAll] = useState('none')
   const [subject, setSubject] = useState([]);
 
 //function export data to excel
@@ -18,6 +18,7 @@ function ShowResult() {
     writeFile(wb, `${fileName}.xlsx`);
   };
 
+  console.log(arraySubjects)
 
   // const allData = dataResult.filter(item => item.username === JSON.parse(authUsername)  )
   const storeData = dataResult.filter(
@@ -29,11 +30,11 @@ function ShowResult() {
     <div>
       <span>
         <button
-          onClick={() => setSubject()}
+          onClick={() => setShowAll('block')}
           className="border transition duration-300 cursor-pointer px-4 py-2 
              bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-200
               my-[20px] rounded-md hover:bg-sky-700  hover:text-white mx-3
-              focus:outline-none focus:ring focus:ring-violet-300 focus:text-white"
+              focus:outline-none focus:ring focus:ring-violet-300 focus:text-white" 
         >
           All
         </button>
@@ -42,7 +43,10 @@ function ShowResult() {
         {arraySubjects.map((subject, index) => (
           <button
             key={index}
-            onClick={() => setSubject(subject.data.subject)}
+            onClick={() => {
+              setSubject(subject.data.subject)
+              setShowAll('none')
+            }}
             className="border transition duration-300 cursor-pointer px-4 py-2 
              bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-200
               my-[20px] rounded-md hover:bg-sky-700  hover:text-white mx-3
@@ -52,17 +56,9 @@ function ShowResult() {
           </button>
         ))}
       </span>
-      {storeData.length === 0 ? (
-        <div>You haven't done the test yet...</div>
-      ) : (
-        <div>
-          <button
-            onClick={()=>exportToExcel(`${subject}`, storeData)}
-            className="border px-1 rounded-md"
-          >
-            Export to Excel
-          </button>
-          <div className="flex justify-center py-[50px]">
+
+      {/* / */}
+      <div className="flex justify-center py-[50px]" style={{display: `${showAll}`}}>
             <table className="w-8/12">
               <thead className="border">
                 <tr>
@@ -72,7 +68,7 @@ function ShowResult() {
                 </tr>
               </thead>
               <tbody className="border-y-2 border-black">
-                {storeData?.map((result, index) => (
+                {dataResult?.map((result, index) => (
                   <tr key={index} className="border">
                     <td className="border-x-2 border-black text-center">
                       {index + 1}
@@ -81,6 +77,46 @@ function ShowResult() {
                       {result.subject}
                     </td>
                     <td className="border-x-2 border-black text-center">
+                      {result.score}/10
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* / */}
+      {storeData.length === 0 ? (
+        <div>
+          You haven't done the test yet...
+          </div>
+      ) : (
+        <div>
+          <button
+            onClick={()=>exportToExcel(`${subject}`, storeData)}
+            className="border px-1 rounded-md"
+          >
+            Export to Excel
+          </button>
+          <div className="flex justify-center py-[50px]">
+            <table className="table-auto w-3/4 border-spacing-2 border border-slate-400">
+              <thead >
+                <tr className="border-b-2 border-black py-2">
+                  <th>Turn</th>
+                  <th >Subject</th>
+                  <th >Score</th>
+                </tr>
+              </thead>
+              <tbody >
+                {storeData?.map((result, index) => (
+                  <tr key={index} className="border-b-[1px] border-slate-400 py-2">
+                    <td >
+                      {index + 1}
+                    </td>
+                    <td >
+                      {result.subject}
+                    </td>
+                    <td >
                       {result.score}/10
                     </td>
                   </tr>
