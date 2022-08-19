@@ -1,32 +1,48 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Auth } from "../Share/Context";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../utils/firebase";
-import { useState } from "react";
-import { useEffect } from "react";
 import { dataContext } from "../Share/Context/DataContext";
+import { utils as XLSXUtils, writeFile } from "xlsx";
 
 function ShowResult() {
   const { authUsername } = useContext(Auth);
   const { dataResult, arraySubjects } = useContext(dataContext);
 
-  const [score, setScore] = useState([]);
-  
-  
+  const [subject, setSubject] = useState([]);
+
+//function export data to excel
+  const exportToExcel = (fileName, data) => {
+    console.log(data)
+    const ws = XLSXUtils.json_to_sheet(data);
+    const wb = XLSXUtils.book_new();
+    XLSXUtils.book_append_sheet(wb, ws, fileName);
+    writeFile(wb, `${fileName}.xlsx`);
+  };
 
 
+  // const allData = dataResult.filter(item => item.username === JSON.parse(authUsername)  )
   const storeData = dataResult.filter(
-    (items) =>
-      items.subject === score && items.username === JSON.parse(authUsername)
+    (item) =>
+      item.subject === subject && item.username === JSON.parse(authUsername)
   );
 
   return (
     <div>
-      <div>
+      <span>
+        <button
+          onClick={() => setSubject()}
+          className="border transition duration-300 cursor-pointer px-4 py-2 
+             bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-200
+              my-[20px] rounded-md hover:bg-sky-700  hover:text-white mx-3
+              focus:outline-none focus:ring focus:ring-violet-300 focus:text-white"
+        >
+          All
+        </button>
+      </span>
+      <span>
         {arraySubjects.map((subject, index) => (
           <button
             key={index}
-            onClick={() => setScore(subject.data.subject)}
+            onClick={() => setSubject(subject.data.subject)}
             className="border transition duration-300 cursor-pointer px-4 py-2 
              bg-gradient-to-r from-indigo-500 via-indigo-300 to-indigo-200
               my-[20px] rounded-md hover:bg-sky-700  hover:text-white mx-3
@@ -35,35 +51,43 @@ function ShowResult() {
             {subject.data.subject}
           </button>
         ))}
-      </div>
+      </span>
       {storeData.length === 0 ? (
         <div>You haven't done the test yet...</div>
       ) : (
-        <div className="flex justify-center py-[50px]">
-          <table className="w-8/12">
-            <thead className="border">
-              <tr>
-                <th className="border-2 border-black text-center">Turn</th>
-                <th className="border-2 border-black text-center">Subject</th>
-                <th className="border-2 border-black text-center">Score</th>
-              </tr>
-            </thead>
-            <tbody className="border-y-2 border-black">
-              {storeData?.map((result, index) => (
-                <tr key={index} className="border">
-                  <td className="border-x-2 border-black text-center">
-                    {index + 1}
-                  </td>
-                  <td className="border-x-2 border-black text-center">
-                    {result.subject}
-                  </td>
-                  <td className="border-x-2 border-black text-center">
-                    {result.score}/10
-                  </td>
+        <div>
+          <button
+            onClick={()=>exportToExcel(`${subject}`, storeData)}
+            className="border px-1 rounded-md"
+          >
+            Export to Excel
+          </button>
+          <div className="flex justify-center py-[50px]">
+            <table className="w-8/12">
+              <thead className="border">
+                <tr>
+                  <th className="border-2 border-black text-center">Turn</th>
+                  <th className="border-2 border-black text-center">Subject</th>
+                  <th className="border-2 border-black text-center">Score</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="border-y-2 border-black">
+                {storeData?.map((result, index) => (
+                  <tr key={index} className="border">
+                    <td className="border-x-2 border-black text-center">
+                      {index + 1}
+                    </td>
+                    <td className="border-x-2 border-black text-center">
+                      {result.subject}
+                    </td>
+                    <td className="border-x-2 border-black text-center">
+                      {result.score}/10
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>

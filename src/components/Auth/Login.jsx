@@ -67,7 +67,7 @@ const Login = () => {
 
         <form className="px-[35px]" onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="username">Username</label>
-          <div className="flex my-[15px]">
+          <div className="flex mt-[15px]">
             <input
               className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
               type="text"
