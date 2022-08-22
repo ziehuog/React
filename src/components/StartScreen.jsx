@@ -1,7 +1,6 @@
 import React, { Fragment, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Navbar } from "./Auth/Navbar";
-import { Auth } from "./Share/Context";
+import { Auth } from "./Share/Context/Context";
 import { dataContext } from "./Share/Context/DataContext";
 
 const StartScreen = () => {
@@ -11,8 +10,7 @@ const StartScreen = () => {
 
   return (
     <Fragment>
-      {/* <Navbar /> */}
-      <div className="pt-[150px] h-[100vh] bg-gradient-to-b from-indigo-500">
+      <div className="pt-[150px] h-[100vh]">
         <div className="text-[30px] text-center py-[30px]">
           Click <b>Start</b> to start the test!
         </div>

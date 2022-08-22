@@ -1,7 +1,6 @@
 import React, { Fragment, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Navbar, User } from "./Auth/Navbar";
-import { questionContext } from "./Share/Context";
+import { questionContext } from "./Share/Context/Context";
 
 const SubmitScreen = () => {
 
@@ -13,8 +12,7 @@ const SubmitScreen = () => {
 
   return (
     <Fragment>
-      {/* <Navbar/> */}
-      <div className="h-full bg-gradient-to-b from-indigo-500 flex  justify-center ">
+      <div className="py-[100px] flex justify-center">
       <div className="bg-gray-200/80 p-[40px] rounded-2xl mt-[40px] h-min">
       <div className="text-[30px] text-center py-[30px]  ">
         Are you finished?
@@ -33,11 +31,11 @@ const SubmitScreen = () => {
                   <label key={elems.id}>
                     <span className="bg-slate-400 rounded-[10px] m-[15px] py-2 text-start px-[10px]">
                       <input
-                        type="radio"
+                        type="checkbox"
                         name={elems.id}
                         
                         // preview checked
-                        defaultChecked={
+                        checked={
                           storeAns.length > 0 &&
                           storeAns.some((a) => {
                             if (a.id === data.id && a.answer === elems.id) {
@@ -47,7 +45,7 @@ const SubmitScreen = () => {
                           })
                         }
                         className="mx-3"
-                        value={elems.id}
+                        // value={elems.id}
                       />
                       {elems.id}
                     </span>
@@ -58,7 +56,7 @@ const SubmitScreen = () => {
           );
         })}
       </div>
-      <div className="text-center">
+      <div className="text-center pt-5">
         <button
           className=" border border-gray-900 rounded-[8px] cursor-pointer 
           py-1 px-9 mx-5 py-[7px] hover:bg-indigo-600/60 hover:text-white"

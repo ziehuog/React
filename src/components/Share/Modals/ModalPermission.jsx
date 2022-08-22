@@ -6,6 +6,7 @@ import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
 import { db } from "../../../utils/firebase";
 import { classByCondition } from "../classByCondition";
+import { Auth } from "../Context/Context";
 import { dataContext } from "../Context/DataContext";
 
 function ModalPermission(props) {
@@ -27,7 +28,6 @@ function ModalPermission(props) {
     setKeys(newKeys);
   };
 
-  console.log(id);
   const handleAdd = async () => {
     try {
       await updateDoc(doc(db, "Users", id), {

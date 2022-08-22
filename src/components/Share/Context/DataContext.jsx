@@ -1,6 +1,5 @@
 import { collection, getDocs } from "firebase/firestore";
-import { useEffect } from "react";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { db } from "../../../utils/firebase";
 
 export const dataContext = createContext();
@@ -16,12 +15,15 @@ export const DataProvider = ({ children }) => {
   useEffect(() => {
     const getData = async () => {
       const querySnapshot = await getDocs(collection(db, "Subjects"));
+
       querySnapshot.forEach((doc) => {
         setArraySubjects((prev) => [...prev, { data: doc.data(), id: doc.id }]);
       });
     };
     getData();
   }, []);
+
+//get Results data
 
   useEffect(() => {
     const getData = async () => {
@@ -35,6 +37,8 @@ export const DataProvider = ({ children }) => {
     getData();
   }, []);
 
+//get Users data
+
   useEffect(() => {
     const getData = async () => {
       const questionData = await getDocs(collection(db, "Users"));
@@ -44,6 +48,8 @@ export const DataProvider = ({ children }) => {
     };
     getData();
   }, []);
+
+//get Permissions data
 
   useEffect(() => {
     const getData = async () => {

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { TimerContext } from "../Share/TimerContext";
+import { TimerContext } from "../Share/Context/TimerContext";
 
 require("moment-duration-format");
 

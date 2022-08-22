@@ -1,7 +1,5 @@
 import { createContext, useState, React } from "react";
 
- 
-// export const Context = createContext();
 
 //Auth
 
@@ -30,10 +28,5 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-
-
 //question
 export const questionContext = createContext();
-
-
-

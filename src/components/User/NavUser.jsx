@@ -1,8 +1,7 @@
 import React, { Fragment, useContext } from "react";
-import { Link, Route, Routes } from "react-router-dom";
-import { Navbar } from "../Auth/Navbar";
+import { Link, NavLink, Route, Routes } from "react-router-dom";
 import AddData from "../Data/AddData";
-import { Auth } from "../Share/Context";
+import { Auth } from "../Share/Context/Context";
 import { dataContext } from "../Share/Context/DataContext";
 import Information from "./Information";
 import Permissions from "./Permissions";
@@ -13,22 +12,31 @@ function NavUser() {
   const { dataUser, permissions } = useContext(dataContext);
   const { authUsername } = useContext(Auth);
 
+  const navLinkStyle = ({ isActive }) => {
+    return { background: isActive ? "#B6C3FD" : "",
+    color: isActive ? "#fff" : "#000",
+  };
+  };
+
   return (
     <Fragment>
-      {/* <Navbar /> */}
-      <div className="pt-[55px] grid grid-cols-12 gap-5">
-        <div className="md:col-span-4 xl:col-span-2 border p-4 h-[100vh] ">
+      <div className="pt-[55px] mt-0 grid grid-cols-12 gap-5 bg-white">
+        <div className="md:col-span-4 xl:col-span-2 border py-4 h-[100vh] ">
           {dataUser.map((user, index) => (
             <div key={index}>
               {user.data.username === JSON.parse(authUsername) ? (
-                <ul >
+                <ul>
                   {permissions.map((permission, index) => (
-                    <div key={index} >
+                    <div key={index}>
                       {user.data.permission.includes(permission.data.key) ? (
-                        <li className="flex items-center border-b-2 my-[10px]">
-                          <Link to={`${permission.data.path}`}>
+                        <li className="flex items-center border-b-2 h-[35px] ">
+                          <NavLink
+                          className='w-full h-full transition-all duration-200 px-4'
+                            style={navLinkStyle}
+                            to={`${permission.data.path}`}
+                          >
                             {permission.data.title}
-                          </Link>
+                          </NavLink>
                         </li>
                       ) : (
                         <div></div>
@@ -49,7 +57,6 @@ function NavUser() {
             <Route path="add_question" element={<UserAddData />} />
             <Route path="permission" element={<Permissions />} />
             <Route path="add-data" element={<AddData />} />
-
           </Routes>
         </div>
       </div>

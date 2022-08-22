@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { BTN_BACK, BTN_NEXT } from "../Share/Constants";
-import { questionContext } from "../Share/Context";
+import { questionContext } from "../Share/Context/Context";
 
 const LayoutBottom = () => {
   const navigate = useNavigate();

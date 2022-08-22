@@ -9,9 +9,10 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../utils/firebase";
 import { toast } from "react-toastify";
 import { dataContext } from "../Share/Context/DataContext";
+import { Auth } from "../Share/Context/Context";
 
 function Permissions() {
-  const { dataUser, permissions } = useContext(dataContext);
+  const { dataUser, permissions} = useContext(dataContext);
   const [modalShow, setModalShow] = useState(false);
   const [currentUser, setCurrentUser] = useState();
 

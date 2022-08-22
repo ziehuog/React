@@ -1,12 +1,12 @@
 import { addDoc, collection, getDocs } from "firebase/firestore";
-import React, { useContext, useEffect, useReducer } from "react";
+import React, { Fragment, useContext, useEffect, useReducer } from "react";
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import { db } from "../utils/firebase";
 import AddData from "./Data/AddData";
 import TestContainer from "./MainTest/TestContainer";
 import ScoreScreen from "./ScoreScreen";
 import { ANSWER, SETDATA } from "./Share/Constants";
-import { Auth, questionContext } from "./Share/Context";
+import { Auth, questionContext } from "./Share/Context/Context";
 import { dataContext } from "./Share/Context/DataContext";
 import { dataReducer, initState } from "./Share/Reducer";
 import StartScreen from "./StartScreen";
@@ -91,7 +91,7 @@ const Navigation = () => {
       window.alert(
         "You have done this test 5 times before so your result cannot save!",
 
-        navigate("/")
+        navigate("/start")
       );
       setBtnStart(true);
     }
@@ -113,7 +113,7 @@ const Navigation = () => {
   };
 
   return (
-    <div>
+    <Fragment>
       <div
         className="flex justify-between px-6 h-[55px] items-center bg-white 
     z-[100] fixed w-full border-b-2 border-indigo-700"
@@ -133,6 +133,7 @@ const Navigation = () => {
           Log out
         </button>
       </div>
+
       {!data ? (
         <div class="lds-dual-ring"></div>
       ) : (
@@ -145,16 +146,16 @@ const Navigation = () => {
             navigateToScore,
           }}
         >
-          <Routes>
-            <Route path="/start" element={<StartScreen />} />
-            <Route path="/question" element={<TestContainer />} />
-            <Route path="/submit" element={<SubmitScreen />} />
-            <Route path="/score" element={<ScoreScreen />} />
-            <Route path="user/*" element={<NavUser />} />
-          </Routes>
+            <Routes>
+              <Route path="/start" element={<StartScreen />} />
+              <Route path="/question" element={<TestContainer />} />
+              <Route path="/submit" element={<SubmitScreen />} />
+              <Route path="/score" element={<ScoreScreen />} />
+              <Route path="user/*" element={<NavUser />} />
+            </Routes>
         </questionContext.Provider>
       )}
-    </div>
+    </Fragment>
   );
 };
 

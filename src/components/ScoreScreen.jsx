@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { questionContext } from "./Share/Context";
+import { questionContext } from "./Share/Context/Context";
 
 function ScoreScreen() {
   const { state,  point } = useContext(questionContext);
@@ -10,7 +10,7 @@ function ScoreScreen() {
 
   return (
     <div>
-      <div className="h-full bg-gradient-to-b from-indigo-500 flex  justify-center pt-[100px]">
+      <div className="flex justify-center pt-[100px]">
         <div className="bg-gray-200/80  p-[40px]  rounded-2xl mt-[40px] h-min">
           <div className="text-[30px] text-center pb-[30px]">
             Your score is
@@ -31,10 +31,11 @@ function ScoreScreen() {
                       <label key={elems.id}>
                         <span className="bg-slate-400 rounded-[10px] m-[15px] py-2 text-start px-[10px]">
                           <input
-                            type="radio"
+                            type="checkbox"
                             name={elems.id}
+                            
                             // preview checked
-                            defaultChecked={data.some((a) => {
+                            checked={data.some((a) => {
                               if (
                                 a.id === dt.id &&
                                 a.correctAnswer === elems.id
