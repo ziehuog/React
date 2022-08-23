@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from "react";
 import { useState } from "react";
-import { Auth } from "../Share/Context/Context";
+import { Auth } from "../Share/Context/Auth";
 import { dataContext } from "../Share/Context/DataContext";
 import ModalChangePassword from "../Share/Modals/ModalChangePassword";
 

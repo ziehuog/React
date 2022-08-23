@@ -6,7 +6,7 @@ import App from "./App";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { DataProvider } from "./components/Share/Context/DataContext";
-import { AuthProvider } from "./components/Share/Context/Context";
+import { AuthProvider } from "./components/Share/Context/Auth";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

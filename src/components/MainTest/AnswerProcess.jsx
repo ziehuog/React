@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { questionContext } from "../Share/Context/Context";
+import { questionContext } from "../Share/Context/Auth";
 import { dataContext } from "../Share/Context/DataContext";
 
 const AnswerProcess = () => {

@@ -7,7 +7,7 @@ import ForgotPassword from "./components/Auth/ForgotPassword";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import Navigation from "./components/Navigation";
-import { Auth } from "./components/Share/Context/Context";
+import { Auth } from "./components/Share/Context/Auth";
 // import { Auth } from "./components/Share/Context/Context";
 
 function App() {

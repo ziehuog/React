@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { questionContext } from "./Share/Context/Context";
+import { questionContext } from "./Share/Context/Auth";
 
 function ScoreScreen() {
   const { state,  point } = useContext(questionContext);
