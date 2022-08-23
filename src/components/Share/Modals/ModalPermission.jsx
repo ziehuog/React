@@ -6,7 +6,7 @@ import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
 import { db } from "../../../utils/firebase";
 import { classByCondition } from "../classByCondition";
-import { Auth } from "../Context/Context";
+import { Auth } from "../Context/Auth";
 import { dataContext } from "../Context/DataContext";
 
 function ModalPermission(props) {

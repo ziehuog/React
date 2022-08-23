@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Auth } from "./Share/Context/Context";
+import { Auth } from "./Share/Context/Auth";
 import { dataContext } from "./Share/Context/DataContext";
 
 const StartScreen = () => {

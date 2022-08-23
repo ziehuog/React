@@ -9,7 +9,7 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../utils/firebase";
 import { toast } from "react-toastify";
 import { dataContext } from "../Share/Context/DataContext";
-import { Auth } from "../Share/Context/Context";
+import { Auth } from "../Share/Context/Auth";
 
 function Permissions() {
   const { dataUser, permissions} = useContext(dataContext);

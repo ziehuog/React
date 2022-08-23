@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { questionContext } from "../Share/Context/Context";
+import { questionContext } from "../Share/Context/Auth";
 
 const TestQuestion = () => {
   const { state, handleAnswer } = useContext(questionContext);

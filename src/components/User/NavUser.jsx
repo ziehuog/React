@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from "react";
 import { Link, NavLink, Route, Routes } from "react-router-dom";
 import AddData from "../Data/AddData";
-import { Auth } from "../Share/Context/Context";
+import { Auth } from "../Share/Context/Auth";
 import { dataContext } from "../Share/Context/DataContext";
 import Information from "./Information";
 import Permissions from "./Permissions";
