@@ -36,11 +36,10 @@ function Permissions() {
             </div>
             <div className="col-span-3 md:col-span-4  flex">
               {permissions.map((permission, index) => (
-                <button
+                <div
                   key={index}
-                  value={permission.data.key}
                   className={
-                    "border-2 px-2 py-1 mx-1 my-2 lg:mx-2 rounded-lg border-indigo-400" +
+                    "border-2 px-2 py-1 mx-1 my-2 lg:mx-2 rounded-lg cursor-auto border-indigo-400" +
                     classByCondition(
                       "bg-indigo-400 text-white ",
                       user.data.permission.includes(permission.data.key)
@@ -48,7 +47,7 @@ function Permissions() {
                   }
                 >
                   {permission.data.title}
-                </button>
+                </div>
               ))}
             </div>
             <div className="col-span-1 md:col-end-6 flex">

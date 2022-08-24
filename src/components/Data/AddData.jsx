@@ -2,7 +2,7 @@ import { addDoc, collection, getDocs } from "firebase/firestore";
 import React, { useContext, useState } from "react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import SimpleBar from "simplebar-react";
 import { db } from "../../utils/firebase";
@@ -16,16 +16,8 @@ function AddData() {
   const navigate = useNavigate();
   const [modalShow, setModalShow] = useState(false);
 
-  useEffect(() => {
-    if (performance.navigation.type === 1) {
-      console.log('F5')
-    // let confirm =  window.confirm('Your process will lose when you reload. Are you sure?')
-    // if(confirm) {
-    //   navigate('/user/')
-    // }
-    } 
-  });
 
+  const {chosenSubject} = useParams()
   const {
     register,
     handleSubmit,
@@ -35,7 +27,7 @@ function AddData() {
 
   const onSubmit = async (data) => {
     console.log(data);
-    const querySnapshot = await getDocs(collection(db, `${subject}`));
+    const querySnapshot = await getDocs(collection(db, `${chosenSubject}`));
     querySnapshot.forEach((doc) => {
       const dataQuestions = doc.data();
       if (dataQuestions.id === data.id) {
@@ -47,7 +39,7 @@ function AddData() {
     });
 
     if (flag) {
-      addDoc(collection(db, `${subject}`), {
+      addDoc(collection(db, `${chosenSubject}`), {
         id: data.id,
         question: data.question,
         correctAnswer: data.correctAnswer,
@@ -74,12 +66,12 @@ function AddData() {
           via-indigo-200 to-indigo-400 mb-3"
         >
           <button
-            onClick={() => navigate("/test/user/add-question")}
+            onClick={() => navigate("/user/add-question")}
             className="absolute hover:text-white hover:underline top-2 left-3"
           >
             Back
           </button>
-          <h1 className="text-[35px] text-center font-bold">{subject}</h1>
+          <h1 className="text-[35px] text-center font-bold">{chosenSubject}</h1>
         </div>
         <div className=" grid grid-cols-2 gap-6 ">
           <div

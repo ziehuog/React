@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { questionContext } from "./Share/Context/Auth";
+import { questionContext } from "./Share/Context/QuestionContext";
 
 function ScoreScreen() {
-  const { state,  point } = useContext(questionContext);
-  const {  data } = state;
-
+  const { state, point } = useContext(questionContext);
+  const { data } = state;
   const navigate = useNavigate();
 
   return (
@@ -33,7 +32,6 @@ function ScoreScreen() {
                           <input
                             type="checkbox"
                             name={elems.id}
-                            
                             // preview checked
                             checked={data.some((a) => {
                               if (
@@ -45,7 +43,6 @@ function ScoreScreen() {
                               return false;
                             })}
                             className="mx-3"
-                            value={elems.id}
                           />
                           {elems.id}
                         </span>
@@ -60,6 +57,7 @@ function ScoreScreen() {
             className=" border border-gray-900 rounded-[8px] cursor-pointer py-1 px-9 mx-5 py-[7px] hover:bg-indigo-600/60 hover:text-white"
             onClick={() => {
               navigate("/start");
+              window.location.reload();
             }}
           >
             OK

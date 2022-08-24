@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { BTN_BACK, BTN_NEXT } from "../Share/Constants";
-import { questionContext } from "../Share/Context/Auth";
+import { questionContext } from "../Share/Context/QuestionContext";
 
 const LayoutBottom = () => {
   const navigate = useNavigate();
 
-  const { state, dispatch,  } = useContext(questionContext);
+  const { state, dispatch, currentSubject } = useContext(questionContext);
   const {displayBack,displayNext, displaySubmit  } = state
 
 
@@ -29,7 +29,7 @@ const LayoutBottom = () => {
       </button>
       <button
         className="border border-gray-400 rounded-[8px] cursor-pointer py-2 px-4 hover:bg-indigo-600/60 hover:text-white"
-        onClick={() => navigate("/submit")}
+        onClick={() => navigate(`/submit/${currentSubject}`)}
         style={{ display: `${displaySubmit}` }}
       >
         Preview

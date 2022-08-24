@@ -56,7 +56,7 @@ function NavUser() {
             <Route path="result" element={<ShowResult />} />
             <Route path="add_question" element={<UserAddData />} />
             <Route path="permission" element={<Permissions />} />
-            <Route path="add-data" element={<AddData />} />
+            <Route path="add-data/:chosenSubject" element={<AddData />} />
           </Routes>
         </div>
       </div>

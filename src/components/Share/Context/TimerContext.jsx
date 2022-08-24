@@ -27,6 +27,5 @@ const navigate = useNavigate();
       clearInterval(timerId);
     };
   }, [remaining]);
-  console.log(remaining)
   return <TimerContext.Provider value={{timeOver, remaining}}>{children}</TimerContext.Provider>;
 };

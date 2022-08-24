@@ -11,7 +11,7 @@ function ModalSubject(props) {
   const { subject } = useContext(dataContext);
   const navigate = useNavigate();
 
-  const deleteSubject = async (id) => {
+  const deleteSubject = async () => {
     let confirm = window.confirm("Are you sure?");
     if (confirm) {
       await deleteDoc(doc(db, "Subjects", props.id));
@@ -33,7 +33,7 @@ function ModalSubject(props) {
       <Modal.Body>
         <button
           onClick={() => {
-            navigate("/user/add-data");
+            navigate(`/user/add-data/${subject}`);
           }}
           value={subject}
           className="border transition duration-300 cursor-pointer px-4 py-2 
