@@ -1,9 +1,8 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useState } from "react";
 import { GrAdd } from "react-icons/gr";
+import { dataContext } from "../Share/Context/DataContext";
 import ModalAddSubject from "../Share/Modals/ModalAddSubject";
 import ModalSubject from "../Share/Modals/ModalSubject";
-import { useState } from "react";
-import { dataContext } from "../Share/Context/DataContext";
 
 const UserAddData = () => {
   const [showAddSubject, setShowAddSubject] = useState(false);

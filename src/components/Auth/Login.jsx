@@ -13,16 +13,15 @@ import { GoogleAuthProvider, signInWithPopup, GithubAuthProvider } from "firebas
 
 const provider = new GoogleAuthProvider();
 
-
-
 const Login = () => {
+
   const navigate = useNavigate();
 
   let schema = yup
     .object()
     .shape({
-      username: yup.string().required().min(3),
-      password: yup.string().required().min(6),
+      username: yup.string().required().min(3).trim(),
+      password: yup.string().required().min(6).trim(),
     })
     .required();
 
@@ -42,7 +41,7 @@ const Login = () => {
   }
 
   const loginWithGithub = () => {
-    signInWithPopup(auth, new GithubAuthProvider)
+    signInWithPopup(auth, new GithubAuthProvider())
     .then(res => console.log(res))
     .catch(err => console.log(err))
   }
@@ -83,7 +82,9 @@ const Login = () => {
       <div className="sm:m-w-[350px] border relative border-gray-400 m-auto w-[350px] h-[520px] bg-slate-200/50 rounded-3xl">
         <h1 className="text-center text-[35px] pt-7 font-bold pb-5">Login</h1>
 
-        <form className="px-[35px]" onSubmit={handleSubmit(onSubmit)}>
+        <form className="px-[35px]" 
+        onSubmit={handleSubmit(onSubmit)}
+        >
           <label htmlFor="username">Username</label>
           <div className="flex mt-[15px]">
             <input

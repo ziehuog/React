@@ -7,7 +7,6 @@ export const Auth = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("id"));
-  const [btnStart, setBtnStart] = useState(false);
 
   const [authUsername, setAuthUsername] = useState(
     localStorage.getItem("username")
@@ -19,8 +18,6 @@ export const AuthProvider = ({ children }) => {
         setToken,
         authUsername,
         setAuthUsername,
-        btnStart,
-        setBtnStart,
       }}
     >
       {children}
@@ -29,4 +26,3 @@ export const AuthProvider = ({ children }) => {
 };
 
 //question
-export const questionContext = createContext();

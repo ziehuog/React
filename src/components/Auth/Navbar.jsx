@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../asset/img/ziehuog-logo.png";
-import { Auth } from "../Share/Context";
+import { Auth } from "../Share/Context/Auth";
+// import { Auth } from "../Share/Context";
 
 export const Navbar = () => {
   const { authUsername, setToken, setAuthUsername } = useContext(Auth);
@@ -27,11 +28,11 @@ export const Navbar = () => {
       className="flex justify-between px-6 h-[55px] items-center bg-white 
     z-[100] fixed w-full border-b-2 border-indigo-700"
     >
-      <div onClick={() => navigate("/")}>
+      <div onClick={() => navigate("/start")}>
         <img className="h-[45px] cursor-pointer" src={logo} />
       </div>
       <div
-        onClick={() => navigate("/test/user")}
+        onClick={() => navigate("/user")}
         className="border border-indigo-600 px-4 py-[3px] rounded-2xl cursor-pointer"
       >
         Username: {JSON.parse(authUsername)}
@@ -45,3 +46,4 @@ export const Navbar = () => {
     </div>
   );
 };
+export default Navbar

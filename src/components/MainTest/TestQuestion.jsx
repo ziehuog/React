@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
-import { questionContext } from "../Share/Context/Auth";
+import { useParams } from "react-router-dom";
+import { questionContext } from "../Share/Context/QuestionContext";
 
 const TestQuestion = () => {
   const { state, handleAnswer } = useContext(questionContext);
   const { index, data, storeAns} = state;
+
+  const {a} = useParams()
 
   return (
     <div>

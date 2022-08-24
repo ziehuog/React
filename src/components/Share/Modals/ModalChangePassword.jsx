@@ -1,8 +1,11 @@
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
+import { useContext } from "react";
 import Modal from "react-bootstrap/Modal";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { db } from "../../../utils/firebase";
+import { Auth } from "../Context/Auth";
 
 function ModalChangePassword(props) {
   const [password, setPassword] = useState("");
@@ -11,6 +14,8 @@ function ModalChangePassword(props) {
 
   const [message, setMessage] = useState("");
   const [messagePw, setMessagePw] = useState("");
+  const { setToken, setAuthUsername } = useContext(Auth);
+  let navigate = useNavigate();
 
   const id = props.user?.id;
 
@@ -37,7 +42,9 @@ function ModalChangePassword(props) {
         });
         toast.success("update successfully!");
         props.onHide();
-        window.location.reload();
+        setToken(localStorage.removeItem("id"));
+        setAuthUsername(localStorage.removeItem("username"));
+        navigate("/login");
       } catch {
         toast.error("Update failed");
       }
@@ -64,7 +71,7 @@ function ModalChangePassword(props) {
             type="password"
             placeholder="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value.trim())}
           />
         </div>
         <p className="text-red-500">{message}</p>
@@ -77,7 +84,7 @@ function ModalChangePassword(props) {
             type="password"
             placeholder="new password"
             value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
+            onChange={(e) => setNewPassword(e.target.value.trim())}
           />
         </div>
 
@@ -89,7 +96,7 @@ function ModalChangePassword(props) {
             type="password"
             placeholder="Confirm"
             value={cfNewPassword}
-            onChange={(e) => setCfNewPassword(e.target.value)}
+            onChange={(e) => setCfNewPassword(e.target.value.trim())}
           />
         </div>
         <p className="text-red-500">{messagePw}</p>
