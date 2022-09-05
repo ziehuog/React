@@ -1,6 +1,7 @@
 import { doc, updateDoc } from "firebase/firestore";
-import React, { useState } from "react";
-import { useContext } from "react";
+import React, { useContext, useState } from "react";
+import { useRef } from "react";
+import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -66,8 +67,7 @@ function ModalChangePassword(props) {
         <label>Password</label>
         <div className="flex mb-[15px]">
           <input
-            className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] 
-            outline-none placeholder:text-gray-500"
+            className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
             type="password"
             placeholder="password"
             value={password}
@@ -79,8 +79,7 @@ function ModalChangePassword(props) {
         <label>New Password</label>
         <div className="flex mb-[15px]">
           <input
-            className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] 
-            outline-none placeholder:text-gray-500"
+            className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
             type="password"
             placeholder="new password"
             value={newPassword}
@@ -91,8 +90,7 @@ function ModalChangePassword(props) {
         <label>Confirm new password</label>
         <div className="flex mb-[15px]">
           <input
-            className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] 
-            outline-none placeholder:text-gray-500"
+            className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
             type="password"
             placeholder="Confirm"
             value={cfNewPassword}
