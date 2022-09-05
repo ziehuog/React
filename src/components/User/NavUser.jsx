@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from "react";
 import { Link, NavLink, Route, Routes } from "react-router-dom";
 import AddData from "../Data/AddData";
-import { Auth } from "../Share/Context/Context";
+import { Auth } from "../Share/Context/Auth";
 import { dataContext } from "../Share/Context/DataContext";
 import Information from "./Information";
 import Permissions from "./Permissions";
@@ -56,7 +56,7 @@ function NavUser() {
             <Route path="result" element={<ShowResult />} />
             <Route path="add_question" element={<UserAddData />} />
             <Route path="permission" element={<Permissions />} />
-            <Route path="add-data" element={<AddData />} />
+            <Route path="add-data/:chosenSubject" element={<AddData />} />
           </Routes>
         </div>
       </div>

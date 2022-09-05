@@ -1,12 +1,9 @@
-import {
-    doc, updateDoc
-} from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
 import { db } from "../../../utils/firebase";
 import { classByCondition } from "../classByCondition";
-import { Auth } from "../Context/Context";
 import { dataContext } from "../Context/DataContext";
 
 function ModalPermission(props) {
@@ -51,7 +48,7 @@ function ModalPermission(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Add new subject
+          Change permission
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>

@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from "react";
 import { useState } from "react";
-import { Auth } from "../Share/Context/Context";
+import { Auth } from "../Share/Context/Auth";
 import { dataContext } from "../Share/Context/DataContext";
 import ModalChangePassword from "../Share/Modals/ModalChangePassword";
 
@@ -18,12 +18,12 @@ function Information() {
       {/* {user.map((user, index) => (
         <div key={index}> */}
           <div>
-            username: <span className="px-2">{user[0]?.data.username}</span>
+            username:<span className="px-2">{user[0]?.data.username}</span>
           </div>
           <div>
-            password:{" "}
+            password:
             <input
-              className="px-2"
+              className="px-2 outline-none"
               type="password"
               value={user[0]?.data.password}
               readOnly

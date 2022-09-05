@@ -1,11 +1,12 @@
 import React, { Fragment, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { questionContext } from "./Share/Context/Context";
+import { questionContext } from "./Share/Context/QuestionContext";
 
 const SubmitScreen = () => {
 
-  const { state, navigateToScore } = useContext(questionContext);
-  const { storeAns, data } = state;
+  const { state, data, navigateToScore, currentSubject } = useContext(questionContext);
+  const { storeAns } = state;
+  console.log(data)
 
   let navigate = useNavigate();
 
@@ -15,7 +16,7 @@ const SubmitScreen = () => {
       <div className="py-[100px] flex justify-center">
       <div className="bg-gray-200/80 p-[40px] rounded-2xl mt-[40px] h-min">
       <div className="text-[30px] text-center py-[30px]  ">
-        Are you finished?
+        Do you finished?
       </div>
 
       {/* map to display question */}
@@ -35,6 +36,7 @@ const SubmitScreen = () => {
                         name={elems.id}
                         
                         // preview checked
+                        readOnly
                         checked={
                           storeAns.length > 0 &&
                           storeAns.some((a) => {
@@ -45,7 +47,6 @@ const SubmitScreen = () => {
                           })
                         }
                         className="mx-3"
-                        // value={elems.id}
                       />
                       {elems.id}
                     </span>
@@ -60,7 +61,7 @@ const SubmitScreen = () => {
         <button
           className=" border border-gray-900 rounded-[8px] cursor-pointer 
           py-1 px-9 mx-5 py-[7px] hover:bg-indigo-600/60 hover:text-white"
-          onClick={() => (navigate("/question"))}
+          onClick={() => (navigate(`/question/${currentSubject}`))}
         >
           Back
         </button>

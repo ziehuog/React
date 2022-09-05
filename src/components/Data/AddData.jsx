@@ -1,41 +1,33 @@
 import { addDoc, collection, getDocs } from "firebase/firestore";
 import React, { useContext, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import SimpleBar from "simplebar-react";
-import * as yup from "yup";
 import { db } from "../../utils/firebase";
 import { dataContext } from "../Share/Context/DataContext";
+import ModalAddFromFile from "../Share/Modals/ModalAddFromFile";
 import ShowData from "./ShowData";
 
 function AddData() {
   const { subject } = useContext(dataContext);
   const [displayFetch, setDisplayFetch] = useState("block");
   const navigate = useNavigate();
+  const [modalShow, setModalShow] = useState(false);
 
-  let schema = yup
-    .object()
-    .shape({
-      id: yup.string().required(),
-      question: yup.string().required(),
-      correctAnswer: yup.string().required(),
-      answer: yup.string().required(),
-    })
-    .required();
 
+  const {chosenSubject} = useParams()
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    // resolver: yupResolver(schema),
-  });
+  } = useForm();
   let flag = true;
 
   const onSubmit = async (data) => {
     console.log(data);
-    const querySnapshot = await getDocs(collection(db, `${subject}`));
+    const querySnapshot = await getDocs(collection(db, `${chosenSubject}`));
     querySnapshot.forEach((doc) => {
       const dataQuestions = doc.data();
       if (dataQuestions.id === data.id) {
@@ -47,7 +39,7 @@ function AddData() {
     });
 
     if (flag) {
-      addDoc(collection(db, `${subject}`), {
+      addDoc(collection(db, `${chosenSubject}`), {
         id: data.id,
         question: data.question,
         correctAnswer: data.correctAnswer,
@@ -66,36 +58,47 @@ function AddData() {
   };
 
   return (
-    <div className=" flex align-middle justify-center w-[100vw] h-[100vh] bg-gradient-to-b from-indigo-500">
+    <div className=" flex align-middle justify-center w-[100vw] h-[100vh] 
+    bg-gradient-to-b from-indigo-500">
       <div className="w-full container mt-[100px]">
         <div
-          className="bg-gradient-to-r relative from-indigo-400 via-indigo-200 to-indigo-400
-          mb-3"
+          className="bg-gradient-to-r relative from-indigo-400 
+          via-indigo-200 to-indigo-400 mb-3"
         >
           <button
-            onClick={() => navigate("/test/user/add-question")}
+            onClick={() => navigate("/user/add-question")}
             className="absolute hover:text-white hover:underline top-2 left-3"
           >
             Back
           </button>
-          <h1 className="text-[35px] text-center font-bold">{subject}</h1>
+          <h1 className="text-[35px] text-center font-bold">{chosenSubject}</h1>
         </div>
         <div className=" grid grid-cols-2 gap-6 ">
           <div
-            className="sm:m-w-[350px] border relative border-gray-400 col-span-1 m-auto bg-slate-200/50 rounded-3xl
-          w-full md:h-[800px]"
+            className="sm:m-w-[350px] border relative border-gray-400 
+            col-span-1 m-auto bg-slate-200/50 rounded-3xl w-full md:h-[800px]"
           >
-            <h1 className="text-center text-[25px] pt-7 font-bold pb-5">
+            <h1 className="text-center text-[25px] pt-7 font-bold pb-5 ">
               Add question
             </h1>
+
             <form className="px-[35px]" onSubmit={handleSubmit(onSubmit)}>
+              <button
+                onClick={() => setModalShow(true)}
+                className="border px-2 py-1 rounded-lg hover:text-white 
+              transition-all duration-300 hover:bg-indigo-400 bg-zinc-100/60"
+              >
+                Add from file
+              </button>
+
               <SimpleBar style={{ maxHeight: 600 }}>
                 <div className="grid grid-cols-12 gap-y-3 2xl:gap-5 w-full">
                   <div className="2xl:col-span-2 md:col-span-12">
                     <label htmlFor="id">Question id</label>
                     <div className=" flex w-full mt-[15px] bg-gray-100 rounded-md">
                       <input
-                        className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                        className="h-[35px] w-full bg-gray-100 rounded-md 
+                        px-[15px] outline-none placeholder:text-gray-500"
                         name="id"
                         type="number"
                         required
@@ -110,7 +113,8 @@ function AddData() {
                     <label htmlFor="question">Question</label>
 
                     <input
-                      className="h-[35px] my-3 w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                      className="h-[35px] my-3 w-full bg-gray-100 rounded-md 
+                      px-[15px] outline-none placeholder:text-gray-500"
                       type="text"
                       placeholder="question"
                       name="question"
@@ -126,8 +130,9 @@ function AddData() {
                 <div className=" flex my-[15px] grid grid-cols-12 2xl:gap-5">
                   <select
                     name="correctAnswer"
-                    className="uppercase bg-gray-100 rounded-md 2xl:col-span-2 md:col-span-12 
-                  h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                    className="uppercase bg-gray-100 rounded-md 2xl:col-span-2 
+                    md:col-span-12 h-[35px] w-full bg-gray-100 rounded-md px-[15px] 
+                    outline-none placeholder:text-gray-500"
                     {...register("correctAnswer")}
                   >
                     <option value="A">A</option>
@@ -143,7 +148,8 @@ function AddData() {
                   <div className="grid grid-cols-12 gap-y-3 2xl:gap-5 md:gap-2 w-full">
                     <div className="2xl:col-span-2 md:col-span-3">
                       <input
-                        className="h-[35px] my-3 w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                        className="h-[35px] my-3 w-full bg-gray-100 rounded-md px-[15px] 
+                        outline-none placeholder:text-gray-500"
                         type="text"
                         name="question"
                         value="A"
@@ -166,7 +172,8 @@ function AddData() {
                   <div className="grid grid-cols-12 gap-y-3 2xl:gap-5 md:gap-2 w-full">
                     <div className="2xl:col-span-2 md:col-span-3">
                       <input
-                        className="h-[35px] my-3 w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                        className="h-[35px] my-3 w-full bg-gray-100 rounded-md 
+                        px-[15px] outline-none placeholder:text-gray-500"
                         type="text"
                         name="question"
                         value="B"
@@ -175,7 +182,8 @@ function AddData() {
                     </div>
                     <div className="2xl:col-span-10 md:col-span-9">
                       <input
-                        className="h-[35px] my-3 w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                        className="h-[35px] my-3 w-full bg-gray-100 rounded-md 
+                        px-[15px] outline-none placeholder:text-gray-500"
                         type="text"
                         placeholder="answer"
                         required
@@ -188,7 +196,8 @@ function AddData() {
                   <div className="grid grid-cols-12 gap-y-3 2xl:gap-5 md:gap-2 w-full">
                     <div className="2xl:col-span-2 md:col-span-3">
                       <input
-                        className="h-[35px] my-3 w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                        className="h-[35px] my-3 w-full bg-gray-100 rounded-md 
+                        px-[15px] outline-none placeholder:text-gray-500"
                         type="text"
                         name="question"
                         value="C"
@@ -197,7 +206,8 @@ function AddData() {
                     </div>
                     <div className="2xl:col-span-10 md:col-span-9">
                       <input
-                        className="h-[35px] my-3 w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                        className="h-[35px] my-3 w-full bg-gray-100 rounded-md 
+                        px-[15px] outline-none placeholder:text-gray-500"
                         type="text"
                         placeholder="answer"
                         required
@@ -209,7 +219,8 @@ function AddData() {
                   <div className="grid grid-cols-12 gap-y-3 2xl:gap-5 md:gap-2 w-full">
                     <div className="2xl:col-span-2 md:col-span-3">
                       <input
-                        className="h-[35px] my-3 w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                        className="h-[35px] my-3 w-full bg-gray-100 rounded-md 
+                        px-[15px] outline-none placeholder:text-gray-500"
                         type="text"
                         name="answerId_3"
                         value="D"
@@ -218,7 +229,8 @@ function AddData() {
                     </div>
                     <div className="2xl:col-span-10 md:col-span-9">
                       <input
-                        className="h-[35px] my-3 w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+                        className="h-[35px] my-3 w-full bg-gray-100 rounded-md 
+                        px-[15px] outline-none placeholder:text-gray-500"
                         type="text"
                         placeholder="answer"
                         name="answer_3"
@@ -247,6 +259,10 @@ function AddData() {
             <ShowData
               setDisplayFetch={setDisplayFetch}
               displayFetch={displayFetch}
+            />
+            <ModalAddFromFile
+              show={modalShow}
+              onHide={() => setModalShow(false)}
             />
           </div>
         </div>
