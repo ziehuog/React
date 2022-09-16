@@ -84,7 +84,7 @@ const Register = () => {
           <label htmlFor="username">Username</label>
           <div className="flex my-[15px]">
             <input
-              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+              className="form-input"
               type="text"
               placeholder="username"
               name="username"
@@ -100,7 +100,7 @@ const Register = () => {
 
           <div className=" flex my-[15px] bg-gray-100 rounded-md">
             <input
-              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+              className="form-input"
               name="password"
               type={`${passwordType}`}
               placeholder="password"
@@ -124,7 +124,7 @@ const Register = () => {
           <label htmlFor="password">Confirm Password</label>
           <div className=" flex mt-[15px] bg-gray-100 rounded-md">
             <input
-              className="h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500"
+              className="form-input"
               name="confirmPassword"
               type={`${cfPasswordType}`}
               placeholder="password"

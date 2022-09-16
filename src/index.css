@@ -16,3 +16,9 @@ code {
     monospace;
 }
 
+@layer components{
+  .form-input{
+    @apply h-[35px] w-full bg-gray-100 rounded-md px-[15px] outline-none placeholder:text-gray-500 
+  }
+}
+
