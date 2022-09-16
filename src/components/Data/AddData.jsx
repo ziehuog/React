@@ -172,8 +172,7 @@ function AddData() {
                   <div className="grid grid-cols-12 gap-y-3 2xl:gap-5 md:gap-2 w-full">
                     <div className="2xl:col-span-2 md:col-span-3">
                       <input
-                        className="h-[35px] my-3 w-full bg-gray-100 rounded-md 
-                        px-[15px] outline-none placeholder:text-gray-500"
+                        className="form-input"
                         type="text"
                         name="question"
                         value="B"
@@ -182,8 +181,7 @@ function AddData() {
                     </div>
                     <div className="2xl:col-span-10 md:col-span-9">
                       <input
-                        className="h-[35px] my-3 w-full bg-gray-100 rounded-md 
-                        px-[15px] outline-none placeholder:text-gray-500"
+                        className="form-input"
                         type="text"
                         placeholder="answer"
                         required
@@ -196,8 +194,7 @@ function AddData() {
                   <div className="grid grid-cols-12 gap-y-3 2xl:gap-5 md:gap-2 w-full">
                     <div className="2xl:col-span-2 md:col-span-3">
                       <input
-                        className="h-[35px] my-3 w-full bg-gray-100 rounded-md 
-                        px-[15px] outline-none placeholder:text-gray-500"
+                        className="form-input"
                         type="text"
                         name="question"
                         value="C"
@@ -206,8 +203,7 @@ function AddData() {
                     </div>
                     <div className="2xl:col-span-10 md:col-span-9">
                       <input
-                        className="h-[35px] my-3 w-full bg-gray-100 rounded-md 
-                        px-[15px] outline-none placeholder:text-gray-500"
+                        className="form-input"
                         type="text"
                         placeholder="answer"
                         required
@@ -219,8 +215,7 @@ function AddData() {
                   <div className="grid grid-cols-12 gap-y-3 2xl:gap-5 md:gap-2 w-full">
                     <div className="2xl:col-span-2 md:col-span-3">
                       <input
-                        className="h-[35px] my-3 w-full bg-gray-100 rounded-md 
-                        px-[15px] outline-none placeholder:text-gray-500"
+                        className="form-input"
                         type="text"
                         name="answerId_3"
                         value="D"
@@ -229,8 +224,7 @@ function AddData() {
                     </div>
                     <div className="2xl:col-span-10 md:col-span-9">
                       <input
-                        className="h-[35px] my-3 w-full bg-gray-100 rounded-md 
-                        px-[15px] outline-none placeholder:text-gray-500"
+                        className="form-input"
                         type="text"
                         placeholder="answer"
                         name="answer_3"

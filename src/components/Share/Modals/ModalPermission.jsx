@@ -19,7 +19,7 @@ function ModalPermission(props) {
   const changeKeys = (e) => {
     const value = e.target.value;
     const newKeys = keys.includes(value)
-      ? keys.filter((k) => k !== value)
+      ? keys.filter((key) => key !== value)
       : [...keys, value];
 
     setKeys(newKeys);
