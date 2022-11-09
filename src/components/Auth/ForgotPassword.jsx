@@ -4,7 +4,7 @@ function ForgotPassword() {
   return (
     <div className=" flex align-middle justify-center  w-[100vw] h-[100vh] ">
       <div className="sm:m-w-[350px] border relative border-gray-400 m-auto w-[350px] h-[420px] bg-slate-200/50 rounded-3xl">
-        <h1 className="text-center text-[35px] pt-7 font-bold pb-5">Forget password</h1>
+        <h1 className="text-center text-[35px] pt-7 font-bold pb-5">Forgot password</h1>
 
         <form className="px-[35px]">
           <label htmlFor="username">Username</label>
